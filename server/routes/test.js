@@ -1,7 +1,7 @@
-import express from 'express';
+import express from "express";
 const router = express.Router();
 
-router.get('/test', (req, res) => {
-    res.send({ msg: 'Test route.' });
-  });
-  export default router;
+router.get("/test", (req, res) => {
+  res.json("Hello backend world");
+});
+export default router;
