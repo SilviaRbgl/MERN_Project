@@ -26,6 +26,10 @@ const expeditionSchema = new Schema({
     endDate: {
         type: Date,
       },
+      
+  },
+  leader: {
+    type:String
   }
 });
 
