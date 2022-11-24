@@ -13,26 +13,21 @@ const expeditionSchema = new Schema({
     required: true,
     unique: false,
   },
-  beginDate: {
-    type: Date,
-  },
-  endDate: {
-    type: Date,
-  },
   date: {
     beginDate: {
-        type: Date,
+      type: Date,
+      required: true,
     },
     endDate: {
-        type: Date,
-      },
-      
+      type: Date,
+      required: true,
+    },
   },
   leader: {
-    type:String
-  }
+    type: String,
+  },
 });
 
-const expeditionModel = mongoose.model('expedition', expeditionSchema);
+const expeditionModel = mongoose.model("expedition", expeditionSchema);
 
 export default expeditionModel;

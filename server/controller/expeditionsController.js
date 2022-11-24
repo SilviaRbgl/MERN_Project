@@ -9,7 +9,7 @@ const gettAllExpeditions = async (req, res) => {
         allExpeditions,
       });
     } catch (error) {
-      console.log("error >", error);
+      console.log("error getting all expeditions >", error);
       res.status(500).json({
         error,
         msg: "problem in the server",
@@ -20,8 +20,8 @@ const gettAllExpeditions = async (req, res) => {
   const getExpeditionsByLeader = async (req, res) => {
     console.log("req :>>", req.params);
     const { leader } = req.params;
-
-    const requestedExpeditions = await expeditionModel
+    try {
+      const requestedExpeditions = await expeditionModel
         .find({ leader: leader })
         .exec()
     console.log("requestedExpeditions>>>", requestedExpeditions);
@@ -29,6 +29,13 @@ const gettAllExpeditions = async (req, res) => {
         number: requestedExpeditions.length,
         requestedExpeditions,
     })
+    } catch (error) {
+      console.log("error getting expeditions by leader >", error);
+      res.status(500).json({
+        error,
+        msg: "problem in the server"
+      });
+    }  
   };
 
   export { gettAllExpeditions, getExpeditionsByLeader }
