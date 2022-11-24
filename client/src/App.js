@@ -1,21 +1,17 @@
-import './App.css';
+import "./App.css";
 import { useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import Home from "./views/Home";
+import Expeditions from "./views/Expeditions";
 
 function App() {
 
-  const getExpeditions = async () => {
-    const response = await fetch("http://localhost:5000/api/expeditions/all/")
-    const results = await response.json()
-    console.log("expeditions >", results);
-  }
-
-  useEffect(() => {
-    getExpeditions()
-  }, [])
-  
   return (
     <div className="App">
-      
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="expeditions" element={<Expeditions />} />
+      </Routes>
     </div>
   );
 }
