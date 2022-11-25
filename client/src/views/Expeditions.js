@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Expeditions() {
   const [expedition, setExpedition] = useState([]);
@@ -23,8 +23,9 @@ function Expeditions() {
   }
   
   const clickMore = useNavigate();
-  const goDetailExpedition = () => {
-    clickMore(`${expedition.island}`); 
+  const goDetailExpedition = (expedition) => {
+    
+    clickMore(`${expedition.island}`,{state:expedition}); 
   }
 
   return (
@@ -36,7 +37,8 @@ function Expeditions() {
             <p className="font-mono">{expedition.country}</p>
             <p className="font-mono">Dates: {getDates(expedition.date.beginDate)} - {getDates(expedition.date.endDate)}</p>
             <p className="font-mono">Leader: {expedition.leader}</p>
-            <button className="btn" onClick={goDetailExpedition}>More</button>
+            <button className="btn" onClick={()=> goDetailExpedition(expedition)}>More</button>
+            {/* <Link to={`${expedition.island}`}className="btn" state={expedition}>More</Link> */}
           </div>
         );
       })}

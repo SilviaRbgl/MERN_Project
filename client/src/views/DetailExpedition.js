@@ -1,6 +1,11 @@
 import React from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 function DetailExpedition() {
+
+   const test = useLocation()
+//    const test = useNavigate()
+   console.log('test :>> ', test);
   return (
     <div className="background">
         <div className="card">
