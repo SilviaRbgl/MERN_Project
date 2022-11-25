@@ -22,7 +22,8 @@ function Expeditions() {
           <div className="card">
             <p className="font-mono font-bold">{expedition.island}</p>
             <p className="font-mono">{expedition.country}</p>
-            <p className="font-mono">Dates:{expedition.date.beginDate} - {expedition.date.beginDate}</p>
+            <p className="font-mono">Dates: {expedition.date.beginDate} - {expedition.date.beginDate}</p>
+            <p className="font-mono">Leader: {expedition.leader}</p>
           </div>
           // </div>
         );
