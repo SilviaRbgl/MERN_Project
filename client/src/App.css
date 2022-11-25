@@ -5,3 +5,7 @@
 .card {
   @apply bg-white rounded overflow-hidden shadow-md p-2;
 }
+
+.background {
+  @apply bg-slate-50 p-10;
+}

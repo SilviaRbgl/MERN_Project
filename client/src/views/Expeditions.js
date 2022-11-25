@@ -8,21 +8,27 @@ function Expeditions() {
     const results = await response.json();
     setExpedition(results.allExpeditions);
     console.log("expeditions >", results);
+    console.log("dates expeditions >", typeof results.allExpeditions[1].date.beginDate);
+    console.log(new Date(results.allExpeditions[1].date.beginDate).toLocaleDateString())
   };
 
   useEffect(() => {
     getExpeditions();
   }, []);
 
+  const getDates = (date) => {
+    let myDate =new Date(date).toLocaleDateString();
+      return myDate
+  }
+  
   return (
-    <div className="bg-slate-50 p-10 grid lg:grid-cols-3 gap-10">
-      {expedition.map((expedition) => {
-        return (
-          // <div className="grid lg:grid-cols-3 gap-10">
-          <div className="card">
+    <div className="background grid lg:grid-cols-3 gap-10">
+      {expedition.map((expedition, index) => {
+        return ( 
+          <div className="card hover:shadow-lg" key={index}>
             <p className="font-mono font-bold">{expedition.island}</p>
             <p className="font-mono">{expedition.country}</p>
-            <p className="font-mono">Dates: {expedition.date.beginDate} - {expedition.date.beginDate}</p>
+            <p className="font-mono">Dates: {getDates(expedition.date.beginDate)} - {getDates(expedition.date.endDate)}</p>
             <p className="font-mono">Leader: {expedition.leader}</p>
           </div>
           // </div>
