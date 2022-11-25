@@ -30,8 +30,8 @@ function Expeditions() {
             <p className="font-mono">{expedition.country}</p>
             <p className="font-mono">Dates: {getDates(expedition.date.beginDate)} - {getDates(expedition.date.endDate)}</p>
             <p className="font-mono">Leader: {expedition.leader}</p>
+            <button className="btn">More</button>
           </div>
-          // </div>
         );
       })}
     </div>

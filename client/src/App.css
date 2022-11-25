@@ -9,3 +9,7 @@
 .background {
   @apply bg-slate-50 p-10;
 }
+
+.btn {
+  @apply rounded-md py-2 px-3 uppercase text-xs font-bold cursor-pointer tracking-wider bg-cyan-200 hover:bg-amber-200;
+}
