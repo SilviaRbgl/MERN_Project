@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Expeditions() {
   const [expedition, setExpedition] = useState([]);
@@ -21,6 +22,11 @@ function Expeditions() {
       return myDate
   }
   
+  const clickMore = useNavigate();
+  const goDetailExpedition = () => {
+    clickMore(`${expedition.island}`); 
+  }
+
   return (
     <div className="background grid lg:grid-cols-3 gap-10">
       {expedition.map((expedition, index) => {
@@ -30,7 +36,7 @@ function Expeditions() {
             <p className="font-mono">{expedition.country}</p>
             <p className="font-mono">Dates: {getDates(expedition.date.beginDate)} - {getDates(expedition.date.endDate)}</p>
             <p className="font-mono">Leader: {expedition.leader}</p>
-            <button className="btn">More</button>
+            <button className="btn" onClick={goDetailExpedition}>More</button>
           </div>
         );
       })}
