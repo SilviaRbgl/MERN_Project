@@ -2,7 +2,7 @@ import expeditionModel from "../models/expeditionsModel.js";
 
 const gettAllExpeditions = async (req, res) => {
     try {
-      const allExpeditions = await expeditionModel.find({});
+      const allExpeditions = await expeditionModel.find({}).populate({ path: "leader"});
       console.log("allExpeditions >", allExpeditions);
       res.status(200).json({
         number: allExpeditions.length,
@@ -12,7 +12,7 @@ const gettAllExpeditions = async (req, res) => {
       console.log("error getting all expeditions >", error);
       res.status(500).json({
         error,
-        msg: "problem in the server",
+        msg: "problem in the server with all expeditions",
       });
     }
   };

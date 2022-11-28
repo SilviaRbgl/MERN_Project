@@ -23,8 +23,16 @@ const expeditionSchema = new Schema({
       required: true,
     },
   },
-  leader: {
+  itinerary: {
     type: String,
+    required: true,
+  },
+  price: {
+    type: String,
+    required: true,
+  },
+  leader: {
+    type: Schema.Types.ObjectId, ref:"leader",
   },
 });
 
