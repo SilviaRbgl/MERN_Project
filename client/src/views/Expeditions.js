@@ -42,9 +42,8 @@ function Expeditions() {
             <p className="font-mono font-bold">{expedition.island}</p>
             <p className="font-mono">{expedition.country}</p>
             <p className="font-mono">Dates: {getDates(expedition.date.beginDate)} - {getDates(expedition.date.endDate)}</p>
-            <p className="font-mono">Leader: {expedition.leader}</p>
+            {/* <p className="font-mono">Leader: {expedition.leader}</p> */}
             <button className="btn" onClick={()=> goDetailExpedition(expedition)}>More</button>
-            {/* <Link to={`${expedition.island}`}className="btn" state={expedition}>More</Link> */}
           </div>
         );
       })}

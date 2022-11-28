@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 function DetailExpedition() {
   const singleExpedition = useLocation();
   console.log("singleExpedition :>> ", singleExpedition);
-  console.log("itinerary", singleExpedition.state.itinerary);
 
   const getDates = (date) => {
     let myDate = new Date(date).toLocaleDateString();
@@ -21,7 +20,7 @@ function DetailExpedition() {
           {getDates(singleExpedition.state.date.beginDate)} -{" "}
           {getDates(singleExpedition.state.date.endDate)}
         </p>
-        <p className="font-mono">Leader: {singleExpedition.state.leader}</p>
+        <p className="font-mono">Leader: {singleExpedition.state.leader.name}</p>
         <p className="font-mono">Price: {singleExpedition.state.price}</p>
         <p className="font-mono"></p>
         <button className="btn">Reserve</button>
