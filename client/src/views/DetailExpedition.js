@@ -1,21 +1,17 @@
-import React from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation } from "react-router-dom";
 
 function DetailExpedition() {
+  const singleExpedition = useLocation();
+  console.log("singleExpedition :>> ", singleExpedition);
 
-   const test = useLocation()
-//    const test = useNavigate()
-   console.log('test :>> ', test);
   return (
     <div className="background">
-        <div className="card">
-          <p className="font-mono font-bold">hello</p>
-          <p className="font-mono"></p>
-
-          <button className="btn">More</button>
-        </div>
-  </div>
-  )
+      <div className="card">
+        <p className="font-mono font-bold">{singleExpedition.state.island}</p>
+        <p className="font-mono"></p>
+      </div>
+    </div>
+  );
 }
 
-export default DetailExpedition
+export default DetailExpedition;

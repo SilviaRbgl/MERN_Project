@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function Expeditions() {
-  
+
   const [expedition, setExpedition] = useState([]);
 
   const fetchExpeditions = async () => {
@@ -18,7 +18,6 @@ function Expeditions() {
       new Date(results.allExpeditions[1].date.beginDate).toLocaleDateString()
     );
   };
-  
 
   useEffect(() => {
     fetchExpeditions();
@@ -26,7 +25,7 @@ function Expeditions() {
 
   const getDates = (date) => {
     let myDate =new Date(date).toLocaleDateString();
-      return myDate
+      return myDate;
   }
   
   const clickMore = useNavigate();
