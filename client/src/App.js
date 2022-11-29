@@ -9,6 +9,7 @@ import Login from "./views/Login";
 import Register from "./views/Register";
 import DetailExpedition from "./views/DetailExpedition";
 import Leaders from "./views/Leaders";
+import Account from "./views/Account";
 
 
 function App() {
@@ -21,8 +22,9 @@ function App() {
         <Route path="expeditions" element={<Expeditions />} />
         <Route path="expeditions/:island" element={<DetailExpedition />} />
         <Route path="leaders" element={<Leaders />} />
-        <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="login" element={<Login />} />
+        <Route path="account" element={<Account />} />
       </Routes>
       {/* <Footer /> */}
     </div>

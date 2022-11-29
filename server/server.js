@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import expeditionsRoutes from "./routes/expeditionsRoutes.js"
 import leadersRoutes from "./routes/leadersRoutes.js"
 import usersRoutes from "./routes/usersRoutes.js"
+import cloudinaryConfig from "./config/cloudinary.js"
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -25,6 +26,7 @@ const addMiddleWares = () => {
     credentials: true,
   };
   app.use(cors(corsOptions));
+  cloudinaryConfig();
 };
 
 const startServer = () => { 

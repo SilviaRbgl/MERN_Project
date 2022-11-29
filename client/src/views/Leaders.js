@@ -1,13 +1,9 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 function Leaders() {
-  return (
-<div>
-    
-</div>
-
-  )
+  return <div></div>;
 }
 
-export default Leaders
+export default Leaders;

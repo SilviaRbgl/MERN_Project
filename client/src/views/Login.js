@@ -30,10 +30,10 @@ function Login() {
           <br />
           <p className="font-mono text-xs mb-4">* required fields</p>
 
-          <button className="btn mb-10">Login</button>
+          <button className="btn mb-8">Login</button>
           <br />
-          <p className="font-mono font-bold">Not an account yet?</p>
-          <Link to="/register">Register here</Link>
+          <p className="font-mono font-bold mb-2">Not an account yet?</p>
+          <Link className="btn mb-10" to="/register">Register here</Link>
         </div>
       </div>
     </div>
