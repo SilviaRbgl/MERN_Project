@@ -1,9 +1,9 @@
 import { v2 as cloudinary } from "cloudinary";
 
 const uploadImage = async (req, res) => {
-  console.log("req.file", req.file);
+  console.log("req.file", req.file.path);
   try {
-    const uploadResult = await cloudinary.uploader.upload(req.file.path, {
+    const uploadResult =  await cloudinary.uploader.upload(req.file.path, {
       folder: "images",
     });
     console.log("uploadResult", uploadResult);

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Svalbard01 from "../images/expeditions/Svalbard01.jpg"
 
 function Expeditions() {
 
@@ -10,7 +9,7 @@ function Expeditions() {
     const response = await fetch("http://localhost:5000/api/expeditions/all/");
     const results = await response.json();
     setExpedition(results.allExpeditions);
-    console.log("expeditions >", results);
+    console.log("expeditions >", results.allExpeditions[0].images[0]);
     // console.log(
     //   "dates expeditions >",
     //   typeof results.allExpeditions[1].date.beginDate
@@ -43,7 +42,7 @@ function Expeditions() {
             <p className="font-mono font-bold">{expedition.island}</p>
             <p className="font-mono">{expedition.country}</p>
             <p className="font-mono">Dates: {getDates(expedition.date.beginDate)} - {getDates(expedition.date.endDate)}</p>
-            <img className="mb-2" src={Svalbard01} alt="expedition image" />
+            <img className="mb-2" src={expedition?.images && expedition.images[0]} alt="expedition image" />
             {/* <p className="font-mono">Leader: {expedition.leader}</p> */}
             <button className="btn" onClick={()=> goDetailExpedition(expedition)}>More</button>
           </div>

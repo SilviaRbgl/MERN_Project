@@ -16,6 +16,7 @@ const upload = multer({
    
       }
 })
+console.log('upload :>> ', upload);
 export default upload;
  
  

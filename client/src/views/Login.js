@@ -33,7 +33,7 @@ function Login() {
           <button className="btn mb-8">Login</button>
           <br />
           <p className="font-mono font-bold mb-2">Not an account yet?</p>
-          <Link className="btn mb-10" to="/register">Register here</Link>
+          <Link className="btn mb-10" to="/register">Register</Link>
         </div>
       </div>
     </div>

@@ -48,9 +48,20 @@ function Register() {
             required
           />
           <br />
+
+          <div>
+          <p className="font-mono">Register as:</p>
+          <input type="radio" id="user" name="register" value="user"></input>
+          <label htmlFor="user">User</label>
+          <br />
+          <input type="radio" id="leader" name="register" value="leader"></input>
+          <label htmlFor="leader">Leader</label>
+          </div>
+          <br />
+
           <p className="font-mono text-xs mb-4">* required fields</p>
 
-          <button className="btn mb-10">Login</button>
+          <button className="btn mb-10">Register</button>
           <br />
         </div>
       </div>
