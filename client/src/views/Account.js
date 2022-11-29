@@ -1,6 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 
 function Account() {
+  const [selectedFile, setSelectedFile] = useState({});
+
+  const attachFileHandler = (e) => {
+    console.log("e.target.files[0]", e.target.files[0]);
+    setSelectedFile(e.target.files[0])
+  }
+
+  const submitForm = async (e) => {
+    console.log("selectedFile>", selectedFile)
+    e.preventDefault();
+
+    const formdata = new FormData();
+    formdata.append("image", setSelectedFile);
+
+    const requestOptions = {
+      method: "POST",
+      body: formdata,
+      redirect: "follow", 
+    };
+
+    const response = await fetch("http://localhost:5000/api/users/uploadimage", requestOptions)
+      const result = await response.json();
+      console.log("result", result);
+  };
+
   return (
     <div className="background">
       <div className="card bg-gradient-to-r from-amber-100 to-cyan-100 mb-4">
@@ -9,8 +34,10 @@ function Account() {
         <p className="font-mono">Email:</p>
         <p className="font-mono">Profile picture:</p>
         <form>
-          <input type="file" mame="file" id="file" />
-          <button className="btn">Upload picture</button>
+          <input type="file" onChange={attachFileHandler} />
+          <button className="btn" onClick={submitForm}>
+            Upload picture
+          </button>
         </form>
       </div>
 
@@ -19,7 +46,6 @@ function Account() {
         <p className="font-mono">My favourites:</p>
         <p className="font-mono">My reviews:</p>
       </div>
-       
     </div>
   );
 }
