@@ -26,9 +26,9 @@ function DetailExpedition() {
         <button className="btn">Reserve</button>
       </div>
 
-      <p className="font-mono font-bold uppercase">Itinerary</p>
-      <p className="font-mono">{singleExpedition.state.itinerary}</p>
-      <p className="font-mono font-bold uppercase">What is included</p>
+      <p className="font-mono font-bold uppercase mb-2">Itinerary</p>
+      <p className="font-mono mb-10">{singleExpedition.state.itinerary}</p>
+      <p className="font-mono font-bold uppercase mb-2">What is included</p>
       <p className="font-mono">{singleExpedition.state.itinerary}</p>
     </div>
   );

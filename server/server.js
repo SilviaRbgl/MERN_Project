@@ -6,6 +6,7 @@ dotenv.config();
 import mongoose from "mongoose";
 import expeditionsRoutes from "./routes/expeditionsRoutes.js"
 import leadersRoutes from "./routes/leadersRoutes.js"
+import usersRoutes from "./routes/usersRoutes.js"
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -34,8 +35,9 @@ const startServer = () => {
 
 const loadRoutes = () => {
   app.use("/api", router);
-  app.use("/api/expeditions", expeditionsRoutes)
-  app.use("/api/leaders", leadersRoutes)
+  app.use("/api/expeditions", expeditionsRoutes);
+  app.use("/api/leaders", leadersRoutes);
+  app.use("/api/users", usersRoutes);
 };
 
 const mongoDBConnection = async () => {
