@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from "cloudinary";
 import userModel from "../models/usersModel.js";
+import encryptPassword from "../utils/encryptPassword.js";
 
 const uploadImage = async (req, res) => {
   try {
@@ -26,15 +27,39 @@ const register = async (req, res) => {
 
   try {
     const existingUser = userModel.findOne({email: email})
+    console.log("existingUser", existingUser)
 
     if(existingUser) {
       res.status(200).json({msg: "email already in use"})
     } else {
-      
+      const hashedPassword = encryptPassword(password);
+      console.log("hashedPassword", hashedPassword);
+
+      const newUser = new userModel ({
+        userName: req.body.userName ? req.body.userName : req.body.email,
+        email: email,
+        password: hashedPassword,
+      })
+      try {
+        const savedUser = newUser.save()
+
+        res.satus(201).json({
+          msg: "user registration succesfully",
+          user: savedUser,
+        })
+
+      } catch (error) {
+        console.log("error", error),
+        res.status(500).json({
+          msg: "user registration error",
+          error: error
+        })
+        
+      }
     }
   } catch (error) {
     res.status(500).json({
-      msg: "registration error",
+      msg: "something went wrong during registration",
       error: error
     }) 
   }

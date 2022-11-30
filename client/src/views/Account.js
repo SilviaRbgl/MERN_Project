@@ -12,8 +12,9 @@ function Account() {
   const submitUploadPicture = async (e) => {
     console.log("selectedFile>", selectedFile);
     e.preventDefault();
+   
     const formdata = new FormData();
-    formdata.append("image", setSelectedFile);
+    formdata.append("image", selectedFile);
 
     const requestOptions = {
       method: "POST",
