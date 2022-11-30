@@ -14,6 +14,7 @@ const uploadImage = async (req, res) => {
       image: uploadResult.url,
     });
   } catch (error) {
+    console.log("error", error);
     res.status(500).json({
       msg: "image uploaded went wrong",
       error: error,
@@ -26,13 +27,13 @@ const register = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const existingUser = userModel.findOne({email: email})
+    const existingUser = await userModel.findOne({email: req.body.email})
     console.log("existingUser", existingUser)
 
     if(existingUser) {
       res.status(200).json({msg: "email already in use"})
     } else {
-      const hashedPassword = encryptPassword(password);
+      const hashedPassword = await encryptPassword(password);
       console.log("hashedPassword", hashedPassword);
 
       const newUser = new userModel ({
@@ -41,9 +42,9 @@ const register = async (req, res) => {
         password: hashedPassword,
       })
       try {
-        const savedUser = newUser.save()
+        const savedUser = await newUser.save()
 
-        res.satus(201).json({
+        res.status(201).json({
           msg: "user registration succesfully",
           user: savedUser,
         })

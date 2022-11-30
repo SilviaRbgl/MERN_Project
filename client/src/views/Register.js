@@ -1,14 +1,43 @@
 import React, { useState } from "react";
 
 function Register() {
-
   const [newUser, setNewUser] = useState({});
 
   const handleChangeHandler = (e) => {
-    console.log("[e.target.name]:e.target.value", e.target.name, e.target.value);
-    setNewUser({...newUser, [e.target.name]:e.target.value })
+    console.log(
+      "[e.target.name]:e.target.value",
+      e.target.name,
+      e.target.value
+    );
+    setNewUser({ ...newUser, [e.target.name]: e.target.value });
+  };
 
-  }
+  const submitRegister =  async () => {
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("userName", newUser.userName ? newUser.userName : newUser.email,);
+    urlencoded.append("email", newUser.email);
+    urlencoded.append("password", newUser.password);
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/users/register",
+        requestOptions
+      );
+      const result = await response.json();
+      console.log("result", result);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   return (
     <div className="background">
@@ -23,7 +52,7 @@ function Register() {
             type="text"
             placeholder="Enter name"
             name="userName"
-            value={newUser.userName ? newUser.userName: ""}
+            value={newUser.userName ? newUser.userName : ""}
             onChange={handleChangeHandler}
             required
           />
@@ -68,18 +97,25 @@ function Register() {
           <br />
 
           <div>
-          <p className="font-mono">Register as:</p>
-          <input type="radio" id="user" name="register" value="user"></input>
-          <label htmlFor="user">User</label>
-          <br />
-          <input type="radio" id="leader" name="register" value="leader"></input>
-          <label htmlFor="leader">Leader</label>
+            <p className="font-mono">Register as:</p>
+            <input type="radio" id="user" name="register" value="user"></input>
+            <label htmlFor="user">User</label>
+            <br />
+            <input
+              type="radio"
+              id="leader"
+              name="register"
+              value="leader"
+            ></input>
+            <label htmlFor="leader">Leader</label>
           </div>
           <br />
 
           <p className="font-mono text-xs mb-4">* required fields</p>
 
-          <button className="btn mb-10">Register</button>
+          <button className="btn mb-10" onClick={submitRegister}>
+            Register
+          </button>
           <br />
         </div>
       </div>
