@@ -10,6 +10,7 @@ import usersRoutes from "./routes/usersRoutes.js"
 import cloudinaryConfig from "./config/cloudinary.js"
 
 const app = express();
+
 const port = process.env.PORT || 5000;
 
 const addMiddleWares = () => {

@@ -2,28 +2,35 @@ import React, { useState } from "react";
 
 function Account() {
   const [selectedFile, setSelectedFile] = useState({});
+  const [newUser, setNewUser] = useState({});
 
   const attachFileHandler = (e) => {
     console.log("e.target.files[0]", e.target.files[0]);
-    setSelectedFile(e.target.files[0])
-  }
+    setSelectedFile(e.target.files[0]);
+  };
 
-  const submitForm = async (e) => {
-    console.log("selectedFile>", selectedFile)
+  const submitUploadPicture = async (e) => {
+    console.log("selectedFile>", selectedFile);
     e.preventDefault();
-
     const formdata = new FormData();
     formdata.append("image", setSelectedFile);
 
     const requestOptions = {
       method: "POST",
       body: formdata,
-      redirect: "follow", 
+      redirect: "follow",
     };
-
-    const response = await fetch("http://localhost:5000/api/users/uploadimage", requestOptions)
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/users/uploadimage",
+        requestOptions
+      );
       const result = await response.json();
       console.log("result", result);
+      // setNewUser({ ...newUser, avatarPicture: result.image });
+    } catch (error) {
+    console.log("error >", error);
+    }
   };
 
   return (
@@ -35,7 +42,7 @@ function Account() {
         <p className="font-mono">Profile picture:</p>
         <form>
           <input type="file" onChange={attachFileHandler} />
-          <button className="btn" onClick={submitForm}>
+          <button className="btn" onClick={submitUploadPicture}>
             Upload picture
           </button>
         </form>
