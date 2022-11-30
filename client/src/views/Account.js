@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { MdModeEditOutline } from "react-icons/md"
 
 function Account() {
   const [selectedFile, setSelectedFile] = useState({});
@@ -12,7 +13,7 @@ function Account() {
   const submitUploadPicture = async (e) => {
     console.log("selectedFile>", selectedFile);
     e.preventDefault();
-   
+
     const formdata = new FormData();
     formdata.append("image", selectedFile);
 
@@ -30,7 +31,7 @@ function Account() {
       console.log("result", result);
       // setNewUser({ ...newUser, avatarPicture: result.image });
     } catch (error) {
-    console.log("error >", error);
+      console.log("error >", error);
     }
   };
 
@@ -40,13 +41,15 @@ function Account() {
         <p className="font-mono font-bold uppercase mb-2">My account</p>
         <p className="font-mono">Name:</p>
         <p className="font-mono">Email:</p>
-        <p className="font-mono">Profile picture:</p>
-        <form>
-          <input type="file" onChange={attachFileHandler} />
+        {/* <p className="font-mono">Profile picture:</p> */}
+        <img className="w-32 h-32" src="http://res.cloudinary.com/dtwbyjspa/image/upload/v1669821358/images/yk4xc69svkglrejjq3tk.png" alt="profile picture" />
+        <div>
+          <label htmlFor="file-upload" className="custom-file-upload">Edit picture</label>
+          <input id="file-upload" type="file" onChange={attachFileHandler} />
           <button className="btn" onClick={submitUploadPicture}>
             Upload picture
           </button>
-        </form>
+        </div>
       </div>
 
       <div className="card mb-4">

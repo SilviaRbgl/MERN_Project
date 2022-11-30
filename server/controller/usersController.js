@@ -27,45 +27,45 @@ const register = async (req, res) => {
   const { email, password, role } = req.body;
 
   try {
-    const existingUser = await userModel.findOne({email: req.body.email})
-    console.log("existingUser", existingUser)
+    const existingUser = await userModel.findOne({ email: req.body.email });
+    console.log("existingUser", existingUser);
 
-    if(existingUser) {
-      res.status(200).json({msg: "email already in use"})
+    if (existingUser) {
+      res.status(200).json({ msg: "email already in use" });
     } else {
       const hashedPassword = await encryptPassword(password);
       console.log("hashedPassword", hashedPassword);
 
-      const newUser = new userModel ({
+      const newUser = new userModel({
         userName: req.body.userName ? req.body.userName : req.body.email,
         email: email,
         password: hashedPassword,
-        roleTraveller: role.traveller,
-        roleLeader: role.leader,
-      })
+        role: role,
+        profilePicture: req.body.image
+          ? req.body.image
+          : "http://res.cloudinary.com/dtwbyjspa/image/upload/v1669821358/images/yk4xc69svkglrejjq3tk.png",
+      });
       try {
-        const savedUser = await newUser.save()
+        const savedUser = await newUser.save();
 
         res.status(201).json({
           msg: "user registration succesfully",
           user: savedUser,
-        })
-
+        });
       } catch (error) {
         console.log("error", error),
-        res.status(500).json({
-          msg: "user registration error",
-          error: error
-        })
-        
+          res.status(500).json({
+            msg: "user registration error",
+            error: error,
+          });
       }
     }
   } catch (error) {
     res.status(500).json({
       msg: "something went wrong during registration",
-      error: error
-    }) 
+      error: error,
+    });
   }
-}
+};
 
 export { uploadImage, register };

@@ -14,19 +14,15 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    required: true, 
+    required: true,
   },
   role: {
-    traveller: {
-      type: Boolean,
-      required: false,
-      unique: true,
-    },
-    leader: {
-      type: Boolean,
-      required: false,
-      unique: true,
-    },
+    type: String,
+    required: true,
+  },
+  image: {
+    type: String,
+    required: false,
   }
 });
 

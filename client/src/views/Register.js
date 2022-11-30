@@ -21,6 +21,7 @@ function Register() {
     urlencoded.append("email", newUser.email);
     urlencoded.append("password", newUser.password);
     urlencoded.append("role", newUser.role);
+    
 
     const requestOptions = {
       method: "POST",
@@ -91,8 +92,9 @@ function Register() {
               className="mr-1"
               type="radio"
               id="traveller"
-              name="register"
-              value={newUser.roleTraveller ? newUser.roleTraveller : ""}
+              name="role"
+              value="traveller"
+              onClick={handleChangeHandler}
             ></input>
             <label htmlFor="traveller">Traveller</label>
             <br />
@@ -100,8 +102,9 @@ function Register() {
               className="mr-1"
               type="radio"
               id="leader"
-              name="register"
-              value={newUser.roleLeader ? newUser.roleLeader : ""}
+              name="role"
+              value="leader"
+              onClick={handleChangeHandler}
             ></input>
             <label htmlFor="leader">Leader</label>
           </div>
