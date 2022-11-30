@@ -20,6 +20,7 @@ function Register() {
     urlencoded.append("userName", newUser.userName ? newUser.userName : newUser.email,);
     urlencoded.append("email", newUser.email);
     urlencoded.append("password", newUser.password);
+    urlencoded.append("role", newUser.role);
 
     const requestOptions = {
       method: "POST",
@@ -83,29 +84,24 @@ function Register() {
             required
           />
           <br />
-          <label htmlFor="password">Confirm password*</label>
-          <br />
-          <input
-            className="border-2 rounded border-cyan-500 shadow-md shadow-cyan-400/30 m-2 p-1"
-            type="password"
-            placeholder="Enter password"
-            name="password"
-            value={newUser.password ? newUser.password : ""}
-            onChange={handleChangeHandler}
-            required
-          />
-          <br />
 
           <div>
-            <p className="font-mono">Register as:</p>
-            <input type="radio" id="user" name="register" value="user"></input>
-            <label htmlFor="user">User</label>
+            <p className="font-mono mb-1">Register as:</p>
+            <input 
+              className="mr-1"
+              type="radio"
+              id="traveller"
+              name="register"
+              value={newUser.roleTraveller ? newUser.roleTraveller : ""}
+            ></input>
+            <label htmlFor="traveller">Traveller</label>
             <br />
             <input
+              className="mr-1"
               type="radio"
               id="leader"
               name="register"
-              value="leader"
+              value={newUser.roleLeader ? newUser.roleLeader : ""}
             ></input>
             <label htmlFor="leader">Leader</label>
           </div>

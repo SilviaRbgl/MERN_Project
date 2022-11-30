@@ -15,6 +15,18 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true, 
+  },
+  role: {
+    traveller: {
+      type: Boolean,
+      required: false,
+      unique: true,
+    },
+    leader: {
+      type: Boolean,
+      required: false,
+      unique: true,
+    },
   }
 });
 

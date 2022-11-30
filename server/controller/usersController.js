@@ -24,7 +24,7 @@ const uploadImage = async (req, res) => {
 
 const register = async (req, res) => {
   console.log("req.body >>", req.body);
-  const { email, password } = req.body;
+  const { email, password, role } = req.body;
 
   try {
     const existingUser = await userModel.findOne({email: req.body.email})
@@ -40,6 +40,8 @@ const register = async (req, res) => {
         userName: req.body.userName ? req.body.userName : req.body.email,
         email: email,
         password: hashedPassword,
+        roleTraveller: role.traveller,
+        roleLeader: role.leader,
       })
       try {
         const savedUser = await newUser.save()
