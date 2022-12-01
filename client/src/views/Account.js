@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 function Account() {
+
+  const { newUser, setNewUser } = useContext(AuthContext)
   const [selectedFile, setSelectedFile] = useState({});
-  const [newUser, setNewUser] = useState({});
 
   const attachFileHandler = (e) => {
     console.log("e.target.files[0]", e.target.files[0]);
@@ -28,7 +30,7 @@ function Account() {
       );
       const result = await response.json();
       console.log("result", result);
-      // setNewUser({ ...newUser, avatarPicture: result.image });
+      setNewUser({ ...newUser, profilePicture: result.image });
     } catch (error) {
       console.log("error >", error);
     }
@@ -41,7 +43,11 @@ function Account() {
         <p className="font-mono">Name:</p>
         <p className="font-mono">Email:</p>
         {/* <p className="font-mono">Profile picture:</p> */}
-        <img className="w-32 h-32" src="http://res.cloudinary.com/dtwbyjspa/image/upload/v1669821358/images/yk4xc69svkglrejjq3tk.png" alt="profile picture" />
+        {newUser && (
+        <img className="w-32 h-32" src={newUser.profilePicture
+          ? newUser.profilePicture
+          : "http://res.cloudinary.com/dtwbyjspa/image/upload/v1669821358/images/yk4xc69svkglrejjq3tk.png"} alt="profile picture" />)}
+        {/* <img className="w-32 h-32" src="http://res.cloudinary.com/dtwbyjspa/image/upload/v1669821358/images/yk4xc69svkglrejjq3tk.png" alt="profile picture" /> */}
         <div>
           <label htmlFor="file-upload" className="custom-file-upload">Edit picture</label>
           <input id="file-upload" type="file" onChange={attachFileHandler} />
