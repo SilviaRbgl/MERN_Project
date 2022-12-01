@@ -1,6 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
 import userModel from "../models/usersModel.js";
 import encryptPassword from "../utils/encryptPassword.js";
+import isPasswordCorrect from "../utils/isPasswordCorrect.js";
 
 const uploadImage = async (req, res) => {
   try {
@@ -68,4 +69,31 @@ const register = async (req, res) => {
   }
 };
 
-export { uploadImage, register };
+const login = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const existingUser = await userModel.findOne({ email: email });
+    console.log("existingUser >>>", existingUser);
+
+    if (!existingUser) {
+      res
+        .status(401)
+        .json({ msg: "user not found with this email, register first?" });
+    } else {
+      const verified = await isPasswordCorrect(password, existingUser.password);
+      console.log("verified", verified);
+      if (!verified) {
+        res.status(401).json({ msg: "wrong password" });
+      }
+      if (verified) {
+        console.log("verified >>>", verified);
+      }
+    }
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).json({ msg: "login went wrong"})
+  }
+};
+
+export { uploadImage, register, login };
