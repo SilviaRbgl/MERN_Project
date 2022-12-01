@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { MdModeEditOutline } from "react-icons/md"
 
 function Account() {
   const [selectedFile, setSelectedFile] = useState({});

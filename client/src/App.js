@@ -10,12 +10,14 @@ import Register from "./views/Register";
 import DetailExpedition from "./views/DetailExpedition";
 import Leaders from "./views/Leaders";
 import Account from "./views/Account";
+import { AuthContextProvider } from "./context/AuthContext";
 
 
 function App() {
 
   return (
     <div className="App">
+      <AuthContextProvider>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -27,6 +29,7 @@ function App() {
         <Route path="account" element={<Account />} />
       </Routes>
       {/* <Footer /> */}
+      </AuthContextProvider>
     </div>
   );
 }

@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+
 
 function Register() {
-  const [newUser, setNewUser] = useState({});
+
+  const { newUser, setNewUser } = useContext(AuthContext)
 
   const handleChangeHandler = (e) => {
     console.log(
