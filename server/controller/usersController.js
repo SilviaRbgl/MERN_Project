@@ -2,6 +2,7 @@ import { v2 as cloudinary } from "cloudinary";
 import userModel from "../models/usersModel.js";
 import encryptPassword from "../utils/encryptPassword.js";
 import isPasswordCorrect from "../utils/isPasswordCorrect.js";
+import issueToken from "../utils/jwt.js";
 
 const uploadImage = async (req, res) => {
   try {
@@ -88,6 +89,8 @@ const login = async (req, res) => {
       }
       if (verified) {
         console.log("verified >>>", verified);
+        const token = await issueToken(existingUser._id);
+        console.log("token>>", token);
       }
     }
   } catch (error) {
