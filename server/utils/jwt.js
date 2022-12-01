@@ -1,6 +1,6 @@
 import JsonWebToken from "jsonwebtoken";
 
-const issueToken = async (userId) => {
+const issueToken = (userId) => {
   const payload = {
     sub: userId,
   };
@@ -8,7 +8,7 @@ const issueToken = async (userId) => {
     expiresIn: "5 days",
   };
 
-  const token = await JsonWebToken.sign(
+  const token = JsonWebToken.sign(
     payload,
     process.env.JWT_SECRET,
     options

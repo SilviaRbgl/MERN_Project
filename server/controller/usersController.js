@@ -89,8 +89,19 @@ const login = async (req, res) => {
       }
       if (verified) {
         console.log("verified >>>", verified);
-        const token = await issueToken(existingUser._id);
+        const token = issueToken(existingUser._id);
         console.log("token>>", token);
+
+        res.status(200).json({ 
+          msg: "logged in successfully",
+          user: {
+            userName: existingUser.userName,
+            id: existingUser._id,
+            email: existingUser.email,
+            profilePicture: existingUser.profilePicture,
+          } ,
+          token,
+         })
       }
     }
   } catch (error) {
