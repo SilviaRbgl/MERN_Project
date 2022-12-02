@@ -1,54 +1,23 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
-
 function Register() {
+  const [newUser, setNewUser] = useState({});
+  const { submitRegister } = useContext(AuthContext);
 
-  const { newUser, setNewUser } = useContext(AuthContext)
-
-  const handleChangeHandler = (e) => {
+    const handleChangeHandler = (e) => {
     console.log(
       "[e.target.name]:e.target.value",
       e.target.name,
       e.target.value
     );
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
-  };
-
-  const submitRegister =  async () => {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-    const urlencoded = new URLSearchParams();
-    urlencoded.append("userName", newUser.userName ? newUser.userName : newUser.email,);
-    urlencoded.append("email", newUser.email);
-    urlencoded.append("password", newUser.password);
-    urlencoded.append("role", newUser.role);
-    urlencoded.append(
-      "profilePicture",
-      newUser.profilePicture
-        ? newUser.profilePicture
-        : "http://res.cloudinary.com/dtwbyjspa/image/upload/v1669821358/images/yk4xc69svkglrejjq3tk.png"
-    );
-    
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: urlencoded,
-      redirect: "follow",
     };
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/users/register",
-        requestOptions
-      );
-      const result = await response.json();
-      console.log("result", result);
-    } catch (error) {
-      console.log("error", error);
-    }
+  
+    const handleSubmit = () => {
+    submitRegister(newUser.email, newUser.password);
   };
-
+  
   return (
     <div className="background">
       <div className="card bg-gradient-to-r from-amber-100 to-cyan-100 text-center">
@@ -96,7 +65,7 @@ function Register() {
 
           <div>
             <p className="font-mono mb-1">Register as:</p>
-            <input 
+            <input
               className="mr-1"
               type="radio"
               id="traveller"
@@ -120,7 +89,7 @@ function Register() {
 
           <p className="font-mono text-xs mb-4">* required fields</p>
 
-          <button className="btn mb-10" onClick={submitRegister}>
+          <button className="btn mb-10" onClick={handleSubmit}>
             Register
           </button>
           <br />

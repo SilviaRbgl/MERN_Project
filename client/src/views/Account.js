@@ -3,7 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 
 function Account() {
 
-  const { newUser, setNewUser } = useContext(AuthContext)
+  const { newUser, setNewUser, getToken, setIsUser} = useContext(AuthContext)
   const [selectedFile, setSelectedFile] = useState({});
 
   const attachFileHandler = (e) => {
@@ -36,6 +36,11 @@ function Account() {
     }
   };
 
+  const logOut = () => {
+    localStorage.removeItem("token");
+    setIsUser(false);
+  }
+
   return (
     <div className="background">
       <div className="card bg-gradient-to-r from-amber-100 to-cyan-100 mb-4">
@@ -62,6 +67,9 @@ function Account() {
         <p className="font-mono">My favourites:</p>
         <p className="font-mono">My reviews:</p>
       </div>
+      <button className="btn" onClick={logOut}>
+            Log out
+          </button>
     </div>
   );
 }

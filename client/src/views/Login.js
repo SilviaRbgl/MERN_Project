@@ -1,45 +1,27 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 function Login() {
   const [userLogin, setUserLogin] = useState({});
+  const { submitLogin } = useContext(AuthContext);
 
   const handleChangeHandler = (e) => {
+    console.log(
+      "[e.target.name]:e.target.value",
+      e.target.name,
+      e.target.value
+    );
     setUserLogin({ ...userLogin, [e.target.name]: e.target.value });
   };
 
-  const submitLogin = async () => {
-    console.log("userLogin", userLogin);
-
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-    const urlencoded = new URLSearchParams();
-    urlencoded.append("email", userLogin.email);
-    urlencoded.append("password", userLogin.password);
-
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: urlencoded,
-      redirect: "follow",
-    };
-
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/users/login",
-        requestOptions
-        );
-      const result = await response.json();
-      console.log("result", result);
-    } catch (error) {
-      console.log("error", error);      
-    }
+  const handleSubmit = () => {
+    submitLogin(userLogin.email, userLogin.password);
   };
 
-  
   return (
     <div className="background">
+      <button onClick={() => test("asdasda")}>mandar al auth</button>
       <div className="card bg-gradient-to-r from-amber-100 to-cyan-100 text-center">
         <p className="font-mono font-bold mb-4">Access to my account</p>
         <div className="flex-col font-mono">
@@ -71,7 +53,7 @@ function Login() {
           <br />
           <p className="font-mono text-xs mb-4">* required fields</p>
 
-          <button className="btn mb-8" onClick={submitLogin}>
+          <button className="btn mb-8" onClick={handleSubmit}>
             Login
           </button>
           <br />

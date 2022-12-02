@@ -3,8 +3,8 @@ import { MdFavoriteBorder } from "react-icons/md";
 
 function DetailExpedition() {
   const singleExpedition = useLocation();
-  console.log("singleExpedition :>> ", singleExpedition);
-  console.log("images singleExpedition >>", singleExpedition.state.images);
+  // console.log("singleExpedition :>> ", singleExpedition);
+  // console.log("images singleExpedition >>", singleExpedition.state.images);
 
   const getDates = (date) => {
     let myDate = new Date(date).toLocaleDateString();

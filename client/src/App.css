@@ -7,7 +7,7 @@
 }
 
 .background {
-  @apply bg-slate-50 p-10;
+  @apply bg-slate-50 p-10 lg:mr-12 lg:ml-12 md:mr-20 md:ml-20 sm:mr-16 sm:ml-16;
 }
 
 .btn {
