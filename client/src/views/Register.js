@@ -31,7 +31,6 @@ function Register() {
         : "http://res.cloudinary.com/dtwbyjspa/image/upload/v1669821358/images/yk4xc69svkglrejjq3tk.png"
     );
     
-
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
