@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { MdFavoriteBorder } from "react-icons/md";
 
-function DetailExpedition() {
+function DetailExpeditionAuth() {
   const singleExpedition = useLocation();
   // console.log("singleExpedition :>> ", singleExpedition);
   // console.log("images singleExpedition >>", singleExpedition.state.images);
@@ -37,21 +37,21 @@ function DetailExpedition() {
           Leader: {singleExpedition.state.leader.name}
         </p>
         <p className="font-mono">Price: {singleExpedition.state.price}</p>
-        {/* <p className="font-mono"></p>
+        <p className="font-mono"></p>
         <button className="btn-favorite">
           <MdFavoriteBorder />
         </button>
-        <br /> */}
+        <br />
         <button className="btn">Reserve</button>
       </div>
       <p className="font-mono font-bold uppercase mb-2">Itinerary</p>
       <p className="font-mono mb-10">{singleExpedition.state.itinerary}</p>
       <p className="font-mono font-bold uppercase mb-2">What is included</p>
-      <p className="font-mono">{singleExpedition.state.itinerary}</p>
+          <p className="font-mono">{singleExpedition.state.itinerary}</p>
+        
 
-      {/* <DetailExpeditionAuth /> */}
     </div>
   );
 }
 
-export default DetailExpedition;
+export default DetailExpeditionAuth;
