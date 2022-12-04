@@ -1,15 +1,27 @@
 import { useLocation } from "react-router-dom";
-import { MdFavoriteBorder } from "react-icons/md";
+import { MdClose } from "react-icons/md";
+import { useState } from "react";
 
 function DetailExpedition() {
   const singleExpedition = useLocation();
   // console.log("singleExpedition :>> ", singleExpedition);
   // console.log("images singleExpedition >>", singleExpedition.state.images);
+  const [modal, setModal] = useState(false);
 
   const getDates = (date) => {
     let myDate = new Date(date).toLocaleDateString();
     return myDate;
   };
+
+  const toggleModal = () => {
+    setModal(!modal);
+  };
+
+  if (modal) {
+    document.body.classList.add("active-modal");
+  } else {
+    document.body.classList.remove("active-modal");
+  }
 
   return (
     <div className="background">
@@ -42,7 +54,23 @@ function DetailExpedition() {
           <MdFavoriteBorder />
         </button>
         <br /> */}
-        <button className="btn">Reserve</button>
+        <button className="btn" onClick={toggleModal}>
+          Reserve
+        </button>
+        {modal && (
+          <div className="modal">
+            <div className="overlay"></div>
+            <div className="modal-content">
+              <p className="font-mono font-bold">Oops!</p>
+              <p className="font-mono">
+                To book an expedition you have to log in first.
+              </p>
+              <button className="close-modal" onClick={toggleModal}>
+                <MdClose />
+              </button>
+            </div>
+          </div>
+        )}
       </div>
       <p className="font-mono font-bold uppercase mb-2">Itinerary</p>
       <p className="font-mono mb-10">{singleExpedition.state.itinerary}</p>
