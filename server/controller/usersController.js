@@ -1,4 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
+import leaderModel from "../models/leadersModel.js";
 import userModel from "../models/usersModel.js";
 import encryptPassword from "../utils/encryptPassword.js";
 import isPasswordCorrect from "../utils/isPasswordCorrect.js";

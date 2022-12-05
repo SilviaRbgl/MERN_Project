@@ -34,7 +34,9 @@ const addMiddleWares = () => {
 
   app.use(passport.initialize());
   passportConfig(passport);
+
 };
+
 
 const startServer = () => { 
   app.listen(port, () => {
