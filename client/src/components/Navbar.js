@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import Dropdown from "./Dropdown";
 
 function Navbar() {
   const { user } = useContext(AuthContext);
@@ -19,7 +20,8 @@ function Navbar() {
         </Link>
         <Link to="/login" className="no-underline hover:underline">
             Log in
-          </Link>
+        </Link>
+        <Dropdown />
         {user ? (
             <Link to="/account" className="no-underline hover:underline">
               Account{" "}

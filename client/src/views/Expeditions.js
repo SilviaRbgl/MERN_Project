@@ -34,7 +34,7 @@ function Expeditions() {
   }
 
   return (
-    <div className="background grid md:grid-cols-3 gap-10">
+    <div className="background grid md:grid-cols-2 lg:grid-cols-3 gap-10">
       {expedition.map((expedition, index) => {
         return ( 
           <div className="card hover:shadow-lg" key={index}>

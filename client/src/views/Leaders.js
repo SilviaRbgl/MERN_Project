@@ -15,11 +15,11 @@ function Leaders() {
   }, []);
 
   return (
-    <div className="background grid gap-10">
+    <div className="background grid gap-10 md:grid-rows-2 lg:grid-rows-3">
       {leader.map((leader, index) => {
         return (
           <div
-            className="rounded-xl card  md:grid-cols-2 lg:grid-cols-3"
+            className="rounded-xl card"
             key={index}
           >
             <img
