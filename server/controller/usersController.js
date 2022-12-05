@@ -1,5 +1,4 @@
 import { v2 as cloudinary } from "cloudinary";
-import leaderModel from "../models/leadersModel.js";
 import userModel from "../models/usersModel.js";
 import encryptPassword from "../utils/encryptPassword.js";
 import isPasswordCorrect from "../utils/isPasswordCorrect.js";
@@ -28,6 +27,8 @@ const uploadImage = async (req, res) => {
 const register = async (req, res) => {
   console.log("req.body >>", req.body);
   const { email, password, role } = req.body;
+
+  // const isEmailValid = validateEmail(email)
 
   try {
     const existingUser = await userModel.findOne({ email: req.body.email });

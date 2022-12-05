@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 function Account() {
-  const { newUser, setNewUser, getToken, setIsUser, logOut } =
+  const { user, newUser, setNewUser, getToken, setIsUser, logOut } =
     useContext(AuthContext);
   const [selectedFile, setSelectedFile] = useState({});
   const [userLogin, setUserLogin] = useState({});
@@ -74,8 +74,8 @@ function Account() {
         </p>
         {userLogin && (
           <div>
-            <p className="font-mono">Name:{userLogin.userName}</p>
-            <p className="font-mono">Email: {userLogin.email}</p>
+            <p className="font-mono">Name:{user.userName}</p>
+            <p className="font-mono">Email: {user.email}</p>
           </div>
         )}
 

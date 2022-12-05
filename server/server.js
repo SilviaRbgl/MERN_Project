@@ -34,7 +34,6 @@ const addMiddleWares = () => {
 
   app.use(passport.initialize());
   passportConfig(passport);
-
 };
 
 

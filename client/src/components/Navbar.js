@@ -3,26 +3,32 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 function Navbar() {
-
-const { user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   return (
     <div>
       <ul className="flex justify-evenly py-5 bg-gradient-to-r from-cyan-200 to-cyan-500 font-mono text-white">
-        <Link to="/" className="no-underline hover:underline">Home </Link>
-        <Link to="/expeditions" className="no-underline hover:underline">Expeditions </Link>
-        <Link to="/leaders" className="no-underline hover:underline">Leaders </Link>
-        {user? (
-          <Link to="/account" className="no-underline hover:underline">Account </Link> &&
-          <Link to="/" className="no-underline hover:underline">Log out</Link>
+        <Link to="/" className="no-underline hover:underline">
+          Home{" "}
+        </Link>
+        <Link to="/expeditions" className="no-underline hover:underline">
+          Expeditions{" "}
+        </Link>
+        <Link to="/leaders" className="no-underline hover:underline">
+          Leaders{" "}
+        </Link>
+        <Link to="/login" className="no-underline hover:underline">
+            Log in
+          </Link>
+        {user ? (
+            <Link to="/account" className="no-underline hover:underline">
+              Account{" "}
+          </Link>
         ) : (
-            <Link to="/login" className="no-underline hover:underline">Log in</Link>
-            
-        )
-        
-        }
-        
-              
+          <Link to="/login" className="no-underline hover:underline">
+            Log in
+          </Link>
+        )}
       </ul>
     </div>
   );
