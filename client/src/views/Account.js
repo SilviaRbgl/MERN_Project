@@ -2,7 +2,8 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 function Account() {
-  const { newUser, setNewUser, getToken, setIsUser } = useContext(AuthContext);
+  const { newUser, setNewUser, getToken, setIsUser, logOut } =
+    useContext(AuthContext);
   const [selectedFile, setSelectedFile] = useState({});
   const [userLogin, setUserLogin] = useState({});
 
@@ -60,9 +61,9 @@ function Account() {
     }
   };
 
-  const logOut = () => {
-    localStorage.removeItem("token");
-    setIsUser(false);
+  const submitLogOut = () => {
+    console.log("logout");
+    logOut();
   };
 
   return (
@@ -107,7 +108,7 @@ function Account() {
         <p className="font-mono">My favourites:</p>
         <p className="font-mono">My reviews:</p>
       </div>
-      <button className="btn" onClick={logOut}>
+      <button className="btn" onClick={submitLogOut}>
         Log out
       </button>
     </div>

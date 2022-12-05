@@ -1,22 +1,32 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 function Login() {
-  const [userLogin, setUserLogin] = useState({});
+  // const [userLogin, setUserLogin] = useState({})
   const { submitLogin } = useContext(AuthContext);
 
-  const handleChangeHandler = (e) => {
-    console.log(
-      "[e.target.name]:e.target.value",
-      e.target.name,
-      e.target.value
-    );
-    setUserLogin({ ...userLogin, [e.target.name]: e.target.value });
-  };
+  const email = useRef()
+  const password = useRef()
+  // const handleChangeHandler = (e) => {
+  //   console.log(
+  //     "[e.target.name]:e.target.value",
+  //     e.target.name,
+  //     e.target.value
+  //   );
+  //   setUserLogin({ ...userLogin, [e.target.name]: e.target.value });
+  // };
 
   const handleSubmit = () => {
-    submitLogin(userLogin.email, userLogin.password);
+    // if (password.current.value.lenght > 5) {
+      
+    //   submitLogin(email.current.value, password.current.value);
+    // } else {
+      
+    //   alert("password too short")
+    // }
+    submitLogin(email.current.value, password.current.value);
+  
   };
 
   return (
@@ -32,8 +42,9 @@ function Login() {
             type="email"
             placeholder="Enter email"
             name="email"
-            value={userLogin.email ? userLogin.email : ""}
-            onChange={handleChangeHandler}
+            // value={userLogin.email ? userLogin.email : ""}
+            // onChange={handleChangeHandler}
+            ref = {email}
             required
           />
           <br />
@@ -45,8 +56,9 @@ function Login() {
             type="password"
             placeholder="Enter password"
             name="password"
-            value={userLogin.password ? userLogin.password : ""}
-            onChange={handleChangeHandler}
+            // value={userLogin.password ? userLogin.password : ""}
+            // onChange={handleChangeHandler}
+            ref={password}
             required
           />
           <br />
