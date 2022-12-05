@@ -83,7 +83,7 @@ const login = async (req, res) => {
         .json({ msg: "user not found with this email, register first?" });
     } else {
       const verified = await isPasswordCorrect(password, existingUser.password);
-      console.log("verified", verified);
+      // console.log("verified", verified);
       if (!verified) {
         res.status(401).json({ msg: "wrong password" });
       }
@@ -110,4 +110,17 @@ const login = async (req, res) => {
   }
 };
 
-export { uploadImage, register, login };
+const getProfile = async (req, res) => {
+  const {userName, email, password, profilePicture, role} = req.user
+  console.log("req>>>", req.user);
+  res.status(200).json({
+    userName: userName,
+    email: email,
+    password: password,
+    role: role,
+    profilePicture: profilePicture,
+  })
+
+}
+
+export { uploadImage, register, login, getProfile };

@@ -21,7 +21,6 @@ function Login() {
 
   return (
     <div className="background">
-      <button onClick={() => test("asdasda")}>mandar al auth</button>
       <div className="card bg-gradient-to-r from-amber-100 to-cyan-100 text-center">
         <p className="font-mono font-bold mb-4">Access to my account</p>
         <div className="flex-col font-mono">

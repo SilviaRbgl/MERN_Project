@@ -1,13 +1,15 @@
+import * as dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import cors from "cors";
 import router from "./routes/test.js";
-import * as dotenv from "dotenv";
-dotenv.config();
 import mongoose from "mongoose";
 import expeditionsRoutes from "./routes/expeditionsRoutes.js"
 import leadersRoutes from "./routes/leadersRoutes.js"
 import usersRoutes from "./routes/usersRoutes.js"
 import cloudinaryConfig from "./config/cloudinary.js"
+import passport from "passport";
+import passportConfig from "./config/passport.js";
 
 const app = express();
 
@@ -27,7 +29,11 @@ const addMiddleWares = () => {
     credentials: true,
   };
   app.use(cors(corsOptions));
+
   cloudinaryConfig();
+
+  app.use(passport.initialize());
+  passportConfig(passport);
 };
 
 const startServer = () => { 
@@ -53,6 +59,7 @@ const mongoDBConnection = async () => {
 };
 
 (async function controller() {
+  // console.log('process.env.JWT_SECRET :>> ', process.env.JWT_SECRET);
   await mongoDBConnection();
   addMiddleWares();
   loadRoutes();

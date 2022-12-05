@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import getToken from "../utils/getToken.js";
 
 export const AuthContext = createContext();
@@ -6,7 +7,7 @@ export const AuthContext = createContext();
 export const AuthContextProvider = (props) => {
 
   const [isUser, setIsUser] = useState(true);
-
+  const redirectTo = useNavigate();
 
   const submitRegister = async (userName, email, password, role, profilePicture) => {
     const myHeaders = new Headers();
@@ -40,12 +41,11 @@ export const AuthContextProvider = (props) => {
       );
       const result = await response.json();
       console.log("result", result);
+      redirectTo("/login"); 
     } catch (error) {
       console.log("error", error);
     }
   };
-
-
 
   const submitLogin = async (email, password) => {
     console.log("userLogin", email, password);
@@ -75,11 +75,11 @@ export const AuthContextProvider = (props) => {
       if(token) {
         localStorage.setItem("token", token);
       }
+      redirectTo("/expeditions");
     } catch (error) {
       console.log("error", error);      
     }
   };
-
 
   useEffect(() => {
     console.log("useEffect run");
