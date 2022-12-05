@@ -83,7 +83,7 @@ export const AuthContextProvider = (props) => {
           localStorage.setItem("token", token);
           setIsUser(true);
           setUser(result.user);
-          redirectTo("/expeditions");
+          redirectTo("/expeditions"); // NO ESTÁ FUNCIONANDO
         }
       if (!token || !user) {
         alert("try again");
