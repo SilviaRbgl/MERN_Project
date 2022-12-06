@@ -3,16 +3,15 @@ import { MdFavoriteBorder } from "react-icons/md";
 
 function DetailExpeditionAuth() {
   const singleExpedition = useLocation();
-  // console.log("singleExpedition :>> ", singleExpedition);
-  // console.log("images singleExpedition >>", singleExpedition.state.images);
 
   const getDates = (date) => {
     let myDate = new Date(date).toLocaleDateString();
     return myDate;
   };
-
+ 
   return (
-    <div className="background">
+    <>
+     {/* <div className="background"> */}
       <div className="card mb-4">
         <div className="slideshow-images">
           <img
@@ -47,8 +46,27 @@ function DetailExpeditionAuth() {
       <p className="font-mono font-bold uppercase mb-2">Itinerary</p>
       <p className="font-mono mb-10">{singleExpedition.state.itinerary}</p>
       <p className="font-mono font-bold uppercase mb-2">What is included</p>
-      <p className="font-mono">{singleExpedition.state.itinerary}</p>
-    </div>
+      <p className="font-mono mb-10">{singleExpedition.state.itinerary}</p>
+
+      <div className="container-comment" action="">
+        <p className="font-mono font-bold uppercase mb-2">
+          Travellers opinions
+        </p>
+        <input
+          className="rounded border-2 border-cyan-500 w-full pt-2 pl-2 pr-14 pb-14 font-mono outline-1 outline-cyan-600"
+          type="text"
+          placeholder="Write your opinion"
+          name="message"
+          required
+        />
+        <label htmlFor="message"></label>
+        <br></br>
+        <button className="btn" type="submit">
+          Submit opinion
+        </button>
+      </div>
+     {/* </div> */}
+    </>
   );
 }
 
