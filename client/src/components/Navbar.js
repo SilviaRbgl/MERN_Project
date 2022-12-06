@@ -21,13 +21,10 @@ function Navbar() {
         <Link to="/login" className="no-underline hover:underline">
             Log in
         </Link>
-        <Dropdown />
         {user ? (
-            <Link to="/account" className="no-underline hover:underline">
-              Account{" "}
-          </Link>
-        ) : (
-          <Link to="/login" className="no-underline hover:underline">
+          <Dropdown />
+        ): (
+            <Link to="/login" className="no-underline hover:underline">
             Log in
           </Link>
         )}

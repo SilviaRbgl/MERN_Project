@@ -1,21 +1,24 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BsFillPersonLinesFill } from "react-icons/bs";
 
 function Dropdown() {
 
-    const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const redirectTo = useNavigate();
 
   const handleOpen = () => {
     setOpen(!open);
   };
-  const handleMenuOne = () => {
-    console.log('clicked one');
+  const handleMenuAccount = () => {
+    console.log('clicked account');
+    redirectTo("/account")
     setOpen(false);
   };
 
-  const handleMenuTwo = () => {
-    console.log('clicked two');
+  const handleMenuLogout = () => {
+    console.log('clicked logout');
+    redirectTo("/")
     setOpen(false);
   };
     
@@ -27,14 +30,14 @@ function Dropdown() {
         {open ? (
         <ul className="menu">
           <li className="menu-item">
-            <button onClick={handleMenuOne}>My account</button>
+            <button onClick={handleMenuAccount}>My account</button>
           </li>
           <li className="menu-item">
-            <button onClick={handleMenuTwo}>Log out</button>
+            <button onClick={handleMenuLogout}>Log out</button>
           </li>
         </ul>
       ) : null}
-        {open ? <div>Is Open</div> : <div>Is Closed</div>}
+        {/* {open ? <div>Is Open</div> : <div>Is Closed</div>} */}
 
       {/* <div class="dropdown">
         <ul>

@@ -78,12 +78,11 @@ export const AuthContextProvider = (props) => {
       const { user } = result;
       setUser(user);
       const { token } = result;
-      if (response.status !== 200)
-        if (token) {
+      if (token) {
           localStorage.setItem("token", token);
           setIsUser(true);
           setUser(result.user);
-          redirectTo("/expeditions"); // NO ESTÁ FUNCIONANDO
+          redirectTo("/expeditions");
         }
       if (!token || !user) {
         alert("try again");

@@ -71,7 +71,9 @@ function Account() {
       <div className="card bg-gradient-to-r from-amber-100 to-cyan-100 mb-4">
         <p className="font-mono font-bold uppercase mb-2">
           My {userLogin?.role} account
+          
         </p>
+        <button className="btn" onClick={getProfile}></button>
         {userLogin && (
           <div>
             <p className="font-mono">Name:{user.userName}</p>
