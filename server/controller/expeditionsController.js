@@ -33,7 +33,7 @@ const gettAllExpeditions = async (req, res) => {
       console.log("error getting expeditions by leader >", error);
       res.status(500).json({
         error,
-        msg: "problem in the server"
+        msg: "problem in the server getting leaders"
       });
     }  
   };

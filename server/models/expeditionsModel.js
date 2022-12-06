@@ -31,10 +31,10 @@ const expeditionSchema = new Schema({
     type: String,
     required: true,
   },
-  favorites: {
-   type: Array
+  leader: { type: Schema.Types.ObjectId, ref: "leader" },
+  favourites: {
+    type: Array,
   },
-  leader: {type: Schema.Types.ObjectId, ref:"leader"},
 });
 
 const expeditionModel = mongoose.model("expedition", expeditionSchema);

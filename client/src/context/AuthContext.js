@@ -153,6 +153,7 @@ export const AuthContextProvider = (props) => {
         submitLogin,
         logOut,
         user,
+        setUser,
         getProfile,
         isLoading,
       }}

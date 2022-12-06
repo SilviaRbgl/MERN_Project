@@ -1,4 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
+import expeditionModel from "../models/expeditionsModel.js";
 import userModel from "../models/usersModel.js";
 import encryptPassword from "../utils/encryptPassword.js";
 import isPasswordCorrect from "../utils/isPasswordCorrect.js";
@@ -123,7 +124,23 @@ const getProfile = async (req, res) => {
     role: role,
     profilePicture: profilePicture,
   })
+};
 
-}
+const getFavourites = async (req, res) => {
+  console.log("req>>>", req.user);
+  const { id } = req.user;
+  try {
+    const requestedFavourites = await userModel
+      .findById({ id: id }) 
+    requestedFavourites.push();
+  } catch (error) {
+    console.log("error getting favourites >", error);
+      res.status(500).json({
+        error,
+        msg: "problem in the server getting favourites"
+      });
+  }
 
-export { uploadImage, register, login, getProfile };
+};
+
+export { uploadImage, register, login, getProfile, getFavourites };

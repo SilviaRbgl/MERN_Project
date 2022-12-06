@@ -54,8 +54,8 @@ function Account() {
         requestOptions
       );
       const result = await response.json();
-      console.log("result", result);
-      setNewUser({ ...newUser, profilePicture: result.image });
+      console.log("result", result.image);
+      setUser({ ...user, profilePicture: result.image });
     } catch (error) {
       console.log("error >", error);
     }
@@ -83,16 +83,15 @@ function Account() {
           </div>
         )}
 
-        {user && (
+        {user && user.profilePicture !== undefined ? (
           <img
             className="w-32 h-32"
-            src={
-              user.profilePicture
-                ? user.profilePicture
-                : "http://res.cloudinary.com/dtwbyjspa/image/upload/v1669821358/images/yk4xc69svkglrejjq3tk.png"
+            src={user.profilePicture    
             }
             alt="profile picture"
           />
+        ) : (
+        <img src="http://res.cloudinary.com/dtwbyjspa/image/upload/v1669821358/images/yk4xc69svkglrejjq3tk.png" alt="default profile picture"/>
         )}
         {/* <img className="w-32 h-32" src="http://res.cloudinary.com/dtwbyjspa/image/upload/v1669821358/images/yk4xc69svkglrejjq3tk.png" alt="profile picture" /> */}
         <div>
