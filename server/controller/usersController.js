@@ -113,7 +113,8 @@ const login = async (req, res) => {
 };
 
 const getProfile = async (req, res) => {
-  const {userName, email, password, profilePicture, role} = req.user
+  const { userName, email, password, profilePicture, role } = req.user
+
   console.log("req>>>", req.user);
   res.status(200).json({
     userName: userName,

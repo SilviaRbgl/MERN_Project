@@ -18,10 +18,8 @@ function Navbar() {
         <Link to="/leaders" className="no-underline hover:underline">
           Leaders{" "}
         </Link>
-        <Link to="/login" className="no-underline hover:underline">
-          Log in
-        </Link>
-        {user ? (
+        {/* {console.log('user in navbar :>> ', Object.keys(user))} */}
+        {Object.keys(user).length !== 0 ? (
           <Dropdown />
         ) : (
           <Link to="/login" className="no-underline hover:underline">

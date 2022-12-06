@@ -28,8 +28,10 @@ function DetailExpedition() {
 
   return (
     <div className="background">
-      {/* {user ? ( */}
-        <>
+      {Object.keys(user).length !== 0 ? ( // we do this, not to receive a user as an empty object.
+        <DetailExpeditionAuth />
+       ) : ( 
+         <>
           <div className="card mb-4">
             <div className="slideshow-images">
               <img
@@ -67,9 +69,10 @@ function DetailExpedition() {
               <div className="modal">
                 <div className="overlay"></div>
                 <div className="modal-content">
-                  <p className="font-mono font-bold">Oops!</p>
-                  <p className="font-mono">
-                    To book an expedition you have to log in first.
+                  <p className="font-mono font-bold text-center">OOPS!</p>
+                  <p className="font-mono text-center">
+                      If you want to book an expedition, <br />
+                      you have to log in first.
                   </p>
                   <button className="close-modal" onClick={toggleModal}>
                     <MdClose />
@@ -89,9 +92,7 @@ function DetailExpedition() {
             <p className="font-mono">{singleExpedition.state.itinerary}</p>
           </div>
         </>
-      {/* ) : ( */}
-        <DetailExpeditionAuth />
-      {/* )} */}
+       )} 
     </div>
   );
 }

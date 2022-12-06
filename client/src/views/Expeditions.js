@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 function Expeditions() {
 
   const [expedition, setExpedition] = useState([]);
-
+  // const { isLoading } = useContext(AuthContext);
+  
   const fetchExpeditions = async () => {
     const response = await fetch("http://localhost:5000/api/expeditions/all/");
     const results = await response.json();
@@ -35,17 +37,21 @@ function Expeditions() {
 
   return (
     <div className="background grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+      {/* {!isLoading ? ( */}
       {expedition.map((expedition, index) => {
-        return ( 
+        return (
           <div className="card hover:shadow-lg" key={index}>
             <p className="font-mono font-bold">{expedition.island}</p>
             <p className="font-mono">{expedition.country}</p>
             <p className="font-mono">Dates: {getDates(expedition.date.beginDate)} - {getDates(expedition.date.endDate)}</p>
             <img className="mb-2" src={expedition?.images && expedition.images[0]} alt="expedition image" />
-            <button className="btn" onClick={()=> goDetailExpedition(expedition)}>More</button>
+            <button className="btn" onClick={() => goDetailExpedition(expedition)}>More</button>
           </div>
         );
       })}
+      {/* ) : (
+        <p>Loading</p>
+      )} */}
     </div>
   );
 }

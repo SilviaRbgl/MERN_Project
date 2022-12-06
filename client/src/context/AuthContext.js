@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import getToken from "../utils/getToken.js";
 
 export const AuthContext = createContext();
@@ -8,6 +8,7 @@ export const AuthContextProvider = (props) => {
   const [isUser, setIsUser] = useState(true);
   const [user, setUser] = useState({});
   const redirectTo = useNavigate();
+  const [isLoading, setIsLoading] = useState(true)
 
   const submitRegister = async (
     userName,
@@ -76,6 +77,7 @@ export const AuthContextProvider = (props) => {
       console.log("result", result);
       console.log("result", result.token);
       const { user } = result;
+      setIsLoading(false)
       setUser(user);
       const { token } = result;
       if (token) {
@@ -85,10 +87,13 @@ export const AuthContextProvider = (props) => {
           redirectTo("/expeditions");
         }
       if (!token || !user) {
+        setUser({})
         alert("user not found with this email, register first?");
+       
       }
     } catch (error) {
       setIsUser(false);
+      setIsLoading(false)
       console.log("error", error);
     }
   };
@@ -104,7 +109,11 @@ export const AuthContextProvider = (props) => {
       headers: myHeaders,
       redirect: "follow",
     };
-    try {
+    // var urlencoded = new URLSearchParams();
+    // urlencoded.append("expeditionId", "123123123");
+    // EJEMPLO DE AÑADIR AQUI LA REQUEST DE POSTMAN DE FAVORITOS.
+    if (token) {
+      try {
       const response = await fetch(
         "http://localhost:5000/api/users/profile",
         requestOptions
@@ -114,6 +123,10 @@ export const AuthContextProvider = (props) => {
       setUser(result);
     } catch (error) {
       console.log("error >", error);
+    }
+    } else {
+      alert("sesion expired, please log in again") // Puedo poner esto en el mensaje? es coherente? Puedo redirectTo al login directamente para que lo haga automático?
+      // redirectTo("/login");
     }
   };
 
@@ -127,6 +140,7 @@ export const AuthContextProvider = (props) => {
     console.log("useEffect run");
     getToken();
     console.log("isUser :>> ", isUser);
+    getProfile()
   }, [isUser]);
 
   return (
@@ -140,9 +154,13 @@ export const AuthContextProvider = (props) => {
         logOut,
         user,
         getProfile,
+        isLoading,
       }}
     >
       {props.children}
     </AuthContext.Provider>
   );
 };
+
+
+

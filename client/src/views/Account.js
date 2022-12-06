@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 function Account() {
-  const { user, newUser, setNewUser, getToken, setUser, logOut } =
+  const { user, newUser, setNewUser, getToken, setUser, logOut , getProfile} =
     useContext(AuthContext);
   const [selectedFile, setSelectedFile] = useState({});
   // const [userLogin, setUserLogin] = useState({});
@@ -65,6 +65,10 @@ function Account() {
     console.log("logout");
     logOut();
   };
+  // useEffect(() => { // el useEffect del getProfile si está aqui igual da menos problemas que en el AuthContext
+  //   getProfile()
+  // }, [])
+  
 
   return (
     <div className="background">

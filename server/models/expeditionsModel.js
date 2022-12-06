@@ -31,6 +31,9 @@ const expeditionSchema = new Schema({
     type: String,
     required: true,
   },
+  favorites: {
+   type: Array
+  },
   leader: {type: Schema.Types.ObjectId, ref:"leader"},
 });
 

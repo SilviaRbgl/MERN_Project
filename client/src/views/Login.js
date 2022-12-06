@@ -4,7 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 
 function Login() {
 
-  const { submitLogin } = useContext(AuthContext);
+  const { submitLogin, user } = useContext(AuthContext);
 
   const email = useRef()
   const password = useRef()
@@ -17,8 +17,8 @@ function Login() {
     // }
 
     submitLogin(email.current.value, password.current.value);
-  
   };
+
 
   return (
     <div className="background">
