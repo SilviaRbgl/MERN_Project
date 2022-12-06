@@ -1,26 +1,31 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BsFillPersonLinesFill } from "react-icons/bs";
+import { AuthContext } from "../context/AuthContext";
 
 function Dropdown() {
 
+   const { getProfile, logOut } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const redirectTo = useNavigate();
 
   const handleOpen = () => {
     setOpen(!open);
   };
-  const handleMenuAccount = () => {
+  const submitAccount = () => {
     console.log('clicked account');
+    getProfile();
     redirectTo("/account")
     setOpen(false);
   };
 
-  const handleMenuLogout = () => {
+  const submitLogOut = () => {
     console.log('clicked logout');
+    logOut()
     redirectTo("/")
     setOpen(false);
   };
+
     
   return (
     <div className="dropdown">
@@ -30,10 +35,10 @@ function Dropdown() {
         {open ? (
         <ul className="menu">
           <li className="menu-item">
-            <button onClick={handleMenuAccount}>My account</button>
+            <button onClick={submitAccount}>My account</button>
           </li>
           <li className="menu-item">
-            <button onClick={handleMenuLogout}>Log out</button>
+            <button onClick={submitLogOut}>Log out</button>
           </li>
         </ul>
       ) : null}

@@ -5,7 +5,7 @@ import getToken from "../utils/getToken.js";
 export const AuthContext = createContext();
 
 export const AuthContextProvider = (props) => {
-  const [isUser, setIsUser] = useState(false);
+  const [isUser, setIsUser] = useState(true);
   const [user, setUser] = useState({});
   const redirectTo = useNavigate();
 
@@ -85,11 +85,35 @@ export const AuthContextProvider = (props) => {
           redirectTo("/expeditions");
         }
       if (!token || !user) {
-        alert("try again");
+        alert("user not found with this email, register first?");
       }
     } catch (error) {
       setIsUser(false);
       console.log("error", error);
+    }
+  };
+  
+  const getProfile = async () => {
+    const token = getToken();
+
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/users/profile",
+        requestOptions
+      );
+      const result = await response.json();
+      console.log("result", result);
+      setUser(result);
+    } catch (error) {
+      console.log("error >", error);
     }
   };
 
@@ -115,6 +139,7 @@ export const AuthContextProvider = (props) => {
         submitLogin,
         logOut,
         user,
+        getProfile,
       }}
     >
       {props.children}

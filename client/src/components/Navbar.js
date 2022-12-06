@@ -19,12 +19,12 @@ function Navbar() {
           Leaders{" "}
         </Link>
         <Link to="/login" className="no-underline hover:underline">
-            Log in
+          Log in
         </Link>
         {user ? (
           <Dropdown />
-        ): (
-            <Link to="/login" className="no-underline hover:underline">
+        ) : (
+          <Link to="/login" className="no-underline hover:underline">
             Log in
           </Link>
         )}

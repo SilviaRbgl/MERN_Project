@@ -2,34 +2,34 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 function Account() {
-  const { user, newUser, setNewUser, getToken, setIsUser, logOut } =
+  const { user, newUser, setNewUser, getToken, setUser, logOut } =
     useContext(AuthContext);
   const [selectedFile, setSelectedFile] = useState({});
-  const [userLogin, setUserLogin] = useState({});
+  // const [userLogin, setUserLogin] = useState({});
 
-  const getProfile = async () => {
-    const token = getToken();
+  // const getProfile = async () => {
+  //   const token = getToken();
 
-    const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
+  //   const myHeaders = new Headers();
+  //   myHeaders.append("Authorization", `Bearer ${token}`);
 
-    const requestOptions = {
-      method: "GET",
-      headers: myHeaders,
-      redirect: "follow",
-    };
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/users/profile",
-        requestOptions
-      );
-      const result = await response.json();
-      console.log("result", result);
-      setUserLogin(result);
-    } catch (error) {
-      console.log("error >", error);
-    }
-  };
+  //   const requestOptions = {
+  //     method: "GET",
+  //     headers: myHeaders,
+  //     redirect: "follow",
+  //   };
+  //   try {
+  //     const response = await fetch(
+  //       "http://localhost:5000/api/users/profile",
+  //       requestOptions
+  //     );
+  //     const result = await response.json();
+  //     console.log("result", result);
+  //     setUserLogin(result);
+  //   } catch (error) {
+  //     console.log("error >", error);
+  //   }
+  // };
 
   const attachFileHandler = (e) => {
     console.log("e.target.files[0]", e.target.files[0]);
@@ -70,24 +70,21 @@ function Account() {
     <div className="background">
       <div className="card bg-gradient-to-r from-amber-100 to-cyan-100 mb-4">
         <p className="font-mono font-bold uppercase mb-2">
-          My {userLogin?.role} account
-          
+          My {user?.role} account
         </p>
-        <button className="btn" onClick={getProfile}></button>
-        {userLogin && (
+        {user && (
           <div>
             <p className="font-mono">Name:{user.userName}</p>
             <p className="font-mono">Email: {user.email}</p>
           </div>
         )}
 
-        {/* <p className="font-mono">Profile picture:</p> */}
-        {newUser && (
+        {user && (
           <img
             className="w-32 h-32"
             src={
-              newUser.profilePicture
-                ? newUser.profilePicture
+              user.profilePicture
+                ? user.profilePicture
                 : "http://res.cloudinary.com/dtwbyjspa/image/upload/v1669821358/images/yk4xc69svkglrejjq3tk.png"
             }
             alt="profile picture"
