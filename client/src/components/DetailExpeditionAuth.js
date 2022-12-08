@@ -8,13 +8,7 @@ function DetailExpeditionAuth() {
     let myDate = new Date(date).toLocaleDateString();
     return myDate;
   };
-  // extraer array favoritos del USER
 
-  // construir function ...recibe como parametro el expedition ID, hace un loop sobre el array favortitos, y retorna true si coincide el id del usuario, con alguna Id en el array
-  // const isFavourite = (expeditionId) => {
-  //   return true;
-  // };
-  // addDeleteFav(expeditionID);
   return (
     <>
       {/* <div className="background"> */}

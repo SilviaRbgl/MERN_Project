@@ -133,10 +133,10 @@ const addFavourite = async (req, res) => {
   console.log("favorite trip>>>", req.body);
 
   try {
-    const favoritingUser = await userModel.findById({ _id: id });
-    console.log("favoritingUser :>> ", favoritingUser);
-    if (favoritingUser.favourites.length === 0) {
-      const requestedFavourites = await userModel.findByIdAndUpdate(
+    const findingUser = await userModel.findById({ _id: id });
+    console.log("findingUser>> ", findingUser);
+    if (findingUser.favourites.length === 0) {
+      const findingFavourites = await userModel.findByIdAndUpdate(
         { _id: id },
         { $push: { favourites: favourite } },
         {
@@ -145,32 +145,32 @@ const addFavourite = async (req, res) => {
       );
       res.status(201).json({
         msg: "added to favorites",
-        requestedFavourites,
+        findingFavourites,
       });
     }
-    if (favoritingUser.favourites.length > 0) {
-      favoritingUser.favourites.forEach(async (favouriteTrip) => {
+    if (findingUser.favourites.length > 0) {
+      findingUser.favourites.forEach(async (favouriteTrip) => {
         if (favouriteTrip === favourite) {
           console.log("is inside array :>> ", favouriteTrip);
           try {
-            const requestedFavourites = await userModel.findByIdAndUpdate(
+            const findingFavourites = await userModel.findByIdAndUpdate(
               { _id: id },
               { $pull: { favourites: favourite } },
               {
                 returnOriginal: false,
               }
             );
-            // console.log("requestedFavourites :>> ", requestedFavourites);
+            // console.log("findingFavourites >> ", findingFavourites);
             res.status(201).json({
               msg: "removed from favourites",
-              requestedFavourites,
+              findingFavourites,
             });
           } catch {
             res.status(500).json({ msg: "error removing favorite" });
           }
         } else {
           try {
-            const requestedFavourites = await userModel.findByIdAndUpdate(
+            const findingFavourites = await userModel.findByIdAndUpdate(
               { _id: id },
               { $push: { favourites: favourite } },
               {
@@ -179,9 +179,9 @@ const addFavourite = async (req, res) => {
             );
             res.status(201).json({
               msg: "added to favorites",
-              requestedFavourites,
+              findingFavourites,
             });
-            console.log("requestedFavourites >>>", requestedFavourites);
+            console.log("findingFavourites >>>", findingFavourites);
           } catch (error) {
             res.status(500).json({ msg: "error adding to favourites" });
           }
