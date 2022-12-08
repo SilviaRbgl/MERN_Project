@@ -8,10 +8,16 @@ function DetailExpeditionAuth() {
     let myDate = new Date(date).toLocaleDateString();
     return myDate;
   };
- 
+  // extraer array favoritos del USER
+
+  // construir function ...recibe como parametro el expedition ID, hace un loop sobre el array favortitos, y retorna true si coincide el id del usuario, con alguna Id en el array
+  // const isFavourite = (expeditionId) => {
+  //   return true;
+  // };
+  // addDeleteFav(expeditionID);
   return (
     <>
-     {/* <div className="background"> */}
+      {/* <div className="background"> */}
       <div className="card mb-4">
         <div className="slideshow-images">
           <img
@@ -38,6 +44,7 @@ function DetailExpeditionAuth() {
         <p className="font-mono">Price: {singleExpedition.state.price}</p>
         <p className="font-mono"></p>
         <button className="btn-favorite">
+          {/* {isFavourite(expeditionId) ? color rojo : color azul}  comprueba , en cada boton, si el resultado de la funcion es true or false, y cambias el color con un ternary operator*/}
           <MdFavoriteBorder />
         </button>
         <br />
@@ -65,7 +72,7 @@ function DetailExpeditionAuth() {
           Submit opinion
         </button>
       </div>
-     {/* </div> */}
+      {/* </div> */}
     </>
   );
 }

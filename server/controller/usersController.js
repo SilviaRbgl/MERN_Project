@@ -95,52 +95,103 @@ const login = async (req, res) => {
         const token = issueToken(existingUser._id);
         console.log("token>>", token);
 
-        res.status(200).json({ 
+        res.status(200).json({
           msg: "logged in successfully",
           user: {
             userName: existingUser.userName,
             id: existingUser._id,
             email: existingUser.email,
             profilePicture: existingUser.profilePicture,
-          } ,
+          },
           token,
-         })
+        });
       }
     }
   } catch (error) {
     console.log("error", error);
-    res.status(500).json({ msg: "login went wrong"})
+    res.status(500).json({ msg: "login went wrong" });
   }
 };
 
 const getProfile = async (req, res) => {
-  const { userName, email, password, profilePicture, role } = req.user
+  const { userName, email, password, profilePicture, role } = req.user;
 
-  console.log("req>>>", req.user);
+  // console.log("req>>>", req.user);
   res.status(200).json({
     userName: userName,
     email: email,
     password: password,
     role: role,
     profilePicture: profilePicture,
-  })
+  });
 };
 
-const getFavourites = async (req, res) => {
-  console.log("req>>>", req.user);
+const addFavourite = async (req, res) => {
   const { id } = req.user;
-  try {
-    const requestedFavourites = await userModel
-      .findById({ id: id }) 
-    requestedFavourites.push();
-  } catch (error) {
-    console.log("error getting favourites >", error);
-      res.status(500).json({
-        error,
-        msg: "problem in the server getting favourites"
-      });
-  }
+  const { favourite } = req.body;
+  console.log("user in request>>>", req.user);
+  console.log("favorite trip>>>", req.body);
 
+  try {
+    const favoritingUser = await userModel.findById({ _id: id });
+    console.log("favoritingUser :>> ", favoritingUser);
+    if (favoritingUser.favourites.length === 0) {
+      const requestedFavourites = await userModel.findByIdAndUpdate(
+        { _id: id },
+        { $push: { favourites: favourite } },
+        {
+          returnOriginal: false,
+        }
+      );
+      res.status(201).json({
+        msg: "added to favorites",
+        requestedFavourites,
+      });
+    }
+    if (favoritingUser.favourites.length > 0) {
+      favoritingUser.favourites.forEach(async (favouriteTrip) => {
+        if (favouriteTrip === favourite) {
+          console.log("is inside array :>> ", favouriteTrip);
+          try {
+            const requestedFavourites = await userModel.findByIdAndUpdate(
+              { _id: id },
+              { $pull: { favourites: favourite } },
+              {
+                returnOriginal: false,
+              }
+            );
+            // console.log("requestedFavourites :>> ", requestedFavourites);
+            res.status(201).json({
+              msg: "removed from favourites",
+              requestedFavourites,
+            });
+          } catch {
+            res.status(500).json({ msg: "error removing favorite" });
+          }
+        } else {
+          try {
+            const requestedFavourites = await userModel.findByIdAndUpdate(
+              { _id: id },
+              { $push: { favourites: favourite } },
+              {
+                returnOriginal: false,
+              }
+            );
+            res.status(201).json({
+              msg: "added to favorites",
+              requestedFavourites,
+            });
+            console.log("requestedFavourites >>>", requestedFavourites);
+          } catch (error) {
+            res.status(500).json({ msg: "error adding to favourites" });
+          }
+        }
+      });
+    }
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).json({ msg: "user clicking in favorutes not found" });
+  }
 };
 
-export { uploadImage, register, login, getProfile, getFavourites };
+export { uploadImage, register, login, getProfile, addFavourite };
