@@ -5,31 +5,6 @@ function Account() {
   const { user, newUser, setNewUser, getToken, setUser, logOut, getProfile } =
     useContext(AuthContext);
   const [selectedFile, setSelectedFile] = useState({});
-  // const [userLogin, setUserLogin] = useState({});
-
-  // const getProfile = async () => {
-  //   const token = getToken();
-
-  //   const myHeaders = new Headers();
-  //   myHeaders.append("Authorization", `Bearer ${token}`);
-
-  //   const requestOptions = {
-  //     method: "GET",
-  //     headers: myHeaders,
-  //     redirect: "follow",
-  //   };
-  //   try {
-  //     const response = await fetch(
-  //       "http://localhost:5000/api/users/profile",
-  //       requestOptions
-  //     );
-  //     const result = await response.json();
-  //     console.log("result", result);
-  //     setUserLogin(result);
-  //   } catch (error) {
-  //     console.log("error >", error);
-  //   }
-  // };
 
   const attachFileHandler = (e) => {
     console.log("e.target.files[0]", e.target.files[0]);
@@ -77,7 +52,7 @@ function Account() {
         </p>
         {user && (
           <div>
-            <p className="font-mono">Name:{user.userName}</p>
+            <p className="font-mono">Name: {user.userName}</p>
             <p className="font-mono">Email: {user.email}</p>
           </div>
         )}
