@@ -2,13 +2,14 @@ import { useLocation } from "react-router-dom";
 import { MdFavoriteBorder, MdOutlineBatteryChargingFull } from "react-icons/md";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { Carousel } from "flowbite-react";
 
 function DetailExpeditionAuth() {
   const singleExpedition = useLocation();
-
   const { user, setUser } = useContext(AuthContext);
-  console.log("user favourites >> ", user.favourites);
-  console.log("expeditionID", singleExpedition.state._id);
+  const [modal, setModal] = useState(false);
+  // console.log("user favourites >> ", user.favourites);
+  console.log("expeditionIMAGES", singleExpedition.state.images);
 
   const getDates = (date) => {
     let myDate = new Date(date).toLocaleDateString();
@@ -25,17 +26,44 @@ function DetailExpeditionAuth() {
     }
   };
 
+  // const clickFavourite = () => {
+  //   isFavourite();
+  // };
+
   return (
     <>
       <div className="card mb-4">
-        <div className="slideshow-images">
-          <img
+        <div className="saturate-50 mb-4 h-56 sm:h-64 xl:h-80 2xl:h-96">
+          <Carousel slideInterval={3000}>
+            <img
+              src={
+                singleExpedition.state?.images &&
+                singleExpedition.state.images[0]
+              }
+              alt="expedition image"
+            />
+            <img
+              src={
+                singleExpedition.state?.images &&
+                singleExpedition.state.images[1]
+              }
+              alt="expedition image"
+            />
+            <img
+              src={
+                singleExpedition.state?.images &&
+                singleExpedition.state.images[2]
+              }
+              alt="expedition image"
+            />
+          </Carousel>
+          {/* <img
             className="mb-2"
             src={
               singleExpedition.state?.images && singleExpedition.state.images[1]
             }
             alt="expedition image"
-          />
+          /> */}
           {/* <img className="mb-2" src={singleExpedition.state?.images && singleExpedition.state.images[1]} alt="expedition image" /> */}
         </div>
 

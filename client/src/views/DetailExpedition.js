@@ -3,6 +3,7 @@ import { MdClose } from "react-icons/md";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import DetailExpeditionAuth from "../components/DetailExpeditionAuth";
+import { Carousel } from "flowbite-react";
 
 function DetailExpedition() {
   const singleExpedition = useLocation();
@@ -33,7 +34,31 @@ function DetailExpedition() {
       ) : (
         <>
           <div className="card mb-4">
-            <div className="slideshow-images">
+            <div className="saturate-50 mb-4 h-56 sm:h-64 xl:h-80 2xl:h-96">
+              <Carousel slideInterval={3000}>
+                <img
+                  src={
+                    singleExpedition.state?.images &&
+                    singleExpedition.state.images[0]
+                  }
+                  alt="expedition image"
+                />
+                <img
+                  src={
+                    singleExpedition.state?.images &&
+                    singleExpedition.state.images[1]
+                  }
+                  alt="expedition image"
+                />
+                <img
+                  src={
+                    singleExpedition.state?.images &&
+                    singleExpedition.state.images[2]
+                  }
+                  alt="expedition image"
+                />
+              </Carousel>
+              {/* <div className="slideshow-images">
               <img
                 className="mb-2"
                 src={
@@ -41,7 +66,7 @@ function DetailExpedition() {
                   singleExpedition.state.images[1]
                 }
                 alt="expedition image"
-              />
+              /> */}
               {/* <img className="mb-2" src={singleExpedition.state?.images && singleExpedition.state.images[1]} alt="expedition image" /> */}
             </div>
 

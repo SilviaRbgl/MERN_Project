@@ -2,7 +2,6 @@ import { Carousel } from "flowbite-react";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "../Home.css";
-import Diego_Garcia01 from "../images/Diego_Garcia01.jpg";
 import Easter_Island01 from "../images/Easter_Island01.jpg";
 import Nicobar_Islands01 from "../images/Nicobar_Islands01.jpg";
 import Pitcairn_Island01 from "../images/Pitcairn_Island01.jpg";
@@ -33,8 +32,8 @@ function Home() {
       </svg> */}
       </div>
 
-      <div className="saturate-50 m-10 h-56 sm:h-64 xl:h-80 2xl:h-96 l:mx-40">
-        <Carousel slideInterval={2000}>
+      <div className="saturate-50 m-10 h-56 sm:h-64 xl:h-80 2xl:h-96 lg:mx-40">
+        <Carousel slideInterval={3000}>
           <img src={Nicobar_Islands01} alt="Nicobar Island" />
           <img src={Revillagigedo01} alt="Revillagigedo Island" />
           <img src={Pitcairn_Island01} alt="Pitcairn Island" />
