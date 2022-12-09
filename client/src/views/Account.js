@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 function Account() {
-  const { user, newUser, setNewUser, getToken, setUser, logOut , getProfile} =
+  const { user, newUser, setNewUser, getToken, setUser, logOut, getProfile } =
     useContext(AuthContext);
   const [selectedFile, setSelectedFile] = useState({});
   // const [userLogin, setUserLogin] = useState({});
@@ -68,7 +68,6 @@ function Account() {
   // useEffect(() => { // el useEffect del getProfile si está aqui igual da menos problemas que en el AuthContext
   //   getProfile()
   // }, [])
-  
 
   return (
     <div className="background">
@@ -86,12 +85,15 @@ function Account() {
         {user && user.profilePicture !== undefined ? (
           <img
             className="w-32 h-32"
-            src={user.profilePicture    
-            }
+            src={user.profilePicture}
             alt="profile picture"
           />
         ) : (
-        <img src="http://res.cloudinary.com/dtwbyjspa/image/upload/v1669821358/images/yk4xc69svkglrejjq3tk.png" alt="default profile picture"/>
+          <img
+            className="w-32 h-32"
+            src="http://res.cloudinary.com/dtwbyjspa/image/upload/v1669821358/images/yk4xc69svkglrejjq3tk.png"
+            alt="default profile picture"
+          />
         )}
         {/* <img className="w-32 h-32" src="http://res.cloudinary.com/dtwbyjspa/image/upload/v1669821358/images/yk4xc69svkglrejjq3tk.png" alt="profile picture" /> */}
         <div>

@@ -8,7 +8,7 @@ export const AuthContextProvider = (props) => {
   const [isUser, setIsUser] = useState(true);
   const [user, setUser] = useState({});
   const redirectTo = useNavigate();
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   const submitRegister = async (
     userName,
@@ -77,27 +77,26 @@ export const AuthContextProvider = (props) => {
       console.log("result", result);
       console.log("result", result.token);
       const { user } = result;
-      setIsLoading(false)
+      setIsLoading(false);
       setUser(user);
       const { token } = result;
       if (token) {
-          localStorage.setItem("token", token);
-          setIsUser(true);
-          setUser(result.user);
-          redirectTo("/expeditions");
-        }
+        localStorage.setItem("token", token);
+        setIsUser(true);
+        setUser(result.user);
+        redirectTo("/expeditions");
+      }
       if (!token || !user) {
-        setUser({})
+        setUser({});
         alert("user not found with this email, register first?");
-       
       }
     } catch (error) {
       setIsUser(false);
-      setIsLoading(false)
+      setIsLoading(false);
       console.log("error", error);
     }
   };
-  
+
   const getProfile = async () => {
     const token = getToken();
 
@@ -109,23 +108,21 @@ export const AuthContextProvider = (props) => {
       headers: myHeaders,
       redirect: "follow",
     };
-    // var urlencoded = new URLSearchParams();
-    // urlencoded.append("expeditionId", "123123123");
-    // EJEMPLO DE AÑADIR AQUI LA REQUEST DE POSTMAN DE FAVORITOS.
+
     if (token) {
       try {
-      const response = await fetch(
-        "http://localhost:5000/api/users/profile",
-        requestOptions
-      );
-      const result = await response.json();
-      console.log("result", result);
-      setUser(result);
-    } catch (error) {
-      console.log("error >", error);
-    }
+        const response = await fetch(
+          "http://localhost:5000/api/users/profile",
+          requestOptions
+        );
+        const result = await response.json();
+        console.log("result", result);
+        setUser(result);
+      } catch (error) {
+        console.log("error >", error);
+      }
     } else {
-      alert("sesion expired, please log in again") // Puedo poner esto en el mensaje? es coherente? Puedo redirectTo al login directamente para que lo haga automático?
+      alert("sesion expired, please log in again"); // Puedo poner esto en el mensaje? es coherente? Puedo redirectTo al login directamente para que lo haga automático?
       // redirectTo("/login");
     }
   };
@@ -140,7 +137,7 @@ export const AuthContextProvider = (props) => {
     console.log("useEffect run");
     getToken();
     console.log("isUser :>> ", isUser);
-    getProfile()
+    getProfile();
   }, [isUser]);
 
   return (
@@ -162,6 +159,3 @@ export const AuthContextProvider = (props) => {
     </AuthContext.Provider>
   );
 };
-
-
-

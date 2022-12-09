@@ -1,57 +1,20 @@
 import { useLocation } from "react-router-dom";
 import { MdClose } from "react-icons/md";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import DetailExpeditionAuth from "../components/DetailExpeditionAuth";
 
 function DetailExpedition() {
   const singleExpedition = useLocation();
+  const { user, setUser } = useContext(AuthContext);
   // console.log("singleExpedition :>> ", singleExpedition);
   // console.log("images singleExpedition >>", singleExpedition.state.images);
   const [modal, setModal] = useState(false);
-  const { user, getToken } = useContext(AuthContext);
 
   const getDates = (date) => {
     let myDate = new Date(date).toLocaleDateString();
     return myDate;
   };
-
-  // extraer array favoritos del USER
-  const getFavourites = async () => {
-    const token = getToken();
-    const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-    const urlencoded = new URLSearchParams();
-    urlencoded.append("favourite", "123456");
-
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: urlencoded,
-      redirect: "follow",
-    };
-
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/users/favourites",
-        requestOptions
-      );
-      const result = await response.json();
-      console.log("result getFavourites>>", result);
-      console.log("array favourites>>>", result.findingFavourites.favourites);
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
-  getFavourites();
-
-  // construir function ...recibe como parametro el expedition ID, hace un loop sobre el array favortitos, y retorna true si coincide el id del usuario, con alguna Id en el array
-  // const isFavourite = (expeditionId) => {
-  //   return true;
-  // };
-  // addDeleteFav(expeditionID);
 
   const toggleModal = () => {
     setModal(!modal);

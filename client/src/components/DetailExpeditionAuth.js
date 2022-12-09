@@ -1,17 +1,32 @@
 import { useLocation } from "react-router-dom";
-import { MdFavoriteBorder } from "react-icons/md";
+import { MdFavoriteBorder, MdOutlineBatteryChargingFull } from "react-icons/md";
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 function DetailExpeditionAuth() {
   const singleExpedition = useLocation();
+
+  const { user, setUser } = useContext(AuthContext);
+  console.log("user favourites >> ", user.favourites);
+  console.log("expeditionID", singleExpedition.state._id);
 
   const getDates = (date) => {
     let myDate = new Date(date).toLocaleDateString();
     return myDate;
   };
 
+  const isFavourite = (expeditionID) => {
+    // console.log("expeditionId :>> ", expeditionID);
+    // console.log("user.favourites :>> ", user.favourites);
+    if (user.favourites.length > 0 && user.favourites.includes(expeditionID)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <>
-      {/* <div className="background"> */}
       <div className="card mb-4">
         <div className="slideshow-images">
           <img
@@ -37,8 +52,18 @@ function DetailExpeditionAuth() {
         </p>
         <p className="font-mono">Price: {singleExpedition.state.price}</p>
         <p className="font-mono"></p>
-        <button className="btn-favorite">
-          {/* {isFavourite(expeditionId) ? color rojo : color azul}  comprueba , en cada boton, si el resultado de la funcion es true or false, y cambias el color con un ternary operator*/}
+        <button
+          className={
+            isFavourite(singleExpedition.state._id)
+              ? " btn-favorite-clicked"
+              : "btn-favorite"
+          }
+        >
+          {/* {isFavourite(expeditionId) ? color rojo : color azul}  comprueba , en cada boton, si el resultado de la funcion es true or false, y cambias el color con un ternary operator */}
+          {console.log(
+            "isFavorite>>>",
+            isFavourite(singleExpedition.state._id)
+          )}
           <MdFavoriteBorder />
         </button>
         <br />
