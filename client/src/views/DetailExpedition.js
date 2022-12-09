@@ -58,16 +58,6 @@ function DetailExpedition() {
                   alt="expedition image"
                 />
               </Carousel>
-              {/* <div className="slideshow-images">
-              <img
-                className="mb-2"
-                src={
-                  singleExpedition.state?.images &&
-                  singleExpedition.state.images[1]
-                }
-                alt="expedition image"
-              /> */}
-              {/* <img className="mb-2" src={singleExpedition.state?.images && singleExpedition.state.images[1]} alt="expedition image" /> */}
             </div>
 
             <p className="font-mono font-bold">
@@ -82,11 +72,6 @@ function DetailExpedition() {
               Leader: {singleExpedition.state.leader.name}
             </p>
             <p className="font-mono">Price: {singleExpedition.state.price}</p>
-            {/* <p className="font-mono"></p>
-        <button className="btn-favorite">
-          <MdFavoriteBorder />
-        </button>
-        <br /> */}
             <button className="btn" onClick={toggleModal}>
               Reserve
             </button>
