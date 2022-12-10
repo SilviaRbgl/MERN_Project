@@ -8,7 +8,7 @@ import { Carousel } from "flowbite-react";
 function DetailExpedition() {
   const singleExpedition = useLocation();
   const { user, setUser } = useContext(AuthContext);
-  // console.log("singleExpedition :>> ", singleExpedition);
+  console.log("singleExpedition :>> ", singleExpedition);
   // console.log("images singleExpedition >>", singleExpedition.state.images);
   const [modal, setModal] = useState(false);
 
@@ -69,7 +69,7 @@ function DetailExpedition() {
               {getDates(singleExpedition.state.date.endDate)}
             </p>
             <p className="font-mono">
-              Leader: {singleExpedition.state.leader.name}
+              Leader: {singleExpedition.state.leader[0].name}
             </p>
             <p className="font-mono">Price: {singleExpedition.state.price}</p>
             <button className="btn" onClick={toggleModal}>

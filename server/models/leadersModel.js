@@ -11,10 +11,11 @@ const leaderSchema = new Schema({
     type: String,
     required: true,
   },
-    image: {
+  image: {
     type: String,
     required: false,
-  }
+  },
+  expeditions: [{ type: Schema.Types.ObjectId, ref: "expedition" }],
 });
 
 const leaderModel = mongoose.model("leader", leaderSchema);

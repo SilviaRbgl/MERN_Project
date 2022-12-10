@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { MdOutlineBatteryChargingFull } from "react-icons/md";
+import { Link, useLocation } from "react-router-dom";
 
 function Leaders() {
   const [leader, setLeader] = useState([]);
+  // const [expeditions, setExpeditions] = useState([]);
+  console.log("leader", leader);
+
+  // const singleExpedition = useLocation();
+  // console.log("singleExpedition", singleExpedition);
 
   const fetchLeaders = async () => {
     const response = await fetch("http://localhost:5000/api/leaders/all/");
-    const results = await response.json();
-    setLeader(results.allLeaders);
+    const result = await response.json();
+    console.log("result", result);
+    setLeader(result.allLeaders);
   };
 
   useEffect(() => {
@@ -16,12 +23,11 @@ function Leaders() {
 
   return (
     <div className="background grid gap-10 md:grid-rows-2 lg:grid-rows-3">
-      {leader.map((leader, index) => {
+      {leader.map((leader, leaderIndex) => {
+        const expeditions = leader;
+
         return (
-          <div
-            className="rounded-xl card"
-            key={index}
-          >
+          <div className="rounded-xl card" key={leaderIndex}>
             <img
               className="mb-2 rounded-xl"
               src={leader.image}
@@ -30,9 +36,23 @@ function Leaders() {
             <p className="font-mono font-bold uppercase p-2 text-start text-xl">
               {leader.name}
             </p>
-            <p className="font-mono p-2 mb-2 text-start ">
+            <p className="font-mono p-2 mb-2 text-start">
               {leader.description}
             </p>
+            <p className="font-mono font-bold p-2 mb-2 text-start">
+              Expeditions
+            </p>
+            <p>{leader.expeditions[0].island}</p>
+            <p>{leader.expeditions[1].island}</p>
+          </div>
+        );
+      })}
+      {leader.map((expedition, expeditionIndex) => {
+        return (
+          <div key={expeditionIndex}>
+            <p>{expedition.expeditions[0].island}</p>
+            <p>{expedition.expeditions[1].island}</p>
+            <p>{expedition.expeditions.island}</p>
           </div>
         );
       })}
