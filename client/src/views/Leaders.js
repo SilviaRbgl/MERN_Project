@@ -40,10 +40,12 @@ function Leaders() {
               {leader.description}
             </p>
             <p className="font-mono font-bold p-2 mb-2 text-start">
-              Expeditions
+              Expeditions:
             </p>
-            <p>{leader.expeditions[0].island}</p>
-            <p>{leader.expeditions[1].island}</p>
+            <p className="font-mono p-2 mb-2 text-start">
+              {leader.expeditions[0].island} - {leader.expeditions[1].island} -{" "}
+              {leader.expeditions[2].island}
+            </p>
           </div>
         );
       })}
