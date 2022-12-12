@@ -3,10 +3,11 @@ import { MdFavoriteBorder, MdClose } from "react-icons/md";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Carousel } from "flowbite-react";
+import getToken from "../utils/getToken";
 
 function DetailExpeditionAuth() {
   const singleExpedition = useLocation();
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser, getProfile } = useContext(AuthContext);
   const [modal, setModal] = useState(false);
   // console.log("expeditionIMAGES", singleExpedition.state.images);
 
@@ -24,6 +25,35 @@ function DetailExpeditionAuth() {
   } else {
     document.body.classList.remove("active-modal");
   }
+
+  const addOrDeleteFav = async (expeditionId) => {
+    console.log("espedition ID in addOrDetele :>> ", expeditionId);
+    const myHeaders = new Headers();
+    const token = getToken();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("favourite", expeditionId);
+
+    const requestOptions = {
+      method: "PATCH",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/users/favourites",
+        requestOptions
+      );
+
+      const result = await response.json();
+      getProfile();
+    } catch (error) {
+      console.log("error :>> ", error);
+    }
+  };
 
   const isFavourite = (expeditionID) => {
     console.log("expeditionId :>> ", expeditionID);
@@ -77,7 +107,9 @@ function DetailExpeditionAuth() {
         </p>
         <p className="font-mono">Price: {singleExpedition.state.price}</p>
         <p className="font-mono"></p>
+        {}
         <button
+          onClick={() => addOrDeleteFav(singleExpedition.state._id)}
           className={
             isFavourite(singleExpedition.state._id)
               ? "btn-favorite-clicked"

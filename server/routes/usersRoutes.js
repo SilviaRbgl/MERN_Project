@@ -14,6 +14,6 @@ router.post("/uploadimage", multerUpload.single("image"), uploadImage);
 router.post("/register", register);
 router.post("/login", login);
 router.get("/profile", jwtAuth, getProfile);
-router.post("/favourites", jwtAuth, addFavourite);
+router.patch("/favourites", jwtAuth, addFavourite);
 
 export default router;

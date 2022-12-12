@@ -84,6 +84,13 @@ function Account() {
         <p className="font-mono font-bold uppercase mb-2">
           My favourites expeditions
         </p>
+        {user?.favourites?.map((fav, index) => {
+          return (
+            <div key={index}>
+              <p>{fav}</p>
+            </div>
+          );
+        })}
       </div>
 
       <div className="card mb-4">

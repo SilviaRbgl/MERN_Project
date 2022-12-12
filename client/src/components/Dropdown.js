@@ -41,14 +41,6 @@ function Dropdown() {
           </li>
         </ul>
       ) : null}
-      {/* {open ? <div>Is Open</div> : <div>Is Closed</div>} */}
-
-      {/* <div class="dropdown">
-        <ul>
-          <li>My account</li>
-          <li>Log out</li>
-        </ul>
-      </div> */}
     </div>
   );
 }

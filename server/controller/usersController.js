@@ -130,6 +130,7 @@ const uploadImage = async (req, res) => {
 const addFavourite = async (req, res) => {
   const { id } = req.user;
   const { favourite } = req.body;
+
   console.log("user in request>>>", req.user);
   console.log("favorite trip>>>", req.body);
 
@@ -146,48 +147,57 @@ const addFavourite = async (req, res) => {
       );
       res.status(201).json({
         msg: "added to favorites",
-        findingFavourites,
+        user: {
+          favourites: findingFavourites.favourites,
+          userName: findingFavourites.userName,
+          id: findingFavourites._id,
+        },
       });
     }
     if (findingUser.favourites.length > 0) {
-      findingUser.favourites.forEach(async (favouriteTrip) => {
-        if (favouriteTrip === favourite) {
-          console.log("is inside array :>> ", favouriteTrip);
-          try {
-            const findingFavourites = await userModel.findByIdAndUpdate(
-              { _id: id },
-              { $pull: { favourites: favourite } },
-              {
-                returnOriginal: false,
-              }
-            );
-            // console.log("findingFavourites >> ", findingFavourites);
-            res.status(201).json({
-              msg: "removed from favourites",
-              findingFavourites,
-            });
-          } catch {
-            res.status(500).json({ msg: "error removing favorite" });
-          }
-        } else {
-          try {
-            const findingFavourites = await userModel.findByIdAndUpdate(
-              { _id: id },
-              { $push: { favourites: favourite } },
-              {
-                returnOriginal: false,
-              }
-            );
-            res.status(201).json({
-              msg: "added to favorites",
-              findingFavourites,
-            });
-            console.log("findingFavourites >>>", findingFavourites);
-          } catch (error) {
-            res.status(500).json({ msg: "error adding to favourites" });
-          }
+      if (findingUser.favourites.includes(favourite)) {
+        try {
+          const findingFavourites = await userModel.findByIdAndUpdate(
+            { _id: id },
+            { $pull: { favourites: favourite } },
+            {
+              returnOriginal: false,
+            }
+          );
+          // console.log("findingFavourites >> ", findingFavourites);
+          res.status(201).json({
+            msg: "removed from favourites",
+            user: {
+              favourites: findingFavourites.favourites,
+              userName: findingFavourites.userName,
+              id: findingFavourites._id,
+            },
+          });
+        } catch {
+          res.status(500).json({ msg: "error removing favorite" });
         }
-      });
+      } else {
+        try {
+          const findingFavourites = await userModel.findByIdAndUpdate(
+            { _id: id },
+            { $push: { favourites: favourite } },
+            {
+              returnOriginal: false,
+            }
+          );
+          res.status(201).json({
+            msg: "added to favorites",
+            user: {
+              favourites: findingFavourites.favourites,
+              userName: findingFavourites.userName,
+              id: findingFavourites._id,
+            },
+          });
+          console.log("findingFavourites >>>", findingFavourites);
+        } catch (error) {
+          res.status(500).json({ msg: "error adding to favourites" });
+        }
+      }
     }
   } catch (error) {
     console.log("error", error);

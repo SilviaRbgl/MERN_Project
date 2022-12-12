@@ -15,7 +15,7 @@ const jwtStrategy = new JwtStrategy(opts, function (jwt_payload, done) {
       return done(err, false);
     }
     if (user) {
-      console.log("user in passport >>", user);
+      // console.log("user in passport >>", user);
       return done(null, user);
     } else {
       return done(null, false);

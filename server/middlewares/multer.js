@@ -12,5 +12,5 @@ const multerUpload = multer({
     cb(null, true);
   },
 });
-console.log("multerUpload >> ", multerUpload);
+// console.log("multerUpload >> ", multerUpload);
 export default multerUpload;

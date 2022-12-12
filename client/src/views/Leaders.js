@@ -3,12 +3,12 @@ import { Link, useLocation } from "react-router-dom";
 
 function Leaders() {
   const [leader, setLeader] = useState([]);
-  console.log("leader", leader);
+  // console.log("leader", leader);
 
   const fetchLeaders = async () => {
     const response = await fetch("http://localhost:5000/api/leaders/all/");
     const result = await response.json();
-    console.log("result", result);
+    // console.log("result", result);
     setLeader(result.allLeaders);
   };
 
@@ -44,13 +44,6 @@ function Leaders() {
                 </div>
               );
             })}
-          </div>
-        );
-      })}
-      {leader.map((expedition, expeditionIndex) => {
-        return (
-          <div key={expeditionIndex}>
-            <p>{expedition.expeditions.island}</p>
           </div>
         );
       })}
