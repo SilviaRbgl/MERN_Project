@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { MdOutlineBatteryChargingFull } from "react-icons/md";
 import { Link, useLocation } from "react-router-dom";
 
 function Leaders() {
   const [leader, setLeader] = useState([]);
-  // const [expeditions, setExpeditions] = useState([]);
   console.log("leader", leader);
 
   // const singleExpedition = useLocation();
@@ -23,11 +21,9 @@ function Leaders() {
 
   return (
     <div className="background grid gap-10 md:grid-rows-2 lg:grid-rows-3">
-      {leader.map((leader, leaderIndex) => {
-        const expeditions = leader;
-
+      {leader.map((leader, index) => {
         return (
-          <div className="rounded-xl card" key={leaderIndex}>
+          <div className="rounded-xl card" key={index}>
             <img
               className="mb-2 rounded-xl"
               src={leader.image}
@@ -42,18 +38,21 @@ function Leaders() {
             <p className="font-mono font-bold p-2 mb-2 text-start">
               Expeditions:
             </p>
-            <p className="font-mono p-2 mb-2 text-start">
-              {leader.expeditions[0].island} - {leader.expeditions[1].island} -{" "}
-              {leader.expeditions[2].island}
-            </p>
+            {leader.expeditions.map((expedition, index) => {
+              return (
+                <div className="ml-2" key={index}>
+                  <button className="btn-reverse p-2 mb-2">
+                    {expedition.island}
+                  </button>
+                </div>
+              );
+            })}
           </div>
         );
       })}
       {leader.map((expedition, expeditionIndex) => {
         return (
           <div key={expeditionIndex}>
-            <p>{expedition.expeditions[0].island}</p>
-            <p>{expedition.expeditions[1].island}</p>
             <p>{expedition.expeditions.island}</p>
           </div>
         );

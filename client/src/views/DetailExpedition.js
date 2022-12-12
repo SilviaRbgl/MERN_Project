@@ -81,8 +81,7 @@ function DetailExpedition() {
                 <div className="modal-content">
                   <p className="font-mono font-bold text-center">OOPS!</p>
                   <p className="font-mono text-center">
-                    If you want to book an expedition, <br />
-                    you have to log in first.
+                    If you want to book an expedition, you have to log in first.
                   </p>
                   <button className="close-modal" onClick={toggleModal}>
                     <MdClose />

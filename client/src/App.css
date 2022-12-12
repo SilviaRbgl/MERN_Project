@@ -21,6 +21,11 @@
   @apply rounded-md py-2 px-3 uppercase text-sm cursor-pointer tracking-wider bg-red-400;
 }
 
+.btn-reverse {
+  @apply rounded-md py-2 px-3 uppercase text-xs font-bold cursor-pointer tracking-wider bg-amber-200 hover:bg-cyan-200;
+ 
+}
+
 input[type="file"] {
   display: none;
 }

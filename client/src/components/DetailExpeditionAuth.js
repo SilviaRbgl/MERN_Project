@@ -16,15 +16,15 @@ function DetailExpeditionAuth() {
     return myDate;
   };
 
-  const isFavourite = (expeditionID) => {
-    // console.log("expeditionId :>> ", expeditionID);
-    // console.log("user.favourites :>> ", user.favourites);
-    if (user.favourites.length > 0 && user.favourites.includes(expeditionID)) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  // const isFavourite = (expeditionID) => {
+  //   // console.log("expeditionId :>> ", expeditionID);
+  //   // console.log("user.favourites :>> ", user.favourites);
+  //   if (user.favourites.length > 0 && user.favourites.includes(expeditionID)) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // };
 
   // const clickFavourite = () => {
   //   isFavourite();
@@ -81,17 +81,17 @@ function DetailExpeditionAuth() {
         <p className="font-mono">Price: {singleExpedition.state.price}</p>
         <p className="font-mono"></p>
         <button
-          className={
-            isFavourite(singleExpedition.state._id)
-              ? " btn-favorite-clicked"
-              : "btn-favorite"
-          }
+        // className={
+        //   isFavourite(singleExpedition.state._id)
+        //     ? " btn-favorite-clicked"
+        //     : "btn-favorite"
+        // }
         >
           {/* {isFavourite(expeditionId) ? color rojo : color azul}  comprueba , en cada boton, si el resultado de la funcion es true or false, y cambias el color con un ternary operator */}
-          {console.log(
+          {/* {console.log(
             "isFavorite>>>",
             isFavourite(singleExpedition.state._id)
-          )}
+          )} */}
           <MdFavoriteBorder />
         </button>
         <br />

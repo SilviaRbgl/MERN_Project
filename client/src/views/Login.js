@@ -14,7 +14,6 @@ function Login() {
     // } else {
     //   alert("password too short")
     // }
-
     submitLogin(email.current.value, password.current.value);
   };
 

@@ -88,7 +88,7 @@ export const AuthContextProvider = (props) => {
       }
       if (!token || !user) {
         setUser({});
-        alert("user not found with this email, register first?");
+        // alert("user not found with this email, register first?");
       }
     } catch (error) {
       setIsUser(false);
@@ -122,7 +122,7 @@ export const AuthContextProvider = (props) => {
         console.log("error >", error);
       }
     } else {
-      alert("sesion expired, please log in again"); // Puedo poner esto en el mensaje? es coherente? Puedo redirectTo al login directamente para que lo haga automático?
+      // alert("sesion expired, please log in again");
       // redirectTo("/login");
     }
   };
