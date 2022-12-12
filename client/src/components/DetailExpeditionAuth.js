@@ -47,15 +47,15 @@ function DetailExpeditionAuth() {
         "http://localhost:5000/api/users/favourites",
         requestOptions
       );
-
       const result = await response.json();
+      // console.log("result", result);
       getProfile();
     } catch (error) {
       console.log("error :>> ", error);
     }
   };
 
-  const isFavourite = (expeditionID) => {
+  const isFav = (expeditionID) => {
     console.log("expeditionId :>> ", expeditionID);
     console.log("user.favourites :>> ", user.favourites);
     if (user.favourites.length > 0 && user.favourites.includes(expeditionID)) {
@@ -111,15 +111,12 @@ function DetailExpeditionAuth() {
         <button
           onClick={() => addOrDeleteFav(singleExpedition.state._id)}
           className={
-            isFavourite(singleExpedition.state._id)
+            isFav(singleExpedition.state._id)
               ? "btn-favorite-clicked"
               : "btn-favorite"
           }
         >
-          {console.log(
-            "isFavorite>>>",
-            isFavourite(singleExpedition.state._id)
-          )}
+          {console.log("isFavorite>>>", isFav(singleExpedition.state._id))}
           <MdFavoriteBorder />
         </button>
         <br />

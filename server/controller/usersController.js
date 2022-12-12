@@ -6,7 +6,7 @@ import isPasswordCorrect from "../utils/isPasswordCorrect.js";
 import issueToken from "../utils/jwt.js";
 
 const register = async (req, res) => {
-  console.log("req.body >>", req.body);
+  // console.log("req.body >>", req.body);
   const { email, password, role } = req.body;
   // const isEmailValid = validateEmail(email)
 
@@ -109,7 +109,7 @@ const getProfile = async (req, res) => {
 
 const uploadImage = async (req, res) => {
   try {
-    console.log("req.file", req.file.path);
+    // console.log("req.file", req.file.path);
     const uploadResult = await cloudinary.uploader.upload(req.file.path, {
       folder: "images",
     });
@@ -131,12 +131,12 @@ const addFavourite = async (req, res) => {
   const { id } = req.user;
   const { favourite } = req.body;
 
-  console.log("user in request>>>", req.user);
-  console.log("favorite trip>>>", req.body);
+  // console.log("user in request>>>", req.user);
+  // console.log("favorite trip>>>", req.body);
 
   try {
     const findingUser = await userModel.findById({ _id: id });
-    console.log("findingUser>> ", findingUser);
+    // console.log("findingUser>> ", findingUser);
     if (findingUser.favourites.length === 0) {
       const findingFavourites = await userModel.findByIdAndUpdate(
         { _id: id },
@@ -204,5 +204,37 @@ const addFavourite = async (req, res) => {
     res.status(500).json({ msg: "user clicking in favourites not found" });
   }
 };
+
+// const addComment = async (req, res) => {
+//   const { userId } = req.user;
+//   const { expeditionId } = req.body;
+//   console.log("req user comments", req.user);
+
+//   const userThatComment = await userModel.findById({ _id: userId });
+//   if (userThatComment) {
+//     try {
+//       const expeditionComment = await userModel.findByIdAndUpdate(
+//         { _id: expeditionId },
+//         {
+//           $push: {
+//             comment: { $each: [req.body.comment, userThatComment.email] },
+//           },
+//         },
+//         {
+//           returnOriginal: false,
+//         }
+//       );
+//       res.status(200).json({
+//         msg: "comment posted",
+//         expeditionComment,
+//       });
+//     } catch (error) {
+//       res
+//         .status(500)
+//         .json({ message: "error by posting comment", error: error });
+//       console.log("error", error);
+//     }
+//   }
+// };
 
 export { uploadImage, register, login, getProfile, addFavourite };

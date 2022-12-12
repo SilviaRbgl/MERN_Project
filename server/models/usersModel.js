@@ -27,7 +27,11 @@ const userSchema = new Schema({
   favourites: {
     type: Array,
     required: false,
-  }
+  },
+  comments: {
+    type: Array,
+    required: false,
+  },
 });
 
 const userModel = mongoose.model("user", userSchema);
