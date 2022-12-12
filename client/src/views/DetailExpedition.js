@@ -8,7 +8,7 @@ import { Carousel } from "flowbite-react";
 function DetailExpedition() {
   const singleExpedition = useLocation();
   const { user, setUser } = useContext(AuthContext);
-  console.log("singleExpedition :>> ", singleExpedition);
+  // console.log("singleExpedition :>> ", singleExpedition);
   // console.log("images singleExpedition >>", singleExpedition.state.images);
   const [modal, setModal] = useState(false);
 

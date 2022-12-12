@@ -2,8 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 function Account() {
-  const { user, newUser, setNewUser, getToken, setUser, logOut, getProfile } =
-    useContext(AuthContext);
+  const { user, setUser, logOut, getProfile } = useContext(AuthContext);
   const [selectedFile, setSelectedFile] = useState({});
 
   const attachFileHandler = (e) => {
@@ -70,7 +69,6 @@ function Account() {
             alt="default profile picture"
           />
         )}
-        {/* <img className="w-32 h-32" src="http://res.cloudinary.com/dtwbyjspa/image/upload/v1669821358/images/yk4xc69svkglrejjq3tk.png" alt="profile picture" /> */}
         <div>
           <label htmlFor="file-upload" className="custom-file-upload">
             Edit picture
@@ -83,9 +81,13 @@ function Account() {
       </div>
 
       <div className="card mb-4">
-        <p className="font-mono font-bold uppercase mb-2">My expeditions</p>
-        <p className="font-mono">My favourites:</p>
-        <p className="font-mono">My reviews:</p>
+        <p className="font-mono font-bold uppercase mb-2">
+          My favourites expeditions
+        </p>
+      </div>
+
+      <div className="card mb-4">
+        <p className="font-mono font-bold uppercase mb-2">My reviews</p>
       </div>
       <button className="btn" onClick={submitLogOut}>
         Log out

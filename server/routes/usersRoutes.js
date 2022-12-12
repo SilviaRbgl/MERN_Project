@@ -1,5 +1,11 @@
 import express from "express";
-import { uploadImage, register, login, getProfile, addFavourite } from "../controller/usersController.js";
+import {
+  uploadImage,
+  register,
+  login,
+  getProfile,
+  addFavourite,
+} from "../controller/usersController.js";
 import jwtAuth from "../middlewares/jwtAuth.js";
 import multerUpload from "../middlewares/multer.js";
 const router = express.Router();

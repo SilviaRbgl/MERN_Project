@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { MdFavoriteBorder, MdOutlineBatteryChargingFull } from "react-icons/md";
+import { MdFavoriteBorder, MdClose } from "react-icons/md";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Carousel } from "flowbite-react";
@@ -8,27 +8,32 @@ function DetailExpeditionAuth() {
   const singleExpedition = useLocation();
   const { user, setUser } = useContext(AuthContext);
   const [modal, setModal] = useState(false);
-  // console.log("user favourites >> ", user.favourites);
-  console.log("expeditionIMAGES", singleExpedition.state.images);
+  // console.log("expeditionIMAGES", singleExpedition.state.images);
 
   const getDates = (date) => {
     let myDate = new Date(date).toLocaleDateString();
     return myDate;
   };
 
-  // const isFavourite = (expeditionID) => {
-  //   // console.log("expeditionId :>> ", expeditionID);
-  //   // console.log("user.favourites :>> ", user.favourites);
-  //   if (user.favourites.length > 0 && user.favourites.includes(expeditionID)) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // };
+  const toggleModal = () => {
+    setModal(!modal);
+  };
 
-  // const clickFavourite = () => {
-  //   isFavourite();
-  // };
+  if (modal) {
+    document.body.classList.add("active-modal");
+  } else {
+    document.body.classList.remove("active-modal");
+  }
+
+  const isFavourite = (expeditionID) => {
+    console.log("expeditionId :>> ", expeditionID);
+    console.log("user.favourites :>> ", user.favourites);
+    if (user.favourites.length > 0 && user.favourites.includes(expeditionID)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   return (
     <>
@@ -57,14 +62,6 @@ function DetailExpeditionAuth() {
               alt="expedition image"
             />
           </Carousel>
-          {/* <img
-            className="mb-2"
-            src={
-              singleExpedition.state?.images && singleExpedition.state.images[1]
-            }
-            alt="expedition image"
-          /> */}
-          {/* <img className="mb-2" src={singleExpedition.state?.images && singleExpedition.state.images[1]} alt="expedition image" /> */}
         </div>
 
         <p className="font-mono font-bold">
@@ -81,21 +78,37 @@ function DetailExpeditionAuth() {
         <p className="font-mono">Price: {singleExpedition.state.price}</p>
         <p className="font-mono"></p>
         <button
-        // className={
-        //   isFavourite(singleExpedition.state._id)
-        //     ? " btn-favorite-clicked"
-        //     : "btn-favorite"
-        // }
+          className={
+            isFavourite(singleExpedition.state._id)
+              ? "btn-favorite-clicked"
+              : "btn-favorite"
+          }
         >
-          {/* {isFavourite(expeditionId) ? color rojo : color azul}  comprueba , en cada boton, si el resultado de la funcion es true or false, y cambias el color con un ternary operator */}
-          {/* {console.log(
+          {console.log(
             "isFavorite>>>",
             isFavourite(singleExpedition.state._id)
-          )} */}
+          )}
           <MdFavoriteBorder />
         </button>
         <br />
-        <button className="btn">Reserve</button>
+        <button className="btn" onClick={toggleModal}>
+          Reserve
+        </button>
+        {modal && (
+          <div className="modal">
+            <div className="overlay"></div>
+            <div className="modal-content">
+              <p className="font-mono font-bold text-center">HURRAH!</p>
+              <p className="font-mono text-center">
+                Thanks for the interest in this expedition. You will receive an
+                email with all the details for the reservation!
+              </p>
+              <button className="close-modal" onClick={toggleModal}>
+                <MdClose />
+              </button>
+            </div>
+          </div>
+        )}
       </div>
       <p className="font-mono font-bold uppercase mb-2">Itinerary</p>
       <p className="font-mono mb-10">{singleExpedition.state.itinerary}</p>

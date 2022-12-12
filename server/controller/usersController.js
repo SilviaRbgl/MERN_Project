@@ -5,30 +5,9 @@ import encryptPassword from "../utils/encryptPassword.js";
 import isPasswordCorrect from "../utils/isPasswordCorrect.js";
 import issueToken from "../utils/jwt.js";
 
-const uploadImage = async (req, res) => {
-  try {
-    console.log("req.file", req.file.path);
-    const uploadResult = await cloudinary.uploader.upload(req.file.path, {
-      folder: "images",
-    });
-    console.log("uploadResult", uploadResult);
-    res.status(200).json({
-      msg: "image uploaded successfully",
-      image: uploadResult.url,
-    });
-  } catch (error) {
-    console.log("error", error);
-    res.status(500).json({
-      msg: "image uploaded went wrong",
-      error: error,
-    });
-  }
-};
-
 const register = async (req, res) => {
   console.log("req.body >>", req.body);
   const { email, password, role } = req.body;
-
   // const isEmailValid = validateEmail(email)
 
   try {
@@ -75,19 +54,6 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-
-  let emptyFields = [];
-  if (!email) {
-    emptyFields.push("email");
-  }
-  if (!password) {
-    emptyFields.push("password");
-  }
-  if (emptyFields.length > 0) {
-    return res
-      .status(400)
-      .json({ error: "Please fill in all the fields", emptyFields });
-  }
 
   try {
     const existingUser = await userModel.findOne({ email: email });
@@ -139,6 +105,26 @@ const getProfile = async (req, res) => {
     profilePicture: profilePicture,
     favourites: favourites,
   });
+};
+
+const uploadImage = async (req, res) => {
+  try {
+    console.log("req.file", req.file.path);
+    const uploadResult = await cloudinary.uploader.upload(req.file.path, {
+      folder: "images",
+    });
+    console.log("uploadResult", uploadResult);
+    res.status(200).json({
+      msg: "image uploaded successfully",
+      image: uploadResult.url,
+    });
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).json({
+      msg: "image uploaded went wrong",
+      error: error,
+    });
+  }
 };
 
 const addFavourite = async (req, res) => {
@@ -205,7 +191,7 @@ const addFavourite = async (req, res) => {
     }
   } catch (error) {
     console.log("error", error);
-    res.status(500).json({ msg: "user clicking in favorutes not found" });
+    res.status(500).json({ msg: "user clicking in favourites not found" });
   }
 };
 

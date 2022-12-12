@@ -5,9 +5,6 @@ function Leaders() {
   const [leader, setLeader] = useState([]);
   console.log("leader", leader);
 
-  // const singleExpedition = useLocation();
-  // console.log("singleExpedition", singleExpedition);
-
   const fetchLeaders = async () => {
     const response = await fetch("http://localhost:5000/api/leaders/all/");
     const result = await response.json();
