@@ -27,7 +27,7 @@ function DetailExpeditionAuth() {
   }
 
   const addOrDeleteFav = async (expeditionId) => {
-    console.log("espedition ID in addOrDetele :>> ", expeditionId);
+    // console.log("espedition ID in addOrDetele :>> ", expeditionId);
     const myHeaders = new Headers();
     const token = getToken();
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -56,8 +56,8 @@ function DetailExpeditionAuth() {
   };
 
   const isFav = (expeditionID) => {
-    console.log("expeditionId :>> ", expeditionID);
-    console.log("user.favourites :>> ", user.favourites);
+    // console.log("expeditionId :>> ", expeditionID);
+    // console.log("user.favourites :>> ", user.favourites);
     if (user.favourites.length > 0 && user.favourites.includes(expeditionID)) {
       return true;
     } else {

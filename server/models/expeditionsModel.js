@@ -35,6 +35,7 @@ const expeditionSchema = new Schema({
   favourites: {
     type: Array,
   },
+  comments: [{ type: Schema.Types.ObjectId, ref: "comment" }],
 });
 
 const expeditionModel = mongoose.model("expedition", expeditionSchema);

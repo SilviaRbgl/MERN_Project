@@ -8,7 +8,8 @@ function Register() {
   const userName = useRef();
   const email = useRef();
   const password = useRef();
-  const role = useRef();
+  const roleTraveller = useRef();
+  const roleLeader = useRef();
 
   // const handleChangeHandler = (e) => {
   // console.log(
@@ -25,7 +26,8 @@ function Register() {
       userName.current.value,
       email.current.value,
       password.current.value,
-      role.current.value
+      roleTraveller.current.value,
+      roleLeader.current.value
     );
   };
 
@@ -86,7 +88,7 @@ function Register() {
               name="role"
               value="traveller"
               // onClick={handleChangeHandler}
-              ref={role}
+              ref={roleTraveller}
             ></input>
             <label htmlFor="traveller">Traveller</label>
             <br />
@@ -97,7 +99,7 @@ function Register() {
               name="role"
               value="leader"
               // onClick={handleChangeHandler}
-              ref={role}
+              ref={roleLeader}
             ></input>
             <label htmlFor="leader">Leader</label>
           </div>

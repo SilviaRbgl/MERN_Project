@@ -129,7 +129,6 @@ const uploadImage = async (req, res) => {
 const addFavourite = async (req, res) => {
   const { id } = req.user;
   const { favourite } = req.body;
-
   // console.log("user in request>>>", req.user);
   // console.log("favorite trip>>>", req.body);
 

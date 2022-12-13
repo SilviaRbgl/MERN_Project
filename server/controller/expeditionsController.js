@@ -1,11 +1,14 @@
+import commentModel from "../models/commentsModel.js";
 import expeditionModel from "../models/expeditionsModel.js";
 
 const gettAllExpeditions = async (req, res) => {
   try {
     const allExpeditions = await expeditionModel
       .find({})
-      .populate({ path: "leader" });
-    console.log("allExpeditions >", allExpeditions);
+      .populate({ path: "leader" })
+      .populate({ path: "comments" })
+      .exec();
+    // console.log("allExpeditions >", allExpeditions);
     res.status(200).json({
       number: allExpeditions.length,
       allExpeditions,
@@ -40,4 +43,50 @@ const getExpeditionsByLeader = async (req, res) => {
   }
 };
 
-export { gettAllExpeditions, getExpeditionsByLeader };
+// crear comentario en collecion comments
+const createComment = async (req, res) => {
+  const { author, date, text, expedition } = req.body;
+  console.log("req.body comment>>>", req.body);
+
+  try {
+    const newComment = new commentModel({
+      author: author,
+      // date: date,
+      text: text,
+      expedition: expedition,
+    });
+    const savedComment = await newComment.save();
+
+    if (savedComment) {
+      const { _id, comments } = req.expedition;
+
+      const findingExpedition = await expeditionModel.findById({ _id: _id });
+      console.log("findingExpedition>>>", findingExpedition);
+
+      if (findingExpedition.comments.includes(comments)) {
+        const findingComment = await expeditionModel.findByIdAndUpdate(
+          { _id: _id },
+          { $push: { comments: comments } },
+          { returnOriginal: false }
+        );
+        res.status(201).json({
+          msg: "comment created in expedition",
+          comment: findingComment,
+        });
+      }
+    }
+    res.status(201).json({
+      comment: savedComment,
+      msg: "comment created",
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: "something went wrong posting a comment",
+      error: error,
+    });
+  }
+};
+
+//Actualizar el array de commentarios de la expedicion haciendo push en el array con el postedComment._id.
+
+export { gettAllExpeditions, getExpeditionsByLeader, createComment };

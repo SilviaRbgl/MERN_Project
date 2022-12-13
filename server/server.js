@@ -11,7 +11,6 @@ import commentsRoutes from "./routes/commentsRoutes.js";
 import cloudinaryConfig from "./config/cloudinary.js";
 import passport from "passport";
 import passportConfig from "./config/passport.js";
-import commentModel from "./models/commentsModel.js";
 
 const app = express();
 
@@ -49,9 +48,7 @@ const loadRoutes = () => {
   app.use("/api/expeditions", expeditionsRoutes);
   app.use("/api/leaders", leadersRoutes);
   app.use("/api/users", usersRoutes);
-  app.use("/api/comments", commentsRoutes, () => {
-    const comments = commentModel;
-  });
+  app.use("/api/comments", commentsRoutes);
 };
 
 const mongoDBConnection = async () => {
