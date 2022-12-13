@@ -153,6 +153,8 @@ function DetailExpeditionAuth() {
           type="text"
           placeholder="Write your opinion"
           name="message"
+          // value={opinion}
+          // onChange={handleOpinion}
           required
         />
         <label htmlFor="message"></label>

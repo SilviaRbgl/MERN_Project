@@ -15,6 +15,5 @@ router.post("/register", register);
 router.post("/login", login);
 router.get("/profile", jwtAuth, getProfile);
 router.patch("/favourites", jwtAuth, addFavourite);
-// router.patch("/comments", jwtAuth, addComment);
 
 export default router;

@@ -1,5 +1,4 @@
 import { v2 as cloudinary } from "cloudinary";
-import expeditionModel from "../models/expeditionsModel.js";
 import userModel from "../models/usersModel.js";
 import encryptPassword from "../utils/encryptPassword.js";
 import isPasswordCorrect from "../utils/isPasswordCorrect.js";
@@ -204,37 +203,5 @@ const addFavourite = async (req, res) => {
     res.status(500).json({ msg: "user clicking in favourites not found" });
   }
 };
-
-// const addComment = async (req, res) => {
-//   const { userId } = req.user;
-//   const { expeditionId } = req.body;
-//   console.log("req user comments", req.user);
-
-//   const userThatComment = await userModel.findById({ _id: userId });
-//   if (userThatComment) {
-//     try {
-//       const expeditionComment = await userModel.findByIdAndUpdate(
-//         { _id: expeditionId },
-//         {
-//           $push: {
-//             comment: { $each: [req.body.comment, userThatComment.email] },
-//           },
-//         },
-//         {
-//           returnOriginal: false,
-//         }
-//       );
-//       res.status(200).json({
-//         msg: "comment posted",
-//         expeditionComment,
-//       });
-//     } catch (error) {
-//       res
-//         .status(500)
-//         .json({ message: "error by posting comment", error: error });
-//       console.log("error", error);
-//     }
-//   }
-// };
 
 export { uploadImage, register, login, getProfile, addFavourite };

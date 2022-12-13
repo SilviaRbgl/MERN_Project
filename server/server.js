@@ -4,12 +4,14 @@ import express from "express";
 import cors from "cors";
 import router from "./routes/test.js";
 import mongoose from "mongoose";
-import expeditionsRoutes from "./routes/expeditionsRoutes.js"
-import leadersRoutes from "./routes/leadersRoutes.js"
-import usersRoutes from "./routes/usersRoutes.js"
-import cloudinaryConfig from "./config/cloudinary.js"
+import expeditionsRoutes from "./routes/expeditionsRoutes.js";
+import leadersRoutes from "./routes/leadersRoutes.js";
+import usersRoutes from "./routes/usersRoutes.js";
+import commentsRoutes from "./routes/commentsRoutes.js";
+import cloudinaryConfig from "./config/cloudinary.js";
 import passport from "passport";
 import passportConfig from "./config/passport.js";
+import commentModel from "./models/commentsModel.js";
 
 const app = express();
 
@@ -36,8 +38,7 @@ const addMiddleWares = () => {
   passportConfig(passport);
 };
 
-
-const startServer = () => { 
+const startServer = () => {
   app.listen(port, () => {
     console.log("Server is running in port " + port);
   });
@@ -48,10 +49,13 @@ const loadRoutes = () => {
   app.use("/api/expeditions", expeditionsRoutes);
   app.use("/api/leaders", leadersRoutes);
   app.use("/api/users", usersRoutes);
+  app.use("/api/comments", commentsRoutes, () => {
+    const comments = commentModel;
+  });
 };
 
 const mongoDBConnection = async () => {
-  try {  
+  try {
     await mongoose.connect(process.env.DB);
     console.log("MongoDB is running in port", port);
   } catch (error) {
