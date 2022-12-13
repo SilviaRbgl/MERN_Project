@@ -1,23 +1,34 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 function Register() {
   const [newUser, setNewUser] = useState({});
   const { submitRegister } = useContext(AuthContext);
 
-    const handleChangeHandler = (e) => {
-    console.log(
-      "[e.target.name]:e.target.value",
-      e.target.name,
-      e.target.value
+  const userName = useRef();
+  const email = useRef();
+  const password = useRef();
+  const role = useRef();
+
+  // const handleChangeHandler = (e) => {
+  // console.log(
+  //   "[e.target.name]:e.target.value",
+  //   e.target.name,
+  //   e.target.value
+  // );
+  // setNewUser({ ...newUser, [e.target.name]: e.target.value });
+  // };
+
+  const handleSubmit = () => {
+    // submitRegister(newUser.email, newUser.password);
+    submitRegister(
+      userName.current.value,
+      email.current.value,
+      password.current.value,
+      role.current.value
     );
-    setNewUser({ ...newUser, [e.target.name]: e.target.value });
-    };
-  
-    const handleSubmit = () => {
-    submitRegister(newUser.email, newUser.password);
   };
-  
+
   return (
     <div className="background">
       <div className="card bg-gradient-to-r from-amber-100 to-cyan-100 text-center">
@@ -31,8 +42,9 @@ function Register() {
             type="text"
             placeholder="Enter name"
             name="userName"
-            value={newUser.userName ? newUser.userName : ""}
-            onChange={handleChangeHandler}
+            // value={newUser.userName ? newUser.userName : ""}
+            // onChange={handleChangeHandler}
+            ref={userName}
             required
           />
           <br />
@@ -44,8 +56,9 @@ function Register() {
             type="email"
             placeholder="Enter email"
             name="email"
-            value={newUser.email ? newUser.email : ""}
-            onChange={handleChangeHandler}
+            // value={newUser.email ? newUser.email : ""}
+            // onChange={handleChangeHandler}
+            ref={email}
             required
           />
           <br />
@@ -57,8 +70,9 @@ function Register() {
             type="password"
             placeholder="Enter password"
             name="password"
-            value={newUser.password ? newUser.password : ""}
-            onChange={handleChangeHandler}
+            // value={newUser.password ? newUser.password : ""}
+            // onChange={handleChangeHandler}
+            ref={password}
             required
           />
           <br />
@@ -71,7 +85,8 @@ function Register() {
               id="traveller"
               name="role"
               value="traveller"
-              onClick={handleChangeHandler}
+              // onClick={handleChangeHandler}
+              ref={role}
             ></input>
             <label htmlFor="traveller">Traveller</label>
             <br />
@@ -81,7 +96,8 @@ function Register() {
               id="leader"
               name="role"
               value="leader"
-              onClick={handleChangeHandler}
+              // onClick={handleChangeHandler}
+              ref={role}
             ></input>
             <label htmlFor="leader">Leader</label>
           </div>

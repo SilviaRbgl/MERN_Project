@@ -28,10 +28,6 @@ const userSchema = new Schema({
     type: Array,
     required: false,
   },
-  comments: {
-    type: Array,
-    required: false,
-  },
 });
 
 const userModel = mongoose.model("user", userSchema);
