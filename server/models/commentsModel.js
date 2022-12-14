@@ -5,8 +5,11 @@ const { Schema } = mongoose;
 const commentSchema = new Schema({
   author: {
     type: String,
-    required: true,
+    required: false,
+    unique: false,
+    sparse: true,
   },
+
   // date: {
   //   type: Date,
   //   required: true,

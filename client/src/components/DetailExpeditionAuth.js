@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { MdFavoriteBorder, MdClose } from "react-icons/md";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Carousel } from "flowbite-react";
 import getToken from "../utils/getToken";
@@ -9,8 +9,8 @@ function DetailExpeditionAuth() {
   const singleExpedition = useLocation();
   const { user, setUser, getProfile } = useContext(AuthContext);
   const [modal, setModal] = useState(false);
-  const [commentText, setCommentText] = useState("");
-  // console.log("expeditionIMAGES", singleExpedition.state.images);
+  const comment = useRef();
+  console.log("expedition>>", singleExpedition);
 
   const getDates = (date) => {
     let myDate = new Date(date).toLocaleDateString();
@@ -66,12 +66,12 @@ function DetailExpeditionAuth() {
     }
   };
 
-  const handleTextChange = (e) => {
-    setCommentText(e.target.value);
-  };
+  // const handleTextChange = (e) => {
+  //   setCommentText(e.target.value);
+  // };
 
-  const postComment = async (expedition) => {
-    console.log("expedition for comments>> ", expedition);
+  const postComment = async () => {
+    // console.log("expedition for comments>> ", expedition);
 
     const myHeaders = new Headers();
     const token = getToken();
@@ -80,9 +80,9 @@ function DetailExpeditionAuth() {
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
     const urlencoded = new URLSearchParams();
-    urlencoded.append("author", "test2@test.com");
-    urlencoded.append("text", "sedsdw");
-    urlencoded.append("expedition", expedition.island);
+    urlencoded.append("author", user.email);
+    urlencoded.append("text", comment.current.value);
+    urlencoded.append("expedition", singleExpedition.state.island);
 
     const requestOptions = {
       method: "POST",
@@ -96,7 +96,7 @@ function DetailExpeditionAuth() {
         requestOptions
       );
       const result = await response.json();
-      setCommentText("");
+      comment.current.value = "";
       console.log("result comments>>", result);
     } catch (error) {
       console.log("error comments>> ", error);
@@ -191,12 +191,13 @@ function DetailExpeditionAuth() {
           type="text"
           placeholder="Write your opinion"
           name="message"
-          onChange={handleTextChange}
+          ref={comment}
+          // onChange={handleTextChange}
           required
         />
         <label htmlFor="message"></label>
         <br></br>
-        <button className="btn" type="submit">
+        <button className="btn" type="submit" onClick={postComment}>
           Submit opinion
         </button>
       </div>

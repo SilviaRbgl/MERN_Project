@@ -55,8 +55,10 @@ const createComment = async (req, res) => {
       text: text,
       expedition: expedition,
     });
+    console.log("newComment", newComment);
     const savedComment = await newComment.save();
 
+    console.log("avedComment", savedComment);
     if (savedComment) {
       try {
         const findingComment = await expeditionModel.findOneAndUpdate(
@@ -86,6 +88,11 @@ const createComment = async (req, res) => {
 const deleteComment = async (req, res) => {
   const comment = req.body;
 
+  // borrar commentario de la coleccion de comentarios
+  //  const deleteCommentFromCommentsCollection = await commentModel.findByIdAndRemove({_id del comentario})
+
+  //2) extraer del array de comentarios de la expedicoon el objectIdf
+  // const deleteCommentFromArray = await.commentModel.findByIdAndUpdate({id de la expedicion}, {hacer pull : comment id})
   try {
     const findingComment = await commentModel.findByIdAndUpdate(
       { _id: id },
