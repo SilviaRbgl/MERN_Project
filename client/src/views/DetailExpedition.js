@@ -28,7 +28,7 @@ function DetailExpedition() {
   }
 
   return (
-    <div className="background">
+    <div className="background mb-10">
       {Object.keys(user).length !== 0 ? ( // we do this, not to receive a user as an empty object.
         <DetailExpeditionAuth />
       ) : (

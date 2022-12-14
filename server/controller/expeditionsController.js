@@ -23,7 +23,7 @@ const gettAllExpeditions = async (req, res) => {
 };
 
 const getExpeditionsByLeader = async (req, res) => {
-  console.log("req :>>", req.params);
+  // console.log("req :>>", req.params);
   const { leader } = req.params;
   try {
     const requestedExpeditions = await expeditionModel
@@ -58,35 +58,58 @@ const createComment = async (req, res) => {
     const savedComment = await newComment.save();
 
     if (savedComment) {
-      const { _id, comments } = req.expedition;
-
-      const findingExpedition = await expeditionModel.findById({ _id: _id });
-      console.log("findingExpedition>>>", findingExpedition);
-
-      if (findingExpedition.comments.includes(comments)) {
-        const findingComment = await expeditionModel.findByIdAndUpdate(
-          { _id: _id },
-          { $push: { comments: comments } },
-          { returnOriginal: false }
+      try {
+        const findingComment = await expeditionModel.findOneAndUpdate(
+          { island: expedition },
+          { $push: { comments: savedComment } },
+          {
+            returnOriginal: false,
+          }
         );
         res.status(201).json({
-          msg: "comment created in expedition",
-          comment: findingComment,
+          msg: "comment saved",
+          findingComment,
+        });
+      } catch (error) {
+        res.status(500).json({
+          msg: "couldn't save message into expeditions array",
         });
       }
     }
-    res.status(201).json({
-      comment: savedComment,
-      msg: "comment created",
-    });
   } catch (error) {
     res.status(500).json({
-      msg: "something went wrong posting a comment",
-      error: error,
+      msg: "problem adding message",
     });
   }
 };
 
-//Actualizar el array de commentarios de la expedicion haciendo push en el array con el postedComment._id.
+const deleteComment = async (req, res) => {
+  const comment = req.body;
 
-export { gettAllExpeditions, getExpeditionsByLeader, createComment };
+  try {
+    const findingComment = await commentModel.findByIdAndUpdate(
+      { _id: id },
+      { $push: { comments: comment._id } },
+      {
+        returnOriginal: false,
+      }
+    );
+    res.status(201).json({
+      msg: "comment removed",
+      comment: {
+        id: findingComment._id,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: "problem deleting message",
+    });
+  }
+};
+
+export {
+  gettAllExpeditions,
+  getExpeditionsByLeader,
+  createComment,
+  deleteComment,
+};

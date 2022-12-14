@@ -93,12 +93,14 @@ function Account() {
         })}
       </div>
 
-      <div className="card mb-4">
-        <p className="font-mono font-bold uppercase mb-2">My reviews</p>
-      </div>
-      <button className="btn" onClick={submitLogOut}>
+      <button className="btn mb-4" onClick={submitLogOut}>
         Log out
       </button>
+
+      <div className="card mb-4">
+        <p className="font-mono font-bold uppercase mb-2">Delete account</p>
+        <p className="font-mono">if </p>
+      </div>
     </div>
   );
 }

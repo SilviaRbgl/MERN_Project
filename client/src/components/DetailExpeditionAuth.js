@@ -9,6 +9,7 @@ function DetailExpeditionAuth() {
   const singleExpedition = useLocation();
   const { user, setUser, getProfile } = useContext(AuthContext);
   const [modal, setModal] = useState(false);
+  const [commentText, setCommentText] = useState("");
   // console.log("expeditionIMAGES", singleExpedition.state.images);
 
   const getDates = (date) => {
@@ -62,6 +63,43 @@ function DetailExpeditionAuth() {
       return true;
     } else {
       return false;
+    }
+  };
+
+  const handleTextChange = (e) => {
+    setCommentText(e.target.value);
+  };
+
+  const postComment = async (expedition) => {
+    console.log("expedition for comments>> ", expedition);
+
+    const myHeaders = new Headers();
+    const token = getToken();
+
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("author", "test2@test.com");
+    urlencoded.append("text", "sedsdw");
+    urlencoded.append("expedition", expedition.island);
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/expeditions/postcomment",
+        requestOptions
+      );
+      const result = await response.json();
+      setCommentText("");
+      console.log("result comments>>", result);
+    } catch (error) {
+      console.log("error comments>> ", error);
     }
   };
 
@@ -153,8 +191,7 @@ function DetailExpeditionAuth() {
           type="text"
           placeholder="Write your opinion"
           name="message"
-          // value={opinion}
-          // onChange={handleOpinion}
+          onChange={handleTextChange}
           required
         />
         <label htmlFor="message"></label>
