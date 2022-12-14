@@ -11,6 +11,7 @@ function DetailExpeditionAuth() {
   const [modal, setModal] = useState(false);
   const comment = useRef();
   console.log("expedition>>", singleExpedition);
+  console.log("comment>>", comment);
 
   const getDates = (date) => {
     let myDate = new Date(date).toLocaleDateString();

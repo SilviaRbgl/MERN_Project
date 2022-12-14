@@ -9,7 +9,6 @@ const commentSchema = new Schema({
     unique: false,
     sparse: true,
   },
-
   // date: {
   //   type: Date,
   //   required: true,

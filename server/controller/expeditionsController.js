@@ -58,7 +58,7 @@ const createComment = async (req, res) => {
     console.log("newComment", newComment);
     const savedComment = await newComment.save();
 
-    console.log("avedComment", savedComment);
+    console.log("savedComment", savedComment);
     if (savedComment) {
       try {
         const findingComment = await expeditionModel.findOneAndUpdate(
@@ -86,25 +86,30 @@ const createComment = async (req, res) => {
 };
 
 const deleteComment = async (req, res) => {
-  const comment = req.body;
+  const { expedition, id } = req.body;
 
-  // borrar commentario de la coleccion de comentarios
-  //  const deleteCommentFromCommentsCollection = await commentModel.findByIdAndRemove({_id del comentario})
-
-  //2) extraer del array de comentarios de la expedicoon el objectIdf
-  // const deleteCommentFromArray = await.commentModel.findByIdAndUpdate({id de la expedicion}, {hacer pull : comment id})
   try {
-    const findingComment = await commentModel.findByIdAndUpdate(
-      { _id: id },
-      { $push: { comments: comment._id } },
+    const deleteCommentDb = await commentModel.findByIdAndDelete({
+      _id: id,
+    });
+    res.status(201).json({
+      msg: "comment removed from database",
+      comment: {
+        id: deleteCommentDb._id,
+      },
+    });
+
+    const deleteCommentExp = await commentModel.findOneAndUpdate(
+      { island: expedition }, // name de la expedición
+      { $pull: { comments: deleteCommentExp.island } },
       {
         returnOriginal: false,
       }
     );
     res.status(201).json({
       msg: "comment removed",
-      comment: {
-        id: findingComment._id,
+      comments: {
+        id: deleteCommentExp.island,
       },
     });
   } catch (error) {
