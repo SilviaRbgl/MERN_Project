@@ -10,7 +10,7 @@ function DetailExpeditionAuth() {
   const { user, setUser, getProfile } = useContext(AuthContext);
   const [modal, setModal] = useState(false);
   const comment = useRef();
-  console.log("expedition>>", singleExpedition);
+  // console.log("expedition>>", singleExpedition);
   console.log("comment>>", comment);
 
   const getDates = (date) => {
@@ -66,10 +66,6 @@ function DetailExpeditionAuth() {
       return false;
     }
   };
-
-  // const handleTextChange = (e) => {
-  //   setCommentText(e.target.value);
-  // };
 
   const postComment = async () => {
     // console.log("expedition for comments>> ", expedition);
@@ -201,6 +197,12 @@ function DetailExpeditionAuth() {
         <button className="btn" type="submit" onClick={postComment}>
           Submit opinion
         </button>
+        <div
+          className="rounded border-2 border-cyan-500 w-full pt-2 pl-2 pr-14 pb-14 font-mono outline-1 outline-cyan-600"
+          action=""
+        >
+          <p className="font-mono mb-2">{user.email} wrote:</p>
+        </div>
       </div>
       {/* </div> */}
     </>

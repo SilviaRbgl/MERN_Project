@@ -86,32 +86,30 @@ const createComment = async (req, res) => {
 };
 
 const deleteComment = async (req, res) => {
-  const { expedition, id } = req.body;
+  const { expeditionId, commentId } = req.body;
+  console.log("expeditionId :>> ", expeditionId);
+  console.log("commentId :>> ", commentId);
 
   try {
     const deleteCommentDb = await commentModel.findByIdAndDelete({
-      _id: id,
-    });
-    res.status(201).json({
-      msg: "comment removed from database",
-      comment: {
-        id: deleteCommentDb._id,
-      },
+      _id: commentId,
     });
 
-    const deleteCommentExp = await commentModel.findOneAndUpdate(
-      { island: expedition }, // name de la expedición
-      { $pull: { comments: deleteCommentExp.island } },
-      {
-        returnOriginal: false,
-      }
-    );
-    res.status(201).json({
-      msg: "comment removed",
-      comments: {
-        id: deleteCommentExp.island,
-      },
-    });
+    console.log("deleteCommentDb>>", deleteCommentDb);
+
+    if (deleteCommentDb) {
+      const deleteCommentExpArray = await expeditionModel.findByIdAndUpdate(
+        { _id: expeditionId }, // id de la expedición
+        { $pull: { comments: commentId } },
+        {
+          returnOriginal: false,
+        }
+      );
+      console.log("deleteCommentExpArray :>> ", deleteCommentExpArray);
+      res.status(201).json({
+        msg: "comment removed from db & array",
+      });
+    }
   } catch (error) {
     res.status(500).json({
       msg: "problem deleting message",
