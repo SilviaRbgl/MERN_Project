@@ -203,4 +203,35 @@ const addFavourite = async (req, res) => {
   }
 };
 
-export { uploadImage, register, login, getProfile, addFavourite };
+const getFavouritesByUser = async (req, res) => {
+  const { favourite } = req.params;
+  // console.log("req.params", req.params);
+  try {
+    const requestedUser = await userModel
+      .findOne({
+        userName: favourite,
+      })
+      .populate({ path: "favourites" })
+      .exec();
+    console.log("requestedUser", requestedUser.favourites);
+    res.status(200).json({
+      msg: "favourites by user successfully",
+      favourites: requestedUser.favourites,
+    });
+  } catch (error) {
+    console.log("error getting favourites by user >", error);
+    res.status(500).json({
+      error,
+      msg: "problem in the server getting favourites by user",
+    });
+  }
+};
+
+export {
+  uploadImage,
+  register,
+  login,
+  getProfile,
+  addFavourite,
+  getFavouritesByUser,
+};

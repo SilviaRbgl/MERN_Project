@@ -1,7 +1,6 @@
 import { useLocation, useParams } from "react-router-dom";
 import { MdFavoriteBorder, MdClose } from "react-icons/md";
 import { AiOutlineDelete } from "react-icons/ai";
-
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Carousel } from "flowbite-react";
@@ -12,10 +11,14 @@ function DetailExpeditionAuth() {
   const { user, setUser, getProfile } = useContext(AuthContext);
   const [modal, setModal] = useState(false);
   const comment = useRef();
-  console.log("expedition>>", singleExpedition.state.comments);
+  const [comments, setComments] = useState([]);
+  console.log("singleExpedition>>", singleExpedition.state);
+  // console.log("comment", comment);
+  console.log("commentID", comment);
 
   const expeditionName = useParams();
-  console.log("expeditionName", expeditionName);
+  // console.log("expeditionName", expeditionName);
+
   const getDates = (date) => {
     let myDate = new Date(date).toLocaleDateString();
     return myDate;
@@ -95,9 +98,8 @@ function DetailExpeditionAuth() {
       );
       const result = await response.json();
       comment.current.value = "";
-      console.log("result comments>>", result);
+      // console.log("result comments>>", result);
       updateComments();
-      // getProfile(); --> DO I NEED TO CALL THIS FUNCTION?
     } catch (error) {
       console.log("error comments>> ", error);
     }
@@ -121,7 +123,35 @@ function DetailExpeditionAuth() {
         requestOptions
       );
       const result = await response.json();
-      console.log("result", result);
+      // console.log("result comments>>", result.comments);
+      setComments(result.comments);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  const deleteComments = async () => {
+    const myHeaders = new Headers();
+    const token = getToken();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    const urlencoded = new URLSearchParams();
+    urlencoded.append("commentId", comment.current._id);
+    urlencoded.append("expeditionId", singleExpedition.state._id);
+
+    const requestOptions = {
+      method: "DELETE",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/expeditions/deletecomment",
+        requestOptions
+      );
+      const result = await response.json();
     } catch (error) {
       console.log("error", error);
     }
@@ -130,11 +160,6 @@ function DetailExpeditionAuth() {
   useEffect(() => {
     updateComments();
   }, []);
-
-  // const submitComment = (e) => {
-  //   e.preventDefault();
-  //   console.log("comments");
-  // };
 
   return (
     <>
@@ -187,7 +212,7 @@ function DetailExpeditionAuth() {
               : "btn-favorite"
           }
         >
-          {console.log("isFavorite>>>", isFav(singleExpedition.state._id))}
+          {/* {console.log("isFavorite>>>", isFav(singleExpedition.state._id))} */}
           <MdFavoriteBorder />
         </button>
         <br />
@@ -232,22 +257,18 @@ function DetailExpeditionAuth() {
         <button className="btn" type="submit" onClick={postComment}>
           Submit opinion
         </button>
-        {/* DISPLAY COMMENTS */}
-
-        {/* {comments && comments.map((opinion, index) => {
-            return (
-	            <div className="rounded border-2 border-cyan-500 w-full pt-2 pl-2 pr-14 pb-14 font-mono outline-1 outline-cyan-600" key={index} >
-		              <p>{opinion.author}<p>
-		              <p>{opinion.text}<p>
-	          </div>
-            )           
-        }) */}
-        {/* <p className="font-mono mb-2">{user.email} wrote:</p> */}
       </div>
-      <button className="btn" type="submit">
-        <AiOutlineDelete />
-      </button>
-      {/* </div> */}
+      {comments?.map((comment, index) => {
+        return (
+          <div key={index} className="bg-amber-200 font-mono">
+            <p>{comment.author}</p>
+            <p>{comment.text}</p>
+            <button className="btn" type="submit" onClick={deleteComments}>
+              <AiOutlineDelete />
+            </button>
+          </div>
+        );
+      })}
     </>
   );
 }

@@ -24,10 +24,11 @@ const userSchema = new Schema({
     type: String,
     required: false,
   },
-  favourites: {
-    type: Array,
-    required: false,
-  },
+  // favourites: {
+  //   type: Array,
+  //   required: false,
+  // },
+  favourites: [{ type: Schema.Types.ObjectId, ref: "favourite" }],
 });
 
 const userModel = mongoose.model("user", userSchema);
