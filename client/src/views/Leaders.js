@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 function Leaders() {
   const [leader, setLeader] = useState([]);
+  const { expedition, setExpedition } = useContext(AuthContext);
   // console.log("leader", leader);
 
   const fetchLeaders = async () => {
     const response = await fetch("http://localhost:5000/api/leaders/all/");
     const result = await response.json();
-    // console.log("result", result);
+    console.log("result", result);
     setLeader(result.allLeaders);
   };
 

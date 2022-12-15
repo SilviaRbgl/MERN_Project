@@ -9,6 +9,7 @@ export const AuthContextProvider = (props) => {
   const [user, setUser] = useState({});
   const redirectTo = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
+  const [expedition, setExpedition] = useState([]);
 
   const submitRegister = async (
     userName,
@@ -153,6 +154,8 @@ export const AuthContextProvider = (props) => {
         setUser,
         getProfile,
         isLoading,
+        expedition,
+        setExpedition,
       }}
     >
       {props.children}

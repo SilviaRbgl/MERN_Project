@@ -1,6 +1,8 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { MdFavoriteBorder, MdClose } from "react-icons/md";
-import { useContext, useRef, useState } from "react";
+import { AiOutlineDelete } from "react-icons/ai";
+
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Carousel } from "flowbite-react";
 import getToken from "../utils/getToken";
@@ -10,9 +12,10 @@ function DetailExpeditionAuth() {
   const { user, setUser, getProfile } = useContext(AuthContext);
   const [modal, setModal] = useState(false);
   const comment = useRef();
-  // console.log("expedition>>", singleExpedition);
-  console.log("comment>>", comment);
+  console.log("expedition>>", singleExpedition.state.comments);
 
+  const expeditionName = useParams();
+  console.log("expeditionName", expeditionName);
   const getDates = (date) => {
     let myDate = new Date(date).toLocaleDateString();
     return myDate;
@@ -68,8 +71,6 @@ function DetailExpeditionAuth() {
   };
 
   const postComment = async () => {
-    // console.log("expedition for comments>> ", expedition);
-
     const myHeaders = new Headers();
     const token = getToken();
 
@@ -95,10 +96,45 @@ function DetailExpeditionAuth() {
       const result = await response.json();
       comment.current.value = "";
       console.log("result comments>>", result);
+      updateComments();
+      // getProfile(); --> DO I NEED TO CALL THIS FUNCTION?
     } catch (error) {
       console.log("error comments>> ", error);
     }
   };
+
+  const updateComments = async () => {
+    const myHeaders = new Headers();
+    const token = getToken();
+
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    const requestOptions = {
+      headers: myHeaders,
+      method: "GET",
+      redirect: "follow",
+    };
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/expeditions/comments/${expeditionName.island}`,
+        requestOptions
+      );
+      const result = await response.json();
+      console.log("result", result);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  useEffect(() => {
+    updateComments();
+  }, []);
+
+  // const submitComment = (e) => {
+  //   e.preventDefault();
+  //   console.log("comments");
+  // };
 
   return (
     <>
@@ -187,9 +223,8 @@ function DetailExpeditionAuth() {
           className="rounded border-2 border-cyan-500 w-full pt-2 pl-2 pr-14 pb-14 font-mono outline-1 outline-cyan-600"
           type="text"
           placeholder="Write your opinion"
-          name="message"
+          name="opinion"
           ref={comment}
-          // onChange={handleTextChange}
           required
         />
         <label htmlFor="message"></label>
@@ -197,13 +232,21 @@ function DetailExpeditionAuth() {
         <button className="btn" type="submit" onClick={postComment}>
           Submit opinion
         </button>
-        <div
-          className="rounded border-2 border-cyan-500 w-full pt-2 pl-2 pr-14 pb-14 font-mono outline-1 outline-cyan-600"
-          action=""
-        >
-          <p className="font-mono mb-2">{user.email} wrote:</p>
-        </div>
+        {/* DISPLAY COMMENTS */}
+
+        {/* {comments && comments.map((opinion, index) => {
+            return (
+	            <div className="rounded border-2 border-cyan-500 w-full pt-2 pl-2 pr-14 pb-14 font-mono outline-1 outline-cyan-600" key={index} >
+		              <p>{opinion.author}<p>
+		              <p>{opinion.text}<p>
+	          </div>
+            )           
+        }) */}
+        {/* <p className="font-mono mb-2">{user.email} wrote:</p> */}
       </div>
+      <button className="btn" type="submit">
+        <AiOutlineDelete />
+      </button>
       {/* </div> */}
     </>
   );

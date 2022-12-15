@@ -25,11 +25,12 @@ const gettAllExpeditions = async (req, res) => {
 const getExpeditionsByLeader = async (req, res) => {
   // console.log("req :>>", req.params);
   const { leader } = req.params;
+  // console.log("leader", leader);
   try {
     const requestedExpeditions = await expeditionModel
-      .find({ leader: leader })
+      .findOne({ leader: leader })
       .exec();
-    console.log("requestedExpeditions>>>", requestedExpeditions);
+    // console.log("requestedExpeditions>>>", requestedExpeditions);
     res.status(200).json({
       number: requestedExpeditions.length,
       requestedExpeditions,
@@ -38,11 +39,34 @@ const getExpeditionsByLeader = async (req, res) => {
     console.log("error getting expeditions by leader >", error);
     res.status(500).json({
       error,
-      msg: "problem in the server getting leaders",
+      msg: "problem in the server getting expeditions by leaders",
     });
   }
 };
 
+const getExpeditionsByName = async (req, res) => {
+  const { expedition } = req.params;
+  // console.log("req.params", req.params);
+  try {
+    const requestedExpedition = await expeditionModel
+      .findOne({
+        island: expedition,
+      })
+      .populate({ path: "comments" })
+      .exec();
+    console.log("requestedExpedition", requestedExpedition.comments);
+    res.status(200).json({
+      msg: "comments by name of expedition successfully",
+      comments: requestedExpedition.comments,
+    });
+  } catch (error) {
+    console.log("error getting expeditions by name >", error);
+    res.status(500).json({
+      error,
+      msg: "problem in the server getting comments by name of expedition",
+    });
+  }
+};
 // crear comentario en collecion comments
 const createComment = async (req, res) => {
   const { author, date, text, expedition } = req.body;
@@ -62,7 +86,11 @@ const createComment = async (req, res) => {
     if (savedComment) {
       try {
         const findingComment = await expeditionModel.findOneAndUpdate(
-          { island: expedition },
+          {
+            island: expedition,
+            author: author,
+            text: text,
+          },
           { $push: { comments: savedComment } },
           {
             returnOriginal: false,
@@ -70,6 +98,11 @@ const createComment = async (req, res) => {
         );
         res.status(201).json({
           msg: "comment saved",
+          // comment: {
+          //   author: findingComment.author,
+          //   text: findingComment.text,
+          //   island: findingComment.expedition,
+          // },
           findingComment,
         });
       } catch (error) {
@@ -120,6 +153,7 @@ const deleteComment = async (req, res) => {
 export {
   gettAllExpeditions,
   getExpeditionsByLeader,
+  getExpeditionsByName,
   createComment,
   deleteComment,
 };

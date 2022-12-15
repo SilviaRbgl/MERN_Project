@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 function Expeditions() {
-  const [expedition, setExpedition] = useState([]);
-  // const { isLoading } = useContext(AuthContext);
+  // const [expedition, setExpedition] = useState([]);
+  const { expedition, setExpedition } = useContext(AuthContext);
 
   const fetchExpeditions = async () => {
     const response = await fetch("http://localhost:5000/api/expeditions/all/");

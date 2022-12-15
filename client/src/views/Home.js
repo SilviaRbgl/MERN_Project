@@ -28,10 +28,10 @@ function Home() {
           <img src={Nicobar_Islands01} alt="Nicobar Island" />
           <img src={Revillagigedo01} alt="Revillagigedo Island" />
           <img src={Pitcairn_Island01} alt="Pitcairn Island" />
-          <img src={Socotra01} alt="Easter Island" />
-          <img src={South_Georgia01} alt="Diego Garcia Island" />
+          <img src={Socotra01} alt="Socotra Island" />
+          <img src={South_Georgia01} alt="South Georgia Island" />
           <img src={Easter_Island01} alt="Easter Island" />
-          <img src={Svalbard01} alt="Pitcairn Island" />
+          <img src={Svalbard01} alt="Svalbard Island" />
         </Carousel>
       </div>
     </>
