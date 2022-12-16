@@ -7,7 +7,6 @@ import issueToken from "../utils/jwt.js";
 const register = async (req, res) => {
   // console.log("req.body >>", req.body);
   const { email, password, role } = req.body;
-  // const isEmailValid = validateEmail(email)
 
   try {
     const existingUser = await userModel.findOne({ email: req.body.email });
@@ -71,7 +70,7 @@ const login = async (req, res) => {
       if (verified) {
         console.log("verified >>>", verified);
         const token = issueToken(existingUser._id);
-        console.log("token>>", token);
+        // console.log("token>>", token);
 
         res.status(200).json({
           msg: "logged in successfully",
@@ -91,10 +90,10 @@ const login = async (req, res) => {
   }
 };
 
-// poner la función de getFavouritesByUser aqui
 const getProfile = async (req, res) => {
   const { userName, email, password, profilePicture, role, favourites } =
     req.user;
+  console.log("req.user", req.user);
 
   try {
     const requestedUser = await userModel
@@ -105,12 +104,11 @@ const getProfile = async (req, res) => {
       .exec();
     console.log("requestedUser", requestedUser);
     res.status(200).json({
-      userName: userName,
-      email: email,
-      password: password,
-      role: role,
-      profilePicture: profilePicture,
-      favourites: favourites,
+      userName: requestedUser.userName,
+      email: requestedUser.email,
+      role: requestedUser.role,
+      profilePicture: requestedUser.profilePicture,
+      favourites: requestedUser.favourites,
     });
   } catch (error) {
     console.log("error getting favourites by user >", error);

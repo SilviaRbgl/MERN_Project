@@ -64,8 +64,8 @@ function DetailExpeditionAuth() {
   };
 
   const isFav = (expeditionID) => {
-    // console.log("expeditionId :>> ", expeditionID);
-    // console.log("user.favourites :>> ", user.favourites);
+    console.log("expeditionId :>> ", expeditionID);
+    console.log("user.favourites :>> ", user.favourites);
     if (
       user?.favourites?.length > 0 &&
       user?.favourites?.includes(expeditionID)
@@ -225,7 +225,7 @@ function DetailExpeditionAuth() {
               : "btn-favorite"
           }
         >
-          {/* {console.log("isFavorite>>>", isFav(singleExpedition.state._id))} */}
+          {console.log("isFavorite>>>", isFav(singleExpedition.state._id))}
           <MdFavoriteBorder />
         </button>
         <br />

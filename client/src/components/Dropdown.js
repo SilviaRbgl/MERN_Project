@@ -13,16 +13,13 @@ function Dropdown() {
   };
 
   const submitAccount = () => {
-    console.log("clicked account");
     getProfile();
     redirectTo("/account");
     setOpen(false);
   };
 
   const submitLogOut = () => {
-    console.log("clicked logout");
     logOut();
-    redirectTo("/");
     setOpen(false);
   };
 

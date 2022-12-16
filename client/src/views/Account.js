@@ -6,7 +6,7 @@ function Account() {
     useContext(AuthContext);
   const [selectedFile, setSelectedFile] = useState({});
   // console.log("expedition", expedition);
-  console.log("userFavs", user.favourites);
+  // console.log("userFavs", user.favourites);
 
   const attachFileHandler = (e) => {
     console.log("e.target.files[0]", e.target.files[0]);
@@ -32,7 +32,8 @@ function Account() {
       );
       const result = await response.json();
       console.log("result", result.image);
-      setUser({ ...user, profilePicture: result.image });
+      // setUser({ ...user, profilePicture: result.image });
+      getProfile({ ...user, profilePicture: result.image });
     } catch (error) {
       console.log("error >", error);
     }
@@ -47,7 +48,7 @@ function Account() {
   // }, [])
 
   return (
-    <div className="background">
+    <div className="background sm:h-64 xl:h-80 2xl:h-96 lg:mx-40">
       <div className="card bg-gradient-to-r from-amber-100 to-cyan-100 mb-4">
         <p className="font-mono font-bold uppercase mb-2">
           My {user?.role} account
@@ -87,14 +88,23 @@ function Account() {
         <p className="font-mono font-bold uppercase mb-2">
           My favourites expeditions
         </p>
-        {user?.favourites?.map((fav, index) => {
-          return (
-            <div key={index}>
-              <p>{fav}</p>
-            </div>
-          );
-        })}
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+          {user?.favourites?.map((fav, index) => {
+            return (
+              <div className="card mb-4 font-mono" key={index}>
+                <p className="mb-1">{fav.island}</p>
+                <p className="text-xs mb-1 ">{fav.country}</p>
+                <img
+                  src={fav.images[0]}
+                  alt="expedition image"
+                  className="w-32 rounded mb-1"
+                />
+              </div>
+            );
+          })}
+        </div>
       </div>
+      {/* </div> */}
 
       <button className="btn mb-4" onClick={submitLogOut}>
         Log out

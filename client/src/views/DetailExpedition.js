@@ -3,7 +3,7 @@ import { MdClose } from "react-icons/md";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import DetailExpeditionAuth from "../components/DetailExpeditionAuth";
-import { Carousel } from "flowbite-react";
+import { Carousel, Timeline } from "flowbite-react";
 
 function DetailExpedition() {
   const singleExpedition = useLocation();
@@ -29,7 +29,8 @@ function DetailExpedition() {
 
   return (
     <div className="background mb-10">
-      {Object.keys(user).length !== 0 ? ( // we do this, not to receive a user as an empty object.
+      {/* {Object.keys(user).length !== 0 ? } ====> we do this, not to receive a user as an empty object */}
+      {user ? (
         <DetailExpeditionAuth />
       ) : (
         <>

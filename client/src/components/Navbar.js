@@ -25,7 +25,7 @@ function Navbar() {
           Leaders{" "}
         </Link>
         {/* {console.log('user in navbar :>> ', Object.keys(user))} */}
-        {Object.keys(user).length !== 0 ? (
+        {user ? (
           <Dropdown />
         ) : (
           <Link to="/login" className="no-underline hover:underline">

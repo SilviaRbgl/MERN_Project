@@ -6,7 +6,7 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = (props) => {
   const [isUser, setIsUser] = useState(true);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const redirectTo = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [expedition, setExpedition] = useState([]);
@@ -53,7 +53,7 @@ export const AuthContextProvider = (props) => {
   };
 
   const submitLogin = async (email, password) => {
-    console.log("userLogin", email, password);
+    // console.log("userLogin", email, password);
 
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -88,11 +88,13 @@ export const AuthContextProvider = (props) => {
         redirectTo("/expeditions");
       }
       if (!token || !user) {
-        setUser({});
+        setUser(null);
+        setIsUser(false);
         // alert("user not found with this email, register first?");
       }
     } catch (error) {
       setIsUser(false);
+      setUser(null);
       setIsLoading(false);
       console.log("error", error);
     }
@@ -119,8 +121,11 @@ export const AuthContextProvider = (props) => {
         const result = await response.json();
         console.log("result", result);
         setUser(result);
+        setIsUser(true);
       } catch (error) {
         console.log("error >", error);
+        setUser(null);
+        setIsUser(false);
       }
     } else {
       // alert("sesion expired, please log in again");
@@ -131,6 +136,7 @@ export const AuthContextProvider = (props) => {
   const logOut = () => {
     localStorage.removeItem("token");
     setIsUser(false);
+    setUser(null);
     redirectTo("/");
   };
 
