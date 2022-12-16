@@ -123,7 +123,7 @@ const getProfile = async (req, res) => {
 
 const updateProfile = async (req, res) => {
   const { userName, password } = req.user;
-  console.log("reqUserrrrr>>", req.user);
+  console.log("reqUser for update>>", req.user);
 
   if (userName) {
     try {
@@ -135,7 +135,13 @@ const updateProfile = async (req, res) => {
         username: updateUsername.userName,
         msg: "username is changed",
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log("error", error);
+      res.status(500).json({
+        msg: "username is not changed",
+        error: error,
+      });
+    }
   }
   if (password) {
     try {
@@ -146,7 +152,13 @@ const updateProfile = async (req, res) => {
         password: updatePassword.password,
         msg: "password is changed",
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log("error", error);
+      res.status(500).json({
+        msg: "password is not changed",
+        error: error,
+      });
+    }
   }
 };
 

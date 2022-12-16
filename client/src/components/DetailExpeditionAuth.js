@@ -66,10 +66,11 @@ function DetailExpeditionAuth() {
     console.log("user.favourites :>> ", user.favourites);
     if (
       user?.favourites?.length > 0 &&
-      user?.favourites?.includes(expeditionID)
+      user?.favourites?.find((fav) => fav._id === expeditionID)
     ) {
       return true;
     }
+    return false;
   };
 
   const postComment = async () => {
