@@ -121,6 +121,35 @@ const getProfile = async (req, res) => {
   // console.log("req>>>", req.user);
 };
 
+const updateProfile = async (req, res) => {
+  const { userName, password } = req.user;
+  console.log("reqUserrrrr>>", req.user);
+
+  if (userName) {
+    try {
+      const updateUsername = await userModel.findOneAndUpdate({
+        userName: userName,
+        returnOriginal: false,
+      });
+      res.status(200).json({
+        username: updateUsername.userName,
+        msg: "username is changed",
+      });
+    } catch (error) {}
+  }
+  if (password) {
+    try {
+      const updatePassword = await userModel.findOneAndUpdate({
+        password: password,
+      });
+      res.status(200).json({
+        password: updatePassword.password,
+        msg: "password is changed",
+      });
+    } catch (error) {}
+  }
+};
+
 const uploadImage = async (req, res) => {
   try {
     // console.log("req.file", req.file.path);
@@ -218,35 +247,11 @@ const addFavourite = async (req, res) => {
   }
 };
 
-// const getFavouritesByUser = async (req, res) => {
-//   const { user, favourite } = req.params;
-//   console.log("req.params", req.params);
-//   try {
-//     const requestedUser = await userModel
-//       .findOne({
-//         email: user,
-//       })
-//       .populate({ path: "favourites", select: "island" })
-//       .exec();
-//     console.log("requestedUser", requestedUser);
-//     res.status(200).json({
-//       msg: "favourites by user successfully",
-//       favourites: requestedUser.favourites,
-//     });
-//   } catch (error) {
-//     console.log("error getting favourites by user >", error);
-//     res.status(500).json({
-//       error,
-//       msg: "problem in the server getting favourites by user",
-//     });
-//   }
-// };
-
 export {
   uploadImage,
   register,
   login,
   getProfile,
   addFavourite,
-  // getFavouritesByUser,
+  updateProfile,
 };

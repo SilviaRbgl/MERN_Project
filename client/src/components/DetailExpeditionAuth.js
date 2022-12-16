@@ -12,9 +12,7 @@ function DetailExpeditionAuth() {
   const [modal, setModal] = useState(false);
   const comment = useRef();
   const [comments, setComments] = useState([]);
-  console.log("singleExpedition>>", singleExpedition.state);
-  // console.log("comment", comment);
-  // console.log("commentID", comment);
+  // console.log("singleExpedition>>", singleExpedition.state);
 
   const expeditionName = useParams();
   // console.log("expeditionName", expeditionName);
@@ -257,7 +255,7 @@ function DetailExpeditionAuth() {
         <p className="font-mono font-bold uppercase mb-2">
           Travellers opinions
         </p>
-        <input
+        <textarea
           className="rounded border-2 border-cyan-500 w-full pt-2 pl-2 pr-14 pb-14 font-mono outline-1 outline-cyan-600"
           type="text"
           placeholder="Write your opinion"

@@ -32,8 +32,7 @@ function Account() {
       );
       const result = await response.json();
       console.log("result", result.image);
-      // setUser({ ...user, profilePicture: result.image });
-      getProfile({ ...user, profilePicture: result.image });
+      setUser({ ...user, profilePicture: result.image });
     } catch (error) {
       console.log("error >", error);
     }
@@ -43,13 +42,10 @@ function Account() {
     console.log("logout");
     logOut();
   };
-  // useEffect(() => { // el useEffect del getProfile si está aqui igual da menos problemas que en el AuthContext
-  //   getProfile()
-  // }, [])
 
   return (
-    <div className="background sm:h-64 xl:h-80 2xl:h-96 lg:mx-40">
-      <div className="card bg-gradient-to-r from-amber-100 to-cyan-100 mb-4">
+    <div className="background lg:mx-60">
+      <div className="card bg-gradient-to-r from-amber-100 to-cyan-100 mb-4 text-center object-center">
         <p className="font-mono font-bold uppercase mb-2">
           My {user?.role} account
         </p>
@@ -62,13 +58,13 @@ function Account() {
 
         {user && user.profilePicture !== undefined ? (
           <img
-            className="w-32 h-32"
+            className="w-32 h-32" // centrar esta imagen
             src={user.profilePicture}
             alt="profile picture"
           />
         ) : (
           <img
-            className="w-32 h-32"
+            className="w-32 h-32" // centrar esta imagen
             src="http://res.cloudinary.com/dtwbyjspa/image/upload/v1669821358/images/yk4xc69svkglrejjq3tk.png"
             alt="default profile picture"
           />
