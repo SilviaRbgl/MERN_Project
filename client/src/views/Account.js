@@ -2,8 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 function Account() {
-  const { user, setUser, logOut, getProfile } = useContext(AuthContext);
+  const { user, setUser, logOut, getProfile, expedition } =
+    useContext(AuthContext);
   const [selectedFile, setSelectedFile] = useState({});
+  // console.log("expedition", expedition);
+  console.log("userFavs", user.favourites);
 
   const attachFileHandler = (e) => {
     console.log("e.target.files[0]", e.target.files[0]);
@@ -84,7 +87,6 @@ function Account() {
         <p className="font-mono font-bold uppercase mb-2">
           My favourites expeditions
         </p>
-
         {user?.favourites?.map((fav, index) => {
           return (
             <div key={index}>
@@ -100,7 +102,7 @@ function Account() {
 
       <div className="card mb-4">
         <p className="font-mono font-bold uppercase mb-2">Delete account</p>
-        <p className="font-mono">if </p>
+        <p className="font-mono"></p>
       </div>
     </div>
   );

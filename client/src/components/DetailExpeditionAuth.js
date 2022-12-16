@@ -14,7 +14,7 @@ function DetailExpeditionAuth() {
   const [comments, setComments] = useState([]);
   console.log("singleExpedition>>", singleExpedition.state);
   // console.log("comment", comment);
-  console.log("commentID", comment);
+  // console.log("commentID", comment);
 
   const expeditionName = useParams();
   // console.log("expeditionName", expeditionName);
@@ -42,7 +42,7 @@ function DetailExpeditionAuth() {
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
     const urlencoded = new URLSearchParams();
-    urlencoded.append("favourite", expeditionId);
+    urlencoded.append("favourite", expeditionId); // esto va al backend
 
     const requestOptions = {
       method: "PATCH",
@@ -66,10 +66,11 @@ function DetailExpeditionAuth() {
   const isFav = (expeditionID) => {
     // console.log("expeditionId :>> ", expeditionID);
     // console.log("user.favourites :>> ", user.favourites);
-    if (user.favourites.length > 0 && user.favourites.includes(expeditionID)) {
+    if (
+      user?.favourites?.length > 0 &&
+      user?.favourites?.includes(expeditionID)
+    ) {
       return true;
-    } else {
-      return false;
     }
   };
 
@@ -130,14 +131,14 @@ function DetailExpeditionAuth() {
     }
   };
 
-  const deleteComments = async () => {
+  const deleteComments = async (commentId, commentAuthor) => {
     const myHeaders = new Headers();
     const token = getToken();
     myHeaders.append("Authorization", `Bearer ${token}`);
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
     const urlencoded = new URLSearchParams();
-    urlencoded.append("commentId", comment.current._id);
+    urlencoded.append("commentId", commentId);
     urlencoded.append("expeditionId", singleExpedition.state._id);
 
     const requestOptions = {
@@ -146,16 +147,28 @@ function DetailExpeditionAuth() {
       body: urlencoded,
       redirect: "follow",
     };
-    try {
-      const response = await fetch(
-        "http://localhost:5000/api/expeditions/deletecomment",
-        requestOptions
-      );
-      const result = await response.json();
-    } catch (error) {
-      console.log("error", error);
+    if (commentAuthor === user.email) {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/expeditions/deletecomment",
+          requestOptions
+        );
+        const result = await response.json();
+        console.log("resultDelete", result);
+        updateComments();
+      } catch (error) {
+        console.log("error", error);
+      }
+    } else {
+      console.log("can not delete comments users");
     }
   };
+
+  // const isDeleted = (commentId) => {
+  //   if (user?.comments?.length > 0 && user?.comments?.includes(commentId)) {
+  //     return true;
+  //   }
+  // };
 
   useEffect(() => {
     updateComments();
@@ -254,18 +267,34 @@ function DetailExpeditionAuth() {
         />
         <label htmlFor="message"></label>
         <br></br>
-        <button className="btn" type="submit" onClick={postComment}>
+        <button className="btn mb-4" type="submit" onClick={postComment}>
           Submit opinion
         </button>
       </div>
       {comments?.map((comment, index) => {
         return (
-          <div key={index} className="bg-amber-200 font-mono">
-            <p>{comment.author}</p>
-            <p>{comment.text}</p>
-            <button className="btn" type="submit" onClick={deleteComments}>
-              <AiOutlineDelete />
-            </button>
+          <div
+            key={index}
+            className="bg-amber-100 font-mono p-2 rounded-lg mb-6 relative"
+          >
+            <p className="text-sm mb-2">{comment.author} wrote:</p>
+            <p className="mb-2">"{comment.text}"</p>
+            <div
+              className="absolute top-0 right-0 mr-2 mt-2"
+              // className={
+              //   isDeleted(comment)
+              //     ? "absolute top-0 right-0 mr-2 mt-2"
+              //     : "absolute top-0 right-0 mr-2 mt-2 hidden"
+              // }
+            >
+              <button
+                className="btn"
+                type="submit"
+                onClick={() => deleteComments(comment._id, comment.author)}
+              >
+                <AiOutlineDelete />
+              </button>
+            </div>
           </div>
         );
       })}

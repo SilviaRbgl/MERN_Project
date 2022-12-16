@@ -28,7 +28,7 @@ const userSchema = new Schema({
   //   type: Array,
   //   required: false,
   // },
-  favourites: [{ type: Schema.Types.ObjectId, ref: "favourite" }],
+  favourites: [{ type: Schema.Types.ObjectId, ref: "expedition" }],
 });
 
 const userModel = mongoose.model("user", userSchema);

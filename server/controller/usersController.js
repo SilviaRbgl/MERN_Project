@@ -91,19 +91,36 @@ const login = async (req, res) => {
   }
 };
 
+// poner la función de getFavouritesByUser aqui
 const getProfile = async (req, res) => {
   const { userName, email, password, profilePicture, role, favourites } =
     req.user;
 
+  try {
+    const requestedUser = await userModel
+      .findOne({
+        email: email,
+      })
+      .populate({ path: "favourites", select: ["island", "country", "images"] })
+      .exec();
+    console.log("requestedUser", requestedUser);
+    res.status(200).json({
+      userName: userName,
+      email: email,
+      password: password,
+      role: role,
+      profilePicture: profilePicture,
+      favourites: favourites,
+    });
+  } catch (error) {
+    console.log("error getting favourites by user >", error);
+    res.status(500).json({
+      error,
+      msg: "problem in the server getting favourites by user",
+    });
+  }
+  // añadir aqui el findOne, populate, blabla
   // console.log("req>>>", req.user);
-  res.status(200).json({
-    userName: userName,
-    email: email,
-    password: password,
-    role: role,
-    profilePicture: profilePicture,
-    favourites: favourites,
-  });
 };
 
 const uploadImage = async (req, res) => {
@@ -128,7 +145,7 @@ const uploadImage = async (req, res) => {
 
 const addFavourite = async (req, res) => {
   const { id } = req.user;
-  const { favourite } = req.body;
+  const { favourite } = req.body; // viene del frontend
   // console.log("user in request>>>", req.user);
   // console.log("favorite trip>>>", req.body);
 
@@ -203,29 +220,29 @@ const addFavourite = async (req, res) => {
   }
 };
 
-const getFavouritesByUser = async (req, res) => {
-  const { favourite } = req.params;
-  // console.log("req.params", req.params);
-  try {
-    const requestedUser = await userModel
-      .findOne({
-        userName: favourite,
-      })
-      .populate({ path: "favourites" })
-      .exec();
-    console.log("requestedUser", requestedUser.favourites);
-    res.status(200).json({
-      msg: "favourites by user successfully",
-      favourites: requestedUser.favourites,
-    });
-  } catch (error) {
-    console.log("error getting favourites by user >", error);
-    res.status(500).json({
-      error,
-      msg: "problem in the server getting favourites by user",
-    });
-  }
-};
+// const getFavouritesByUser = async (req, res) => {
+//   const { user, favourite } = req.params;
+//   console.log("req.params", req.params);
+//   try {
+//     const requestedUser = await userModel
+//       .findOne({
+//         email: user,
+//       })
+//       .populate({ path: "favourites", select: "island" })
+//       .exec();
+//     console.log("requestedUser", requestedUser);
+//     res.status(200).json({
+//       msg: "favourites by user successfully",
+//       favourites: requestedUser.favourites,
+//     });
+//   } catch (error) {
+//     console.log("error getting favourites by user >", error);
+//     res.status(500).json({
+//       error,
+//       msg: "problem in the server getting favourites by user",
+//     });
+//   }
+// };
 
 export {
   uploadImage,
@@ -233,5 +250,5 @@ export {
   login,
   getProfile,
   addFavourite,
-  getFavouritesByUser,
+  // getFavouritesByUser,
 };
