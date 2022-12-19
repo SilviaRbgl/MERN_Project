@@ -7,9 +7,9 @@ export const AuthContext = createContext();
 export const AuthContextProvider = (props) => {
   const [isUser, setIsUser] = useState(true);
   const [user, setUser] = useState(null);
-  const redirectTo = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
   const [expedition, setExpedition] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const redirectTo = useNavigate();
 
   const submitRegister = async (
     userName,
@@ -75,10 +75,10 @@ export const AuthContextProvider = (props) => {
         requestOptions
       );
       const result = await response.json();
-      console.log("result", result);
-      console.log("result", result.token);
+      // console.log("result", result);
+      // console.log("result", result.token);
       const { user } = result;
-      setIsLoading(false);
+      // setLoading(false);
       setUser(user);
       const { token } = result;
       if (token) {
@@ -95,7 +95,7 @@ export const AuthContextProvider = (props) => {
     } catch (error) {
       setIsUser(false);
       setUser(null);
-      setIsLoading(false);
+      // setLoading(false);
       console.log("error", error);
     }
   };
@@ -159,7 +159,8 @@ export const AuthContextProvider = (props) => {
         user,
         setUser,
         getProfile,
-        isLoading,
+        loading,
+        setLoading,
         expedition,
         setExpedition,
       }}

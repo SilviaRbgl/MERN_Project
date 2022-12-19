@@ -109,6 +109,7 @@ const getProfile = async (req, res) => {
       role: requestedUser.role,
       profilePicture: requestedUser.profilePicture,
       favourites: requestedUser.favourites,
+      _id: requestedUser._id,
     });
   } catch (error) {
     console.log("error getting favourites by user >", error);
@@ -117,8 +118,6 @@ const getProfile = async (req, res) => {
       msg: "problem in the server getting favourites by user",
     });
   }
-  // añadir aqui el findOne, populate, blabla
-  // console.log("req>>>", req.user);
 };
 
 const updateProfile = async (req, res) => {
@@ -164,15 +163,18 @@ const updateProfile = async (req, res) => {
 
 const uploadImage = async (req, res) => {
   try {
+    console.log("req.user in controller :>> ", req.user);
+    const { user } = req;
     // console.log("req.file", req.file.path);
     const uploadResult = await cloudinary.uploader.upload(req.file.path, {
       folder: "images",
     });
     console.log("uploadResult", uploadResult);
-    res.status(200).json({
-      msg: "image uploaded successfully",
-      image: uploadResult.url,
-    });
+    // res.status(200).json({
+    //   msg: "image uploaded successfully",
+    //   image: uploadResult.url,
+    // });
+    editPicProfile(uploadResult.url, user);
   } catch (error) {
     console.log("error", error);
     res.status(500).json({
@@ -180,6 +182,10 @@ const uploadImage = async (req, res) => {
       error: error,
     });
   }
+};
+
+const editPicProfile = (imgUrl, user) => {
+  // write code to update image field
 };
 
 const addFavourite = async (req, res) => {

@@ -73,6 +73,31 @@ function DetailExpeditionAuth() {
     return false;
   };
 
+  const getComments = async () => {
+    const myHeaders = new Headers();
+    const token = getToken();
+
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    const requestOptions = {
+      headers: myHeaders,
+      method: "GET",
+      redirect: "follow",
+    };
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/expeditions/comments/${expeditionName.island}`,
+        requestOptions
+      );
+      const result = await response.json();
+      console.log("result comments>>", result.comments);
+      setComments(result.comments);
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
   const postComment = async () => {
     const myHeaders = new Headers();
     const token = getToken();
@@ -99,34 +124,9 @@ function DetailExpeditionAuth() {
       const result = await response.json();
       comment.current.value = "";
       // console.log("result comments>>", result);
-      updateComments();
+      getComments();
     } catch (error) {
       console.log("error comments>> ", error);
-    }
-  };
-
-  const updateComments = async () => {
-    const myHeaders = new Headers();
-    const token = getToken();
-
-    myHeaders.append("Authorization", `Bearer ${token}`);
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-    const requestOptions = {
-      headers: myHeaders,
-      method: "GET",
-      redirect: "follow",
-    };
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/expeditions/comments/${expeditionName.island}`,
-        requestOptions
-      );
-      const result = await response.json();
-      // console.log("result comments>>", result.comments);
-      setComments(result.comments);
-    } catch (error) {
-      console.log("error", error);
     }
   };
 
@@ -154,7 +154,7 @@ function DetailExpeditionAuth() {
         );
         const result = await response.json();
         console.log("resultDelete", result);
-        updateComments();
+        getComments();
       } catch (error) {
         console.log("error", error);
       }
@@ -163,14 +163,8 @@ function DetailExpeditionAuth() {
     }
   };
 
-  // const isDeleted = (commentId) => {
-  //   if (user?.comments?.length > 0 && user?.comments?.includes(commentId)) {
-  //     return true;
-  //   }
-  // };
-
   useEffect(() => {
-    updateComments();
+    getComments();
   }, []);
 
   return (
@@ -278,21 +272,16 @@ function DetailExpeditionAuth() {
           >
             <p className="text-sm mb-2">{comment.author} wrote:</p>
             <p className="mb-2">"{comment.text}"</p>
-            <div
-              className="absolute top-0 right-0 mr-2 mt-2"
-              // className={
-              //   isDeleted(comment)
-              //     ? "absolute top-0 right-0 mr-2 mt-2"
-              //     : "absolute top-0 right-0 mr-2 mt-2 hidden"
-              // }
-            >
-              <button
-                className="btn"
-                type="submit"
-                onClick={() => deleteComments(comment._id, comment.author)}
-              >
-                <AiOutlineDelete />
-              </button>
+            <div className="absolute top-0 right-0 mr-2 mt-2">
+              {user.email === comment.author && (
+                <button
+                  className="btn"
+                  type="submit"
+                  onClick={() => deleteComments(comment._id, comment.author)}
+                >
+                  <AiOutlineDelete />
+                </button>
+              )}
             </div>
           </div>
         );

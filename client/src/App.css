@@ -15,7 +15,7 @@
 }
 
 .btn-favorite {
-  @apply rounded-md py-2 px-3 uppercase text-sm cursor-pointer tracking-wider bg-red-200 hover:bg-red-400;
+  @apply rounded-md py-2 px-3 uppercase text-sm cursor-pointer tracking-wider bg-white hover:bg-red-200;
 }
 
 .btn-favorite-clicked {
