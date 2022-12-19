@@ -266,7 +266,12 @@ function DetailExpeditionAuth() {
             key={index}
             className="bg-amber-100 font-mono p-2 rounded-lg mb-6 relative "
           >
-            <p className="text-sm mb-2">{comment.author} wrote:</p>
+            <img
+              className="w-10 h-10 img-profile"
+              src={user.profilePicture}
+              alt="profile picture"
+            />
+            <p className="text-sm mb-2">{user.userName} wrote:</p>
             <p className="mb-2">"{comment.text}"</p>
             <div className="absolute top-0 right-0 mr-2 mt-2">
               {user.email === comment.author && (
