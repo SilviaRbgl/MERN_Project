@@ -111,3 +111,7 @@ body.active-modal {
   /* font: inherit; */
   cursor: pointer;
 }
+
+.img-profile {
+  display: unset;
+}

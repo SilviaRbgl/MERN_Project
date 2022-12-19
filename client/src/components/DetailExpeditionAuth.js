@@ -13,7 +13,6 @@ function DetailExpeditionAuth() {
   const comment = useRef();
   const [comments, setComments] = useState([]);
   // console.log("singleExpedition>>", singleExpedition.state);
-
   const expeditionName = useParams();
   // console.log("expeditionName", expeditionName);
 
@@ -62,8 +61,8 @@ function DetailExpeditionAuth() {
   };
 
   const isFav = (expeditionID) => {
-    console.log("expeditionId :>> ", expeditionID);
-    console.log("user.favourites :>> ", user.favourites);
+    // console.log("expeditionId :>> ", expeditionID);
+    // console.log("user.favourites :>> ", user.favourites);
     if (
       user?.favourites?.length > 0 &&
       user?.favourites?.find((fav) => fav._id === expeditionID)
@@ -91,7 +90,7 @@ function DetailExpeditionAuth() {
         requestOptions
       );
       const result = await response.json();
-      console.log("result comments>>", result.comments);
+      // console.log("result comments>>", result.comments);
       setComments(result.comments);
     } catch (error) {
       console.log("error", error);
@@ -169,7 +168,7 @@ function DetailExpeditionAuth() {
 
   return (
     <>
-      <div className="card mb-4">
+      <div className="card space-y-1 mb-10">
         <div className="saturate-50 mb-4 h-56 sm:h-64 xl:h-80 2xl:h-96">
           <Carousel slideInterval={3000}>
             <img
@@ -218,7 +217,7 @@ function DetailExpeditionAuth() {
               : "btn-favorite"
           }
         >
-          {console.log("isFavorite>>>", isFav(singleExpedition.state._id))}
+          {/* {console.log("isFavorite>>>", isFav(singleExpedition.state._id))} */}
           <MdFavoriteBorder />
         </button>
         <br />
@@ -241,15 +240,12 @@ function DetailExpeditionAuth() {
           </div>
         )}
       </div>
-      <p className="font-mono font-bold uppercase mb-2">Itinerary</p>
-      <p className="font-mono mb-10">{singleExpedition.state.itinerary}</p>
-      <p className="font-mono font-bold uppercase mb-2">What is included</p>
-      <p className="font-mono mb-10">{singleExpedition.state.itinerary}</p>
-
-      <div className="container-comment" action="">
-        <p className="font-mono font-bold uppercase mb-2">
-          Travellers opinions
-        </p>
+      <div className="space-y-5">
+        <p className="font-mono font-bold uppercase">Itinerary</p>
+        <p className="font-mono">{singleExpedition.state.itinerary}</p>
+        <p className="font-mono font-bold uppercase">What is included</p>
+        <p className="font-mono">{singleExpedition.state.itinerary}</p>
+        <p className="font-mono font-bold uppercase">Travellers opinions</p>
         <textarea
           className="rounded border-2 border-cyan-500 w-full pt-2 pl-2 pr-14 pb-14 font-mono outline-1 outline-cyan-600"
           type="text"
@@ -268,7 +264,7 @@ function DetailExpeditionAuth() {
         return (
           <div
             key={index}
-            className="bg-amber-100 font-mono p-2 rounded-lg mb-6 relative"
+            className="bg-amber-100 font-mono p-2 rounded-lg mb-6 relative "
           >
             <p className="text-sm mb-2">{comment.author} wrote:</p>
             <p className="mb-2">"{comment.text}"</p>

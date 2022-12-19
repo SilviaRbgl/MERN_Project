@@ -161,31 +161,52 @@ const updateProfile = async (req, res) => {
   }
 };
 
-const uploadImage = async (req, res) => {
+const uploadPicProfile = async (req, res) => {
   try {
-    console.log("req.user in controller :>> ", req.user);
+    // console.log("req.user in controller :>> ", req.user);
     const { user } = req;
     // console.log("req.file", req.file.path);
     const uploadResult = await cloudinary.uploader.upload(req.file.path, {
       folder: "images",
     });
-    console.log("uploadResult", uploadResult);
+    console.log("uploadResult", uploadResult.url);
     // res.status(200).json({
-    //   msg: "image uploaded successfully",
-    //   image: uploadResult.url,
+    //   msg: "image uploaded in cloudinary",
+    //   imageUrl: uploadResult.url,
     // });
     editPicProfile(uploadResult.url, user);
   } catch (error) {
     console.log("error", error);
     res.status(500).json({
-      msg: "image uploaded went wrong",
+      msg: "image uploaded went wrong in cloudinary",
       error: error,
     });
   }
 };
 
-const editPicProfile = (imgUrl, user) => {
+const editPicProfile = async (req, res) => {
   // write code to update image field
+  const { id } = req.user;
+  const { profilePicture } = req.body;
+  console.log("user in request>>>", req.user);
+  console.log("profilePic in request>>>", req.body);
+
+  try {
+    // console.log("req.user for editPicProfile :>> ", req.user);
+    const findingPic = await userModel.findOneAndUpdate({
+      profilePicture: profilePicture,
+    });
+    res.status(201).json({
+      msg: "profile picture changed",
+      profilePicture: {
+        imageUrl: findingPic.url,
+      },
+    });
+    console.log("findingPic editPicProfile", findingPic);
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).json({ msg: "problem editing profile picture" });
+  }
 };
 
 const addFavourite = async (req, res) => {
@@ -266,10 +287,11 @@ const addFavourite = async (req, res) => {
 };
 
 export {
-  uploadImage,
+  uploadPicProfile,
   register,
   login,
   getProfile,
   addFavourite,
   updateProfile,
+  editPicProfile,
 };

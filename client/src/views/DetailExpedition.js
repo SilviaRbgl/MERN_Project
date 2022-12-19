@@ -28,13 +28,12 @@ function DetailExpedition() {
   }
 
   return (
-    <div className="background mb-10">
-      {/* {Object.keys(user).length !== 0 ? } ====> we do this, not to receive a user as an empty object */}
+    <div className="background mb-10 lg:mx-40">
       {user ? (
         <DetailExpeditionAuth />
       ) : (
         <>
-          <div className="card mb-4">
+          <div className="card space-y-1 mb-10">
             <div className="saturate-50 mb-4 h-56 sm:h-64 xl:h-80 2xl:h-96">
               <Carousel slideInterval={3000}>
                 <img
@@ -60,7 +59,6 @@ function DetailExpedition() {
                 />
               </Carousel>
             </div>
-
             <p className="font-mono font-bold">
               {singleExpedition.state.island}, {singleExpedition.state.country}
             </p>
@@ -91,14 +89,10 @@ function DetailExpedition() {
               </div>
             )}
           </div>
-          <div>
-            <p className="font-mono font-bold uppercase mb-2">Itinerary</p>
-            <p className="font-mono mb-10">
-              {singleExpedition.state.itinerary}
-            </p>
-            <p className="font-mono font-bold uppercase mb-2">
-              What is included
-            </p>
+          <div className="space-y-5">
+            <p className="font-mono font-bold uppercase">Itinerary</p>
+            <p className="font-mono">{singleExpedition.state.itinerary}</p>
+            <p className="font-mono font-bold uppercase">What is included</p>
             <p className="font-mono">{singleExpedition.state.itinerary}</p>
           </div>
         </>

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 function Account() {
-  const { user, setUser, logOut, getProfile, expedition } =
+  const { user, setUser, logOut, getProfile, expedition, getToken } =
     useContext(AuthContext);
   const [selectedFile, setSelectedFile] = useState({});
   // console.log("expedition", expedition);
@@ -14,6 +14,11 @@ function Account() {
   };
 
   const submitUploadPicture = async (e) => {
+    const myHeaders = new Headers();
+    const token = getToken();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
     console.log("selectedFile>", selectedFile);
     e.preventDefault();
 
@@ -58,13 +63,13 @@ function Account() {
 
         {user && user.profilePicture !== undefined ? (
           <img
-            className="w-32 h-32" // centrar esta imagen
+            className="w-32 h-32 img-profile"
             src={user.profilePicture}
             alt="profile picture"
           />
         ) : (
           <img
-            className="w-32 h-32" // centrar esta imagen
+            className="w-32 h-32 img-profile"
             src="http://res.cloudinary.com/dtwbyjspa/image/upload/v1669821358/images/yk4xc69svkglrejjq3tk.png"
             alt="default profile picture"
           />

@@ -19,7 +19,7 @@ function Expeditions() {
   useEffect(() => {
     setTimeout(() => {
       fetchExpeditions();
-    }, 1200);
+    }, 1000);
   }, []);
 
   const getDates = (date) => {
@@ -37,7 +37,7 @@ function Expeditions() {
       {!loading ? (
         expedition.map((expedition, index) => {
           return (
-            <div className="card hover:shadow-lg" key={index}>
+            <div className="card hover:shadow-lg space-y-1" key={index}>
               <p className="font-mono font-bold">{expedition.island}</p>
               <p className="font-mono">{expedition.country}</p>
               <p className="font-mono">
@@ -45,7 +45,6 @@ function Expeditions() {
                 {getDates(expedition.date.endDate)}
               </p>
               <img
-                className="mb-2"
                 src={expedition?.images && expedition.images[0]}
                 alt="expedition image"
               />
@@ -59,12 +58,9 @@ function Expeditions() {
           );
         })
       ) : (
-        <Spinner
-          color="warning"
-          aria-label="Warning spinner example"
-          size="lg"
-          className="text-center"
-        />
+        <div className="text-center">
+          <Spinner color="warning" size="xl" />
+        </div>
       )}
     </div>
   );
