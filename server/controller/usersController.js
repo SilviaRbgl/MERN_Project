@@ -11,44 +11,45 @@ const register = async (req, res) => {
 
   try {
     const errors = validationResult(req).array();
+    console.log("errosarray>>", errors);
 
-    const existingEmail = await userModel.findOne({ email: req.body.email });
-    console.log("existingEmail", existingEmail);
-
-    if (existingEmail) {
-      errors.push({ msg: "Email already in use" });
-    }
     if (errors.length > 0) {
-      console.log(errors);
-      return res.status(500).json({
-        errors: errors,
-      });
-    } else {
-      const hashedPassword = await encryptPassword(password);
-      console.log("hashedPassword", hashedPassword);
+      return res.status(400).json({ errors: errors });
+    }
 
-      const newUser = new userModel({
-        userName: req.body.userName ? req.body.userName : req.body.email,
-        email: email,
-        password: hashedPassword,
-        role: role,
-        profilePicture: req.body.image
-          ? req.body.image
-          : "http://res.cloudinary.com/dtwbyjspa/image/upload/v1669821358/images/yk4xc69svkglrejjq3tk.png",
-      });
-      try {
-        const savedUser = await newUser.save();
+    if (errors.length === 0) {
+      const existingEmail = await userModel.findOne({ email: req.body.email });
+      console.log("existingEmail", existingEmail);
+      if (existingEmail) {
+        return res.status(400).json({ msg: "Email already in use" });
+      }
+      if (!existingEmail) {
+        const hashedPassword = await encryptPassword(password);
+        console.log("hashedPassword", hashedPassword);
 
-        res.status(201).json({
-          msg: "User registration succesfully",
-          user: savedUser,
+        const newUser = new userModel({
+          userName: req.body.userName ? req.body.userName : req.body.email,
+          email: email,
+          password: hashedPassword,
+          role: role,
+          profilePicture: req.body.image
+            ? req.body.image
+            : "http://res.cloudinary.com/dtwbyjspa/image/upload/v1669821358/images/yk4xc69svkglrejjq3tk.png",
         });
-      } catch (error) {
-        console.log("error", error),
-          res.status(500).json({
-            msg: "User registration error",
-            error: error,
+        try {
+          const savedUser = await newUser.save();
+
+          res.status(201).json({
+            msg: "User registration succesfully",
+            user: savedUser,
           });
+        } catch (error) {
+          console.log("error", error),
+            res.status(500).json({
+              msg: "User registration error",
+              error: error,
+            });
+        }
       }
     }
   } catch (error) {

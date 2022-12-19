@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import getToken from "../utils/getToken.js";
 
 export const AuthContext = createContext();
@@ -47,7 +48,26 @@ export const AuthContextProvider = (props) => {
       const result = await response.json();
       console.log("result", result);
       console.log("result errors>>", result.errors);
-      redirectTo("/login");
+      //ejemplo:
+      if (result.errors) {
+        toast.error(
+          result.errors.length === 1
+            ? `${result.errors[0].msg}`
+            : `${result.errors[0].msg} and ${result.errors[1].msg}`,
+          {
+            position: "bottom-center",
+            autoClose: 2500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          }
+        );
+      }
+
+      if (!result.errors) redirectTo("/login");
     } catch (error) {
       console.log("error", error);
     }
