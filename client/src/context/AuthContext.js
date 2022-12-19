@@ -46,6 +46,7 @@ export const AuthContextProvider = (props) => {
       );
       const result = await response.json();
       console.log("result", result);
+      console.log("result errors>>", result.errors);
       redirectTo("/login");
     } catch (error) {
       console.log("error", error);

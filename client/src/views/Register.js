@@ -1,8 +1,9 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useRef } from "react";
+import { toast } from "react-toastify";
 import { AuthContext } from "../context/AuthContext";
 
 function Register() {
-  const [newUser, setNewUser] = useState({});
+  // const [newUser, setNewUser] = useState({});
   const { submitRegister } = useContext(AuthContext);
 
   const userName = useRef();
@@ -29,6 +30,16 @@ function Register() {
       roleTraveller.current.value,
       roleLeader.current.value
     );
+    // toast.success("💫 You are register! Now you have to log in!", {
+    //   position: "bottom-center",
+    //   autoClose: 2500,
+    //   hideProgressBar: false,
+    //   closeOnClick: true,
+    //   pauseOnHover: true,
+    //   draggable: true,
+    //   progress: undefined,
+    //   theme: "colored",
+    // });
   };
 
   return (
@@ -80,7 +91,7 @@ function Register() {
           <br />
 
           <div>
-            <p className="font-mono mb-1">Register as:</p>
+            <p className="font-mono mb-1">Register as*:</p>
             <input
               className="mr-1"
               type="radio"

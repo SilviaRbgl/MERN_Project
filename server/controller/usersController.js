@@ -3,17 +3,26 @@ import userModel from "../models/usersModel.js";
 import encryptPassword from "../utils/encryptPassword.js";
 import isPasswordCorrect from "../utils/isPasswordCorrect.js";
 import issueToken from "../utils/jwt.js";
+import { validationResult } from "express-validator";
 
 const register = async (req, res) => {
   // console.log("req.body >>", req.body);
   const { email, password, role } = req.body;
 
   try {
-    const existingUser = await userModel.findOne({ email: req.body.email });
-    console.log("existingUser", existingUser);
+    const errors = validationResult(req).array();
 
-    if (existingUser) {
-      res.status(200).json({ msg: "email already in use" });
+    const existingEmail = await userModel.findOne({ email: req.body.email });
+    console.log("existingEmail", existingEmail);
+
+    if (existingEmail) {
+      errors.push({ msg: "Email already in use" });
+    }
+    if (errors.length > 0) {
+      console.log(errors);
+      return res.status(500).json({
+        errors: errors,
+      });
     } else {
       const hashedPassword = await encryptPassword(password);
       console.log("hashedPassword", hashedPassword);
@@ -31,20 +40,20 @@ const register = async (req, res) => {
         const savedUser = await newUser.save();
 
         res.status(201).json({
-          msg: "user registration succesfully",
+          msg: "User registration succesfully",
           user: savedUser,
         });
       } catch (error) {
         console.log("error", error),
           res.status(500).json({
-            msg: "user registration error",
+            msg: "User registration error",
             error: error,
           });
       }
     }
   } catch (error) {
     res.status(500).json({
-      msg: "something went wrong during registration",
+      msg: "Something went wrong during registration",
       error: error,
     });
   }
@@ -65,7 +74,7 @@ const login = async (req, res) => {
       const verified = await isPasswordCorrect(password, existingUser.password);
       // console.log("verified", verified);
       if (!verified) {
-        res.status(401).json({ msg: "wrong password" });
+        res.status(401).json({ msg: "Wrong password" });
       }
       if (verified) {
         console.log("verified >>>", verified);
@@ -73,7 +82,7 @@ const login = async (req, res) => {
         // console.log("token>>", token);
 
         res.status(200).json({
-          msg: "logged in successfully",
+          msg: "Logged in successfully",
           user: {
             userName: existingUser.userName,
             id: existingUser._id,
@@ -86,7 +95,7 @@ const login = async (req, res) => {
     }
   } catch (error) {
     console.log("error", error);
-    res.status(500).json({ msg: "login went wrong" });
+    res.status(500).json({ msg: "Log in went wrong" });
   }
 };
 
@@ -112,10 +121,10 @@ const getProfile = async (req, res) => {
       _id: requestedUser._id,
     });
   } catch (error) {
-    console.log("error getting favourites by user >", error);
+    console.log("Error getting favourites by user>>>", error);
     res.status(500).json({
       error,
-      msg: "problem in the server getting favourites by user",
+      msg: "Problem in the server getting favourites by user",
     });
   }
 };
@@ -132,12 +141,12 @@ const updateProfile = async (req, res) => {
       });
       res.status(200).json({
         username: updateUsername.userName,
-        msg: "username is changed",
+        msg: "Username is changed",
       });
     } catch (error) {
       console.log("error", error);
       res.status(500).json({
-        msg: "username is not changed",
+        msg: "Username is not changed",
         error: error,
       });
     }
@@ -149,17 +158,41 @@ const updateProfile = async (req, res) => {
       });
       res.status(200).json({
         password: updatePassword.password,
-        msg: "password is changed",
+        msg: "Password is changed",
       });
     } catch (error) {
       console.log("error", error);
       res.status(500).json({
-        msg: "password is not changed",
+        msg: "Password is not changed",
         error: error,
       });
     }
   }
 };
+
+// const uploadPicProfile = async (req, res) => {
+//   try {
+//     // console.log("req.user in controller :>> ", req.user);
+//     const { user } = req;
+//     // console.log("req.file", req.file.path);
+//     const uploadResult = await cloudinary.uploader.upload(req.file.path, {
+//       folder: "images",
+//     });
+//     console.log("uploadResult", uploadResult.url);
+
+//     const result = await editPicProfile(uploadResult.url, user);
+//     res.status(200).json({
+//       msg: "image uploaded in cloudinary",
+//       updatedUser: result,
+//     });
+//   } catch (error) {
+//     console.log("error", error);
+//     res.status(500).json({
+//       msg: "image uploaded went wrong in cloudinary",
+//       error: error,
+//     });
+//   }
+// };
 
 const uploadPicProfile = async (req, res) => {
   try {
@@ -170,11 +203,11 @@ const uploadPicProfile = async (req, res) => {
       folder: "images",
     });
     console.log("uploadResult", uploadResult.url);
-    // res.status(200).json({
-    //   msg: "image uploaded in cloudinary",
-    //   imageUrl: uploadResult.url,
-    // });
-    editPicProfile(uploadResult.url, user);
+
+    res.status(200).json({
+      msg: "image uploaded in cloudinary",
+      imageUrl: uploadResult.url,
+    });
   } catch (error) {
     console.log("error", error);
     res.status(500).json({
@@ -186,28 +219,54 @@ const uploadPicProfile = async (req, res) => {
 
 const editPicProfile = async (req, res) => {
   // write code to update image field
-  const { id } = req.user;
-  const { profilePicture } = req.body;
-  console.log("user in request>>>", req.user);
-  console.log("profilePic in request>>>", req.body);
 
+  const { id } = req.user;
+  const { imageUrl } = req.body;
   try {
-    // console.log("req.user for editPicProfile :>> ", req.user);
-    const findingPic = await userModel.findOneAndUpdate({
-      profilePicture: profilePicture,
-    });
-    res.status(201).json({
-      msg: "profile picture changed",
-      profilePicture: {
-        imageUrl: findingPic.url,
+    const updatedUser = await userModel.findByIdAndUpdate(
+      id,
+      {
+        profilePicture: imageUrl,
       },
+      { new: true }
+    );
+    res.status(200).json({
+      msg: "image updated",
+      updatedUser: updatedUser.profilePicture,
     });
-    console.log("findingPic editPicProfile", findingPic);
   } catch (error) {
     console.log("error", error);
-    res.status(500).json({ msg: "problem editing profile picture" });
+    res.status(500).json({
+      msg: "image uploaded went wrong",
+      error: error,
+    });
   }
 };
+
+// const editPicProfile = async (req, res) => {
+//   // write code to update image field
+//   const { id } = req.user;
+//   const { profilePicture } = req.body;
+//   console.log("user in request>>>", req.user);
+//   console.log("profilePic in request>>>", req.body);
+
+//   try {
+//     // console.log("req.user for editPicProfile :>> ", req.user);
+//     const findingPic = await userModel.findOneAndUpdate({
+//       profilePicture: profilePicture,
+//     });
+//     res.status(201).json({
+//       msg: "profile picture changed",
+//       profilePicture: {
+//         imageUrl: findingPic.url,
+//       },
+//     });
+//     console.log("findingPic editPicProfile", findingPic);
+//   } catch (error) {
+//     console.log("error", error);
+//     res.status(500).json({ msg: "problem editing profile picture" });
+//   }
+// };
 
 const addFavourite = async (req, res) => {
   const { id } = req.user;

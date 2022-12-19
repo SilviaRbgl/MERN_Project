@@ -17,7 +17,6 @@ function Account() {
     const myHeaders = new Headers();
     const token = getToken();
     myHeaders.append("Authorization", `Bearer ${token}`);
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
     console.log("selectedFile>", selectedFile);
     e.preventDefault();
@@ -29,6 +28,7 @@ function Account() {
       method: "POST",
       body: formdata,
       redirect: "follow",
+      headers: myHeaders,
     };
     try {
       const response = await fetch(
@@ -36,8 +36,41 @@ function Account() {
         requestOptions
       );
       const result = await response.json();
-      console.log("result", result.image);
-      setUser({ ...user, profilePicture: result.image });
+      console.log("result", result);
+      updateUser({ img: result.imageUrl });
+      // setUser({ ...user, profilePicture: result.image });
+    } catch (error) {
+      console.log("error >", error);
+    }
+  };
+
+  const updateUser = async (userUpdates) => {
+    const myHeaders = new Headers();
+    const token = getToken();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    const { img } = userUpdates;
+    console.log("img :>> ", img);
+
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("imageUrl", img);
+
+    const requestOptions = {
+      method: "POST",
+      body: urlencoded,
+      redirect: "follow",
+      headers: myHeaders,
+    };
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/users/editimage",
+        requestOptions
+      );
+      const result = await response.json();
+      console.log("result", result);
+
+      setUser({ ...user, profilePicture: result.updatedUser });
     } catch (error) {
       console.log("error >", error);
     }

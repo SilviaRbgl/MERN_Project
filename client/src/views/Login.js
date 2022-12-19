@@ -21,7 +21,7 @@ function Login() {
     <div className="background">
       <div className="card bg-gradient-to-r from-amber-100 to-cyan-100 text-center">
         <p className="font-mono font-bold mb-4">Access to my account</p>
-        <div className="flex-col font-mono">
+        <div className="flex-col font-mono pb-8">
           <label htmlFor="email">Email*</label>
           <br />
           <input
@@ -52,8 +52,8 @@ function Login() {
             Login
           </button>
           <br />
-          <p className="font-mono font-bold mb-2">Not an account yet?</p>
-          <Link className="btn mb-10" to="/register">
+          <p className="font-mono font-bold mb-3">Not an account yet?</p>
+          <Link className="btn" to="/register">
             Register
           </Link>
         </div>

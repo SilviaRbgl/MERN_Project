@@ -11,6 +11,8 @@ import DetailExpedition from "./views/DetailExpedition";
 import Leaders from "./views/Leaders";
 import Account from "./views/Account";
 import { AuthContextProvider } from "./context/AuthContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -28,6 +30,7 @@ function App() {
         </Routes>
         {/* <Footer /> */}
       </AuthContextProvider>
+      <ToastContainer />
     </div>
   );
 }
