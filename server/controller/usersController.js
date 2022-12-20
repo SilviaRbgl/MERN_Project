@@ -11,7 +11,7 @@ const register = async (req, res) => {
 
   try {
     const errors = validationResult(req).array();
-    console.log("errosarray>>", errors);
+    // console.log("errosarray>>", errors);
 
     if (errors.length > 0) {
       return res.status(400).json({ errors: errors });
@@ -19,13 +19,13 @@ const register = async (req, res) => {
 
     if (errors.length === 0) {
       const existingEmail = await userModel.findOne({ email: req.body.email });
-      console.log("existingEmail", existingEmail);
+      // console.log("existingEmail", existingEmail);
       if (existingEmail) {
         return res.status(400).json({ msg: "Email already in use" });
       }
       if (!existingEmail) {
         const hashedPassword = await encryptPassword(password);
-        console.log("hashedPassword", hashedPassword);
+        // console.log("hashedPassword", hashedPassword);
 
         const newUser = new userModel({
           userName: req.body.userName ? req.body.userName : req.body.email,
@@ -65,7 +65,7 @@ const login = async (req, res) => {
 
   try {
     const errors = validationResult(req).array();
-    console.log("errosarray>>", errors);
+    // console.log("errosarray>>", errors);
 
     if (errors.length > 0) {
       return res.status(400).json({ errors: errors });
@@ -73,7 +73,7 @@ const login = async (req, res) => {
 
     if (errors.length === 0) {
       const existingUser = await userModel.findOne({ email: email });
-      console.log("existingUser >>>", existingUser);
+      // console.log("existingUser >>>", existingUser);
 
       if (!existingUser) {
         res
@@ -89,7 +89,7 @@ const login = async (req, res) => {
           res.status(401).json({ msg: "Wrong password" });
         }
         if (verified) {
-          console.log("verified >>>", verified);
+          // console.log("verified >>>", verified);
           const token = issueToken(existingUser._id);
           // console.log("token>>", token);
 
@@ -144,6 +144,7 @@ const getProfile = async (req, res) => {
 
 const updateProfile = async (req, res) => {
   const { userName, password, id } = req.user;
+  const { newUsername } = req.body;
   console.log("reqUser for update>>", req.user);
 
   try {
@@ -153,9 +154,13 @@ const updateProfile = async (req, res) => {
       if (existingUserName) {
         res.status(400).json({ errors: { msg: "Username already in use" } });
       } else {
-        const updatedUser = await userModel.findByIdAndUpdate(id, {
-          userName: userName,
-        });
+        const updatedUser = await userModel.findByIdAndUpdate(
+          id,
+          {
+            userName: newUsername,
+          },
+          { new: true }
+        );
         console.log("updatedUser>>>", updatedUser);
         res.status(201).json({
           msg: "Update successful",

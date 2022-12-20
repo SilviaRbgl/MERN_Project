@@ -145,7 +145,7 @@ export const AuthContextProvider = (props) => {
           setIsUser(false);
           toast.warn("User not found with this email, try registering first!", {
             position: "bottom-center",
-            autoClose: 2500,
+            autoClose: 2700,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
