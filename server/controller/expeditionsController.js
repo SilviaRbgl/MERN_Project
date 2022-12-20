@@ -69,13 +69,15 @@ const getExpeditionsByName = async (req, res) => {
 };
 // crear comentario en collecion comments
 const createComment = async (req, res) => {
-  const { author, date, text, expedition } = req.body;
+  const { author, profilePicture, text, expedition } = req.body;
+  // const { author } = req.user.userName;
   console.log("req.body comment>>>", req.body);
+  // console.log("req.user comments>>>", req.user.userName);
 
   try {
     const newComment = new commentModel({
       author: author,
-      // date: date,
+      profilePicture: profilePicture,
       text: text,
       expedition: expedition,
     });
@@ -89,6 +91,7 @@ const createComment = async (req, res) => {
           {
             island: expedition,
             author: author,
+            profilePicture: profilePicture,
             text: text,
           },
           { $push: { comments: savedComment } },

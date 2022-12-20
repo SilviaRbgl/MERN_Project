@@ -20,7 +20,7 @@ function Home() {
         >
           remote island expeditions
         </NavLink>
-        <p className="font-mono">off the beaten track islands</p>
+        <p className="font-mono">expeditions off the beaten track</p>
       </div>
 
       <div className="saturate-50 m-10 h-56 sm:h-64 xl:h-80 2xl:h-96 lg:mx-40">

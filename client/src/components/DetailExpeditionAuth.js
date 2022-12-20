@@ -90,7 +90,7 @@ function DetailExpeditionAuth() {
         requestOptions
       );
       const result = await response.json();
-      // console.log("result comments>>", result.comments);
+      // console.log("result get comments>>", result);
       setComments(result.comments);
     } catch (error) {
       console.log("error", error);
@@ -105,7 +105,8 @@ function DetailExpeditionAuth() {
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
     const urlencoded = new URLSearchParams();
-    urlencoded.append("author", user.email);
+    urlencoded.append("author", user.userName);
+    urlencoded.append("profilePicture", user.profilePicture);
     urlencoded.append("text", comment.current.value);
     urlencoded.append("expedition", singleExpedition.state.island);
 
@@ -122,7 +123,7 @@ function DetailExpeditionAuth() {
       );
       const result = await response.json();
       comment.current.value = "";
-      // console.log("result comments>>", result);
+      console.log("result post comments>>", result);
       getComments();
     } catch (error) {
       console.log("error comments>> ", error);
@@ -145,7 +146,7 @@ function DetailExpeditionAuth() {
       body: urlencoded,
       redirect: "follow",
     };
-    if (commentAuthor === user.email) {
+    if (commentAuthor === user.userName) {
       try {
         const response = await fetch(
           "http://localhost:5000/api/expeditions/deletecomment",
@@ -230,8 +231,8 @@ function DetailExpeditionAuth() {
             <div className="modal-content">
               <p className="font-mono font-bold text-center">HURRAH!</p>
               <p className="font-mono text-center">
-                Thanks for the interest in this expedition. You will receive an
-                email with all the details for the reservation!
+                Thank you for your interest in this expedition, you will receive
+                an email with all the booking details!
               </p>
               <button className="close-modal" onClick={toggleModal}>
                 <MdClose />
@@ -256,7 +257,7 @@ function DetailExpeditionAuth() {
         />
         <label htmlFor="message"></label>
         <br></br>
-        <button className="btn mb-4" type="submit" onClick={postComment}>
+        <button className="btn" type="submit" onClick={postComment}>
           Submit opinion
         </button>
       </div>
@@ -264,17 +265,17 @@ function DetailExpeditionAuth() {
         return (
           <div
             key={index}
-            className="bg-amber-100 font-mono p-2 rounded-lg mb-6 relative "
+            className="bg-amber-100 font-mono p-2 rounded-lg mt-4 mb-6 relative"
           >
             <img
               className="w-10 h-10 img-profile"
-              src={user.profilePicture}
+              src={comment.profilePicture}
               alt="profile picture"
             />
-            <p className="text-sm mb-2">{user.userName} wrote:</p>
-            <p className="mb-2">"{comment.text}"</p>
+            <p className="text-sm mb-2">{comment.author} wrote:</p>
+            <p className="mb-2 italic">{comment.text}</p>
             <div className="absolute top-0 right-0 mr-2 mt-2">
-              {user.email === comment.author && (
+              {user.userName === comment.author && (
                 <button
                   className="btn"
                   type="submit"
