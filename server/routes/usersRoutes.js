@@ -4,9 +4,9 @@ import {
   login,
   getProfile,
   addFavourite,
-  updateProfile,
   uploadPicProfile,
   editPicProfile,
+  updateProfile,
 } from "../controller/usersController.js";
 import jwtAuth from "../middlewares/jwtAuth.js";
 import multerUpload from "../middlewares/multer.js";

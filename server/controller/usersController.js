@@ -64,34 +64,46 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const existingUser = await userModel.findOne({ email: email });
-    console.log("existingUser >>>", existingUser);
+    const errors = validationResult(req).array();
+    console.log("errosarray>>", errors);
 
-    if (!existingUser) {
-      res
-        .status(401)
-        .json({ msg: "user not found with this email, register first?" });
-    } else {
-      const verified = await isPasswordCorrect(password, existingUser.password);
-      // console.log("verified", verified);
-      if (!verified) {
-        res.status(401).json({ msg: "Wrong password" });
-      }
-      if (verified) {
-        console.log("verified >>>", verified);
-        const token = issueToken(existingUser._id);
-        // console.log("token>>", token);
+    if (errors.length > 0) {
+      return res.status(400).json({ errors: errors });
+    }
 
-        res.status(200).json({
-          msg: "Logged in successfully",
-          user: {
-            userName: existingUser.userName,
-            id: existingUser._id,
-            email: existingUser.email,
-            profilePicture: existingUser.profilePicture,
-          },
-          token,
-        });
+    if (errors.length === 0) {
+      const existingUser = await userModel.findOne({ email: email });
+      console.log("existingUser >>>", existingUser);
+
+      if (!existingUser) {
+        res
+          .status(401)
+          .json({ msg: "user not found with this email, register first?" });
+      } else {
+        const verified = await isPasswordCorrect(
+          password,
+          existingUser.password
+        );
+        // console.log("verified", verified);
+        if (!verified) {
+          res.status(401).json({ msg: "Wrong password" });
+        }
+        if (verified) {
+          console.log("verified >>>", verified);
+          const token = issueToken(existingUser._id);
+          // console.log("token>>", token);
+
+          res.status(200).json({
+            msg: "Logged in successfully",
+            user: {
+              userName: existingUser.userName,
+              id: existingUser._id,
+              email: existingUser.email,
+              profilePicture: existingUser.profilePicture,
+            },
+            token,
+          });
+        }
       }
     }
   } catch (error) {
@@ -131,69 +143,43 @@ const getProfile = async (req, res) => {
 };
 
 const updateProfile = async (req, res) => {
-  const { userName, password } = req.user;
+  const { userName, password, id } = req.user;
   console.log("reqUser for update>>", req.user);
 
-  if (userName) {
-    try {
-      const updateUsername = await userModel.findOneAndUpdate({
-        userName: userName,
-        returnOriginal: false,
-      });
-      res.status(200).json({
-        username: updateUsername.userName,
-        msg: "Username is changed",
-      });
-    } catch (error) {
-      console.log("error", error);
-      res.status(500).json({
-        msg: "Username is not changed",
-        error: error,
-      });
+  try {
+    if (userName) {
+      const existingUserName = await userModel.findOne({ userName: userName });
+      console.log("existingUserName>>", existingUserName.userName);
+      if (existingUserName) {
+        res.status(400).json({ errors: { msg: "Username already in use" } });
+      } else {
+        const updatedUser = await userModel.findByIdAndUpdate(id, {
+          userName: userName,
+        });
+        console.log("updatedUser>>>", updatedUser);
+        res.status(201).json({
+          msg: "Update successful",
+          updatedUser: updatedUser.userName,
+        });
+      }
+      // if (password) {
+      //   const hashedPassword = await encryptPassword(password);
+      //   const updatedUser = await userModel.updateOne(
+      //     { _id: id },
+      //     { password: hashedPassword },
+      //     { new: true }
+      //   );
+      //   console.log("updatePassword>>>", updatedUser);
+      //   res.status(201).json({
+      //     msg: "Password updated correctly",
+      //     updatedUser: updatedUser.password,
+      //   });
     }
-  }
-  if (password) {
-    try {
-      const updatePassword = await userModel.findOneAndUpdate({
-        password: password,
-      });
-      res.status(200).json({
-        password: updatePassword.password,
-        msg: "Password is changed",
-      });
-    } catch (error) {
-      console.log("error", error);
-      res.status(500).json({
-        msg: "Password is not changed",
-        error: error,
-      });
-    }
+  } catch (error) {
+    console.log("error", error);
+    res.status(500).json({ msg: "Error updating info" });
   }
 };
-
-// const uploadPicProfile = async (req, res) => {
-//   try {
-//     // console.log("req.user in controller :>> ", req.user);
-//     const { user } = req;
-//     // console.log("req.file", req.file.path);
-//     const uploadResult = await cloudinary.uploader.upload(req.file.path, {
-//       folder: "images",
-//     });
-//     console.log("uploadResult", uploadResult.url);
-
-//     const result = await editPicProfile(uploadResult.url, user);
-//     res.status(200).json({
-//       msg: "image uploaded in cloudinary",
-//       updatedUser: result,
-//     });
-//   } catch (error) {
-//     console.log("error", error);
-//     res.status(500).json({
-//       msg: "image uploaded went wrong in cloudinary",
-//       error: error,
-//     });
-//   }
-// };
 
 const uploadPicProfile = async (req, res) => {
   try {
@@ -219,8 +205,6 @@ const uploadPicProfile = async (req, res) => {
 };
 
 const editPicProfile = async (req, res) => {
-  // write code to update image field
-
   const { id } = req.user;
   const { imageUrl } = req.body;
   try {

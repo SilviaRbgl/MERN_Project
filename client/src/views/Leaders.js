@@ -19,7 +19,7 @@ function Leaders() {
   }, []);
 
   return (
-    <div className="background grid gap-10 md:grid-rows-2 lg:grid-rows-3">
+    <div className="background grid gap-10 md:grid-rows-2 lg:grid-rows-3 lg:mx-40">
       {leader.map((leader, index) => {
         return (
           <div className="rounded-xl card" key={index}>

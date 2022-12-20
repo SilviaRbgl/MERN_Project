@@ -30,16 +30,6 @@ function Register() {
       roleTraveller.current.value,
       roleLeader.current.value
     );
-    toast.success("You are register. Now you have to log in!", {
-      position: "bottom-center",
-      autoClose: 2500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
   };
 
   return (

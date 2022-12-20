@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import { Slide, toast } from "react-toastify";
 import getToken from "../utils/getToken.js";
 
 export const AuthContext = createContext();
@@ -48,7 +48,6 @@ export const AuthContextProvider = (props) => {
       const result = await response.json();
       console.log("result", result);
       console.log("result errors>>", result.errors);
-      //ejemplo:
       if (result.errors) {
         toast.error(
           result.errors.length === 1
@@ -67,7 +66,19 @@ export const AuthContextProvider = (props) => {
         );
       }
 
-      if (!result.errors) redirectTo("/login");
+      if (!result.errors) {
+        redirectTo("/login");
+        toast.success("You are register. Now you have to log in!", {
+          position: "bottom-center",
+          autoClose: 2500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
     } catch (error) {
       console.log("error", error);
     }
@@ -102,16 +113,48 @@ export const AuthContextProvider = (props) => {
       // setLoading(false);
       setUser(user);
       const { token } = result;
-      if (token) {
-        localStorage.setItem("token", token);
-        setIsUser(true);
-        setUser(result.user);
-        redirectTo("/expeditions");
+
+      if (result.errors) {
+        toast.error(
+          result.errors.length === 1
+            ? `${result.errors[0].msg}`
+            : `${result.errors[0].msg} and ${result.errors[1].msg}`,
+          {
+            position: "bottom-center",
+            autoClose: 2500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          }
+        );
       }
-      if (!token || !user) {
-        setUser(null);
-        setIsUser(false);
-        // alert("user not found with this email, register first?");
+
+      if (!result.errors) {
+        if (token) {
+          localStorage.setItem("token", token);
+          setIsUser(true);
+          setUser(result.user);
+          redirectTo("/expeditions");
+        }
+        if (!token || !user) {
+          setUser(null);
+          setIsUser(false);
+          toast.warn("User not found with this email, try registering first!", {
+            position: "bottom-center",
+            autoClose: 2500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Slide,
+          });
+        }
       }
     } catch (error) {
       setIsUser(false);
