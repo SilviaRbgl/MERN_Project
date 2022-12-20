@@ -205,7 +205,7 @@ function DetailExpeditionAuth() {
           {getDates(singleExpedition.state.date.endDate)}
         </p>
         <p className="font-mono">
-          Leader: {singleExpedition.state.leader.name}
+          Leader: {singleExpedition.state.leader[0].name}
         </p>
         <p className="font-mono">Price: {singleExpedition.state.price}</p>
         <p className="font-mono"></p>
@@ -218,7 +218,6 @@ function DetailExpeditionAuth() {
               : "btn-favorite"
           }
         >
-          {/* {console.log("isFavorite>>>", isFav(singleExpedition.state._id))} */}
           <MdFavoriteBorder />
         </button>
         <br />

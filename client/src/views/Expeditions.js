@@ -19,7 +19,7 @@ function Expeditions() {
   useEffect(() => {
     setTimeout(() => {
       fetchExpeditions();
-    }, 1000);
+    }, 1200);
   }, []);
 
   const getDates = (date) => {
@@ -58,7 +58,7 @@ function Expeditions() {
           );
         })
       ) : (
-        <div className="text-center">
+        <div className="block md:ml-48 lg:ml-96">
           <Spinner color="warning" size="xl" />
         </div>
       )}

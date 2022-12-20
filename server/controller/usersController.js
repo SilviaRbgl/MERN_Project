@@ -4,6 +4,7 @@ import encryptPassword from "../utils/encryptPassword.js";
 import isPasswordCorrect from "../utils/isPasswordCorrect.js";
 import issueToken from "../utils/jwt.js";
 import { validationResult } from "express-validator";
+import commentModel from "../models/commentsModel.js";
 
 const register = async (req, res) => {
   // console.log("req.body >>", req.body);
@@ -144,7 +145,7 @@ const getProfile = async (req, res) => {
 
 const updateProfile = async (req, res) => {
   const { userName, password, id } = req.user;
-  const { newUsername } = req.body;
+  const { newUserName, newPassword } = req.body;
   console.log("reqUser for update>>", req.user);
 
   try {
@@ -152,37 +153,46 @@ const updateProfile = async (req, res) => {
       const existingUserName = await userModel.findOne({ userName: userName });
       console.log("existingUserName>>", existingUserName.userName);
       if (existingUserName) {
-        res.status(400).json({ errors: { msg: "Username already in use" } });
-      } else {
-        const updatedUser = await userModel.findByIdAndUpdate(
-          id,
-          {
-            userName: newUsername,
-          },
-          { new: true }
-        );
-        console.log("updatedUser>>>", updatedUser);
-        res.status(201).json({
-          msg: "Update successful",
-          updatedUser: updatedUser.userName,
-        });
+        try {
+          const updatedUser = await userModel.findByIdAndUpdate(id, {
+            userName: newUserName,
+          });
+          const updatedComments = await commentModel.updateMany(
+            { author: userName },
+            { $set: { author: newUserName } }
+          );
+          console.log("updatedComments", updatedComments);
+          // console.log("updatedUsername>>>", updatedUser);
+          res.status(201).json({
+            msg: "Username updated correctly",
+            updatedUser: newUserName,
+          });
+        } catch (error) {
+          console.log("error", error);
+          res.status(500).json({ msg: "Error updating username" });
+        }
       }
-      // if (password) {
-      //   const hashedPassword = await encryptPassword(password);
-      //   const updatedUser = await userModel.updateOne(
-      //     { _id: id },
-      //     { password: hashedPassword },
-      //     { new: true }
-      //   );
-      //   console.log("updatePassword>>>", updatedUser);
-      //   res.status(201).json({
-      //     msg: "Password updated correctly",
-      //     updatedUser: updatedUser.password,
-      //   });
     }
+
+    // if (password) {
+    //   try {
+    //     const hashedPassword = await encryptPassword(newPassword);
+    //     const updatedUser = await userModel.findByIdAndUpdate(id, {
+    //       password: hashedPassword,
+    //     });
+    //     // console.log("updatePassword>>>", updatedUser);
+    //     res.status(201).json({
+    //       msg: "Password updated correctly",
+    //       updatedUser: newPassword,
+    //     });
+    //   } catch (error) {
+    //     console.log("error", error);
+    //     res.status(500).json({ msg: "Error updating password" });
+    //   }
+    // }
   } catch (error) {
     console.log("error", error);
-    res.status(500).json({ msg: "Error updating info" });
+    res.status(500).json({ msg: "Error updating profile info" });
   }
 };
 

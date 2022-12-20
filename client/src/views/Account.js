@@ -1,10 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { MdModeEditOutline, MdArrowRightAlt } from "react-icons/md";
+import { GrUpdate } from "react-icons/gr";
 
+import { Link } from "react-router-dom";
 function Account() {
   const { user, setUser, logOut, getProfile, expedition, getToken } =
     useContext(AuthContext);
   const [selectedFile, setSelectedFile] = useState({});
+  const [showInput1, setShowInput1] = useState(false); // JC style
+  const userName = useRef();
   // console.log("expedition", expedition);
   // console.log("userFavs", user.favourites);
 
@@ -37,14 +42,14 @@ function Account() {
       );
       const result = await response.json();
       console.log("result", result);
-      updateUser({ img: result.imageUrl });
+      updateProfilePic({ img: result.imageUrl });
       // setUser({ ...user, profilePicture: result.image });
     } catch (error) {
       console.log("error >", error);
     }
   };
 
-  const updateUser = async (userUpdates) => {
+  const updateProfilePic = async (userUpdates) => {
     const myHeaders = new Headers();
     const token = getToken();
     myHeaders.append("Authorization", `Bearer ${token}`);
@@ -53,7 +58,7 @@ function Account() {
     const { img } = userUpdates;
     console.log("img :>> ", img);
 
-    var urlencoded = new URLSearchParams();
+    const urlencoded = new URLSearchParams();
     urlencoded.append("imageUrl", img);
 
     const requestOptions = {
@@ -76,6 +81,38 @@ function Account() {
     }
   };
 
+  const submitUpdate = async () => {
+    const myHeaders = new Headers();
+    const token = getToken();
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    const urlencoded = new URLSearchParams();
+    // urlencoded.append("id", user._id);
+    // if (userName.current) { urlencoded.append("username", userName.current.value);
+    urlencoded.append("newUserName", userName.current.value);
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: "follow",
+    };
+
+    try {
+      const response = await fetch(
+        "http://localhost:5000/api/users/updateprofile",
+        requestOptions
+      );
+      const result = await response.json();
+      console.log("result", result);
+      setShowInput1(false); // JC style
+    } catch (error) {
+      console.log("error >", error);
+    }
+    getProfile(); //tengo que llamar aqui el profile?
+  };
+
   const submitLogOut = () => {
     console.log("logout");
     logOut();
@@ -88,12 +125,42 @@ function Account() {
           My {user?.role} account
         </p>
         {user && (
-          <div>
-            <p className="font-mono">Name: {user.userName}</p>
-            <p className="font-mono">Email: {user.email}</p>
+          <div className="font-mono flex flex-row justify-center items-center">
+            <p className="font-mono">Name: </p>
+            {!showInput1 ? (
+              <p className="font-mono"> {user.userName} </p>
+            ) : (
+              <input
+                className="border-2 rounded border-cyan-500 p-1"
+                type="text"
+                name="username"
+                ref={userName}
+                defaultValue={user.userName}
+              ></input>
+            )}
+
+            {!showInput1 ? (
+              <button
+                className="btn-reverse"
+                type="submit"
+                onClick={() => setShowInput1(true)}
+              >
+                <MdModeEditOutline />
+              </button>
+            ) : (
+              <div>
+                <button
+                  className="btn"
+                  type="submit"
+                  onClick={() => submitUpdate()}
+                >
+                  <GrUpdate />
+                </button>
+              </div>
+            )}
           </div>
         )}
-
+        <p className="font-mono">Email: {user.email}</p>
         {user && user.profilePicture !== undefined ? (
           <img
             className="w-32 h-32 img-profile"
@@ -144,10 +211,10 @@ function Account() {
         Log out
       </button>
 
-      <div className="card mb-4">
+      {/* <div className="card mb-4">
         <p className="font-mono font-bold uppercase mb-2">Delete account</p>
         <p className="font-mono"></p>
-      </div>
+      </div> */}
     </div>
   );
 }
