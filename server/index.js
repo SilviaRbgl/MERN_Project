@@ -26,7 +26,8 @@ const addMiddleWares = () => {
   );
 
   const corsOptions = {
-    origin: "http://localhost:3000",
+    origin: "https://remoteislandexpeditions-server.vercel.app",
+    // origin: "http://localhost:3000",
     credentials: true,
   };
   app.use(cors(corsOptions));
@@ -61,7 +62,6 @@ const mongoDBConnection = async () => {
 };
 
 (async function controller() {
-  // console.log('process.env.JWT_SECRET :>> ', process.env.JWT_SECRET);
   await mongoDBConnection();
   addMiddleWares();
   loadRoutes();

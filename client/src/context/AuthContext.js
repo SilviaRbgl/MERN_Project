@@ -11,6 +11,7 @@ export const AuthContextProvider = (props) => {
   const [expedition, setExpedition] = useState([]);
   const [loading, setLoading] = useState(true);
   const redirectTo = useNavigate();
+  const server = "http://remoteislandexpeditions-server.vercel.app";
 
   const submitRegister = async (
     userName,
@@ -42,7 +43,7 @@ export const AuthContextProvider = (props) => {
     };
     try {
       const response = await fetch(
-        "http://localhost:5000/api/users/register",
+        `${server}/api/users/register`,
         requestOptions
       );
       const result = await response.json();
@@ -100,10 +101,7 @@ export const AuthContextProvider = (props) => {
     };
 
     try {
-      const response = await fetch(
-        "http://localhost:5000/api/users/login",
-        requestOptions
-      );
+      const response = await fetch(`${server}/api/users/login`, requestOptions);
       const result = await response.json();
       const { user } = result;
       setUser(user);
@@ -173,7 +171,7 @@ export const AuthContextProvider = (props) => {
     if (token) {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/users/profile",
+          `${server}/api/users/profile`,
           requestOptions
         );
         const result = await response.json();
@@ -218,6 +216,7 @@ export const AuthContextProvider = (props) => {
         setLoading,
         expedition,
         setExpedition,
+        server,
       }}
     >
       {props.children}

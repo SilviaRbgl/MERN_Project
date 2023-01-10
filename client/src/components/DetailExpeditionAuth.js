@@ -8,7 +8,7 @@ import getToken from "../utils/getToken";
 
 function DetailExpeditionAuth() {
   const singleExpedition = useLocation();
-  const { user, setUser, getProfile } = useContext(AuthContext);
+  const { user, setUser, getProfile, server } = useContext(AuthContext);
   const [modal, setModal] = useState(false);
   const comment = useRef();
   const [comments, setComments] = useState([]);
@@ -46,7 +46,7 @@ function DetailExpeditionAuth() {
     };
     try {
       const response = await fetch(
-        "http://localhost:5000/api/users/favourites",
+        `${server}/api/users/favourites`,
         requestOptions
       );
       const result = await response.json();
@@ -80,7 +80,7 @@ function DetailExpeditionAuth() {
     };
     try {
       const response = await fetch(
-        `http://localhost:5000/api/expeditions/comments/${expeditionName.island}`,
+        `${server}/api/expeditions/comments/${expeditionName.island}`,
         requestOptions
       );
       const result = await response.json();
@@ -111,12 +111,12 @@ function DetailExpeditionAuth() {
     };
     try {
       const response = await fetch(
-        "http://localhost:5000/api/expeditions/postcomment",
+        `${server}/api/expeditions/postcomment`,
         requestOptions
       );
       const result = await response.json();
       comment.current.value = "";
-      console.log("result post comments>>", result);
+      // console.log("result post comments>>", result);
       getComments();
     } catch (error) {
       console.log("error comments>> ", error);
@@ -142,7 +142,7 @@ function DetailExpeditionAuth() {
     if (commentAuthor === user.userName) {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/expeditions/deletecomment",
+          `${server}/api/expeditions/deletecomment`,
           requestOptions
         );
         const result = await response.json();

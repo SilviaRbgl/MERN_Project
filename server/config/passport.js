@@ -9,14 +9,12 @@ var opts = {
 };
 
 const jwtStrategy = new JwtStrategy(opts, function (jwt_payload, done) {
-  console.log("checkin user token in passport");
   userModel.findOne({ _id: jwt_payload.sub }, function (err, user) {
     if (err) {
       console.log("error>>>", err);
       return done(err, false);
     }
     if (user) {
-      // console.log("user in passport >>", user);
       return done(null, user);
     } else {
       return done(null, false);

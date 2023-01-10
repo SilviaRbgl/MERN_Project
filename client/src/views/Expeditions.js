@@ -4,13 +4,12 @@ import { AuthContext } from "../context/AuthContext";
 import { Spinner } from "flowbite-react";
 
 function Expeditions() {
-  const { expedition, setExpedition, loading, setLoading } =
+  const { expedition, setExpedition, loading, setLoading, server } =
     useContext(AuthContext);
 
   const fetchExpeditions = async () => {
-    const response = await fetch("http://localhost:5000/api/expeditions/all/");
+    const response = await fetch(`${server}/api/expeditions/all/`);
     const results = await response.json();
-    console.log("results.allExpeditions :>> ", results.allExpeditions);
     setExpedition(results.allExpeditions);
     setLoading(false);
   };

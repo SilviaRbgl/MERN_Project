@@ -3,7 +3,6 @@ import commentModel from "../models/commentsModel.js";
 const getAllComments = async (req, res) => {
   try {
     const allComments = await commentModel.find({});
-    console.log("allComments >", allComments);
     res.status(200).json({
       number: allComments.length,
       allComments,

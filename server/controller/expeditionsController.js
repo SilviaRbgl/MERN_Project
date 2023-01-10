@@ -8,7 +8,6 @@ const gettAllExpeditions = async (req, res) => {
       .populate({ path: "leader" })
       .populate({ path: "comments" })
       .exec();
-    // console.log("allExpeditions >", allExpeditions);
     res.status(200).json({
       number: allExpeditions.length,
       allExpeditions,
@@ -23,14 +22,11 @@ const gettAllExpeditions = async (req, res) => {
 };
 
 const getExpeditionsByLeader = async (req, res) => {
-  // console.log("req :>>", req.params);
   const { leader } = req.params;
-  // console.log("leader", leader);
   try {
     const requestedExpeditions = await expeditionModel
       .findOne({ leader: leader })
       .exec();
-    // console.log("requestedExpeditions>>>", requestedExpeditions);
     res.status(200).json({
       number: requestedExpeditions.length,
       requestedExpeditions,
@@ -46,7 +42,6 @@ const getExpeditionsByLeader = async (req, res) => {
 
 const getExpeditionsByName = async (req, res) => {
   const { expedition } = req.params;
-  // console.log("req.params", req.params);
   try {
     const requestedExpedition = await expeditionModel
       .findOne({
@@ -54,7 +49,6 @@ const getExpeditionsByName = async (req, res) => {
       })
       .populate({ path: "comments" })
       .exec();
-    console.log("requestedExpedition", requestedExpedition.comments);
     res.status(200).json({
       msg: "comments by name of expedition successfully",
       comments: requestedExpedition.comments,
@@ -67,12 +61,9 @@ const getExpeditionsByName = async (req, res) => {
     });
   }
 };
-// crear comentario en collecion comments
+
 const createComment = async (req, res) => {
   const { author, profilePicture, text, expedition } = req.body;
-  // const { author } = req.user.userName;
-  console.log("req.body comment>>>", req.body);
-  // console.log("req.user comments>>>", req.user.userName);
 
   try {
     const newComment = new commentModel({
@@ -101,11 +92,6 @@ const createComment = async (req, res) => {
         );
         res.status(201).json({
           msg: "comment saved",
-          // comment: {
-          //   author: findingComment.author,
-          //   text: findingComment.text,
-          //   island: findingComment.expedition,
-          // },
           findingComment,
         });
       } catch (error) {
@@ -123,25 +109,20 @@ const createComment = async (req, res) => {
 
 const deleteComment = async (req, res) => {
   const { expeditionId, commentId } = req.body;
-  console.log("expeditionId :>> ", expeditionId);
-  console.log("commentId :>> ", commentId);
 
   try {
     const deleteCommentDb = await commentModel.findByIdAndDelete({
       _id: commentId,
     });
 
-    console.log("deleteCommentDb>>", deleteCommentDb);
-
     if (deleteCommentDb) {
       const deleteCommentExpArray = await expeditionModel.findByIdAndUpdate(
-        { _id: expeditionId }, // id de la expedición
+        { _id: expeditionId },
         { $pull: { comments: commentId } },
         {
           returnOriginal: false,
         }
       );
-      console.log("deleteCommentExpArray :>> ", deleteCommentExpArray);
       res.status(201).json({
         msg: "comment removed from db & array",
       });
