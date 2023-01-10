@@ -24,7 +24,6 @@ function Navbar() {
         >
           Leaders{" "}
         </Link>
-        {/* {console.log('user in navbar :>> ', Object.keys(user))} */}
         {user ? (
           <Dropdown />
         ) : (

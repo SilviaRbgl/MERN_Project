@@ -204,11 +204,6 @@ function Account() {
       <button className="btn mb-4" onClick={submitLogOut}>
         Log out
       </button>
-
-      {/* <div className="card mb-4">
-        <p className="font-mono font-bold uppercase mb-2">Delete account</p>
-        <p className="font-mono"></p>
-      </div> */}
     </div>
   );
 }

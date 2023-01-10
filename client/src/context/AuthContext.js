@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Slide, toast } from "react-toastify";
 import getToken from "../utils/getToken.js";
 
@@ -85,8 +85,6 @@ export const AuthContextProvider = (props) => {
   };
 
   const submitLogin = async (email, password) => {
-    // console.log("userLogin", email, password);
-
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
@@ -107,10 +105,7 @@ export const AuthContextProvider = (props) => {
         requestOptions
       );
       const result = await response.json();
-      // console.log("result", result);
-      // console.log("result", result.token);
       const { user } = result;
-      // setLoading(false);
       setUser(user);
       const { token } = result;
 
@@ -159,7 +154,6 @@ export const AuthContextProvider = (props) => {
     } catch (error) {
       setIsUser(false);
       setUser(null);
-      // setLoading(false);
       console.log("error", error);
     }
   };
@@ -191,9 +185,6 @@ export const AuthContextProvider = (props) => {
         setUser(null);
         setIsUser(false);
       }
-    } else {
-      // alert("sesion expired, please log in again");
-      // redirectTo("/login");
     }
   };
 

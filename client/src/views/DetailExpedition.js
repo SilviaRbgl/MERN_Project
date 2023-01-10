@@ -1,15 +1,13 @@
 import { useLocation } from "react-router-dom";
 import { MdClose } from "react-icons/md";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import DetailExpeditionAuth from "../components/DetailExpeditionAuth";
-import { Carousel, Timeline } from "flowbite-react";
+import { Carousel } from "flowbite-react";
 
 function DetailExpedition() {
   const singleExpedition = useLocation();
-  const { user, setUser } = useContext(AuthContext);
-  // console.log("singleExpedition :>> ", singleExpedition);
-  // console.log("images singleExpedition >>", singleExpedition.state.images);
+  const { user } = useContext(AuthContext);
   const [modal, setModal] = useState(false);
 
   const getDates = (date) => {

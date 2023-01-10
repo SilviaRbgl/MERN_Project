@@ -4,14 +4,13 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
 import Expeditions from "./views/Expeditions";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import Login from "./views/Login";
 import Register from "./views/Register";
 import DetailExpedition from "./views/DetailExpedition";
 import Leaders from "./views/Leaders";
 import Account from "./views/Account";
 import { AuthContextProvider } from "./context/AuthContext";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
@@ -28,7 +27,6 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="account" element={<Account />} />
         </Routes>
-        {/* <Footer /> */}
       </AuthContextProvider>
       <ToastContainer />
     </div>
