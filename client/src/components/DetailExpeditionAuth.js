@@ -12,9 +12,7 @@ function DetailExpeditionAuth() {
   const [modal, setModal] = useState(false);
   const comment = useRef();
   const [comments, setComments] = useState([]);
-  // console.log("singleExpedition>>", singleExpedition.state);
   const expeditionName = useParams();
-  // console.log("expeditionName", expeditionName);
 
   const getDates = (date) => {
     let myDate = new Date(date).toLocaleDateString();
@@ -32,14 +30,13 @@ function DetailExpeditionAuth() {
   }
 
   const addOrDeleteFav = async (expeditionId) => {
-    // console.log("espedition ID in addOrDetele :>> ", expeditionId);
     const myHeaders = new Headers();
     const token = getToken();
     myHeaders.append("Authorization", `Bearer ${token}`);
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
     const urlencoded = new URLSearchParams();
-    urlencoded.append("favourite", expeditionId); // esto va al backend
+    urlencoded.append("favourite", expeditionId);
 
     const requestOptions = {
       method: "PATCH",
@@ -53,7 +50,6 @@ function DetailExpeditionAuth() {
         requestOptions
       );
       const result = await response.json();
-      // console.log("result", result);
       getProfile();
     } catch (error) {
       console.log("error :>> ", error);
@@ -61,8 +57,6 @@ function DetailExpeditionAuth() {
   };
 
   const isFav = (expeditionID) => {
-    // console.log("expeditionId :>> ", expeditionID);
-    // console.log("user.favourites :>> ", user.favourites);
     if (
       user?.favourites?.length > 0 &&
       user?.favourites?.find((fav) => fav._id === expeditionID)
@@ -90,7 +84,6 @@ function DetailExpeditionAuth() {
         requestOptions
       );
       const result = await response.json();
-      // console.log("result get comments>>", result);
       setComments(result.comments);
     } catch (error) {
       console.log("error", error);
@@ -153,7 +146,6 @@ function DetailExpeditionAuth() {
           requestOptions
         );
         const result = await response.json();
-        console.log("resultDelete", result);
         getComments();
       } catch (error) {
         console.log("error", error);

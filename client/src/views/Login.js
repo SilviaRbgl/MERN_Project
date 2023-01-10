@@ -1,19 +1,14 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 function Login() {
-  const { submitLogin, user } = useContext(AuthContext);
+  const { submitLogin } = useContext(AuthContext);
 
   const email = useRef();
   const password = useRef();
 
   const handleSubmit = () => {
-    // if (password.current.value.lenght > 5) {
-    //   submitLogin(email.current.value, password.current.value);
-    // } else {
-    //   alert("password too short")
-    // }
     submitLogin(email.current.value, password.current.value);
   };
 

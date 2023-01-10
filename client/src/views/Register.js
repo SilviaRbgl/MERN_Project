@@ -1,9 +1,7 @@
-import React, { useContext, useRef, useState } from "react";
-import { toast } from "react-toastify";
+import React, { useContext, useRef } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 function Register() {
-  // const [newUser, setNewUser] = useState({});
   const { submitRegister } = useContext(AuthContext);
 
   const userName = useRef();
@@ -12,17 +10,7 @@ function Register() {
   const roleTraveller = useRef();
   const roleLeader = useRef();
 
-  // const handleChangeHandler = (e) => {
-  // console.log(
-  //   "[e.target.name]:e.target.value",
-  //   e.target.name,
-  //   e.target.value
-  // );
-  // setNewUser({ ...newUser, [e.target.name]: e.target.value });
-  // };
-
   const handleSubmit = () => {
-    // submitRegister(newUser.email, newUser.password);
     submitRegister(
       userName.current.value,
       email.current.value,
@@ -45,8 +33,6 @@ function Register() {
             type="text"
             placeholder="Enter name"
             name="userName"
-            // value={newUser.userName ? newUser.userName : ""}
-            // onChange={handleChangeHandler}
             ref={userName}
             required
           />
@@ -59,8 +45,6 @@ function Register() {
             type="email"
             placeholder="Enter email"
             name="email"
-            // value={newUser.email ? newUser.email : ""}
-            // onChange={handleChangeHandler}
             ref={email}
             required
           />
@@ -73,8 +57,6 @@ function Register() {
             type="password"
             placeholder="Enter password"
             name="password"
-            // value={newUser.password ? newUser.password : ""}
-            // onChange={handleChangeHandler}
             ref={password}
             required
           />
@@ -88,7 +70,6 @@ function Register() {
               id="traveller"
               name="role"
               value="traveller"
-              // onClick={handleChangeHandler}
               ref={roleTraveller}
             ></input>
             <label htmlFor="traveller">Traveller</label>
@@ -99,7 +80,6 @@ function Register() {
               id="leader"
               name="role"
               value="leader"
-              // onClick={handleChangeHandler}
               ref={roleLeader}
             ></input>
             <label htmlFor="leader">Leader</label>

@@ -1,17 +1,14 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { MdModeEditOutline, MdArrowRightAlt } from "react-icons/md";
+import { MdModeEditOutline } from "react-icons/md";
 import { GrUpdate } from "react-icons/gr";
 
-import { Link } from "react-router-dom";
 function Account() {
-  const { user, setUser, logOut, getProfile, expedition, getToken } =
+  const { user, setUser, logOut, getProfile, getToken } =
     useContext(AuthContext);
   const [selectedFile, setSelectedFile] = useState({});
-  const [showInput1, setShowInput1] = useState(false); // JC style
+  const [showInput1, setShowInput1] = useState(false);
   const userName = useRef();
-  // console.log("expedition", expedition);
-  // console.log("userFavs", user.favourites);
 
   const attachFileHandler = (e) => {
     console.log("e.target.files[0]", e.target.files[0]);
@@ -88,8 +85,6 @@ function Account() {
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
     const urlencoded = new URLSearchParams();
-    // urlencoded.append("id", user._id);
-    // if (userName.current) { urlencoded.append("username", userName.current.value);
     urlencoded.append("newUserName", userName.current.value);
 
     const requestOptions = {
@@ -106,11 +101,11 @@ function Account() {
       );
       const result = await response.json();
       console.log("result", result);
-      setShowInput1(false); // JC style
+      setShowInput1(false);
     } catch (error) {
       console.log("error >", error);
     }
-    getProfile(); //tengo que llamar aqui el profile?
+    getProfile();
   };
 
   const submitLogOut = () => {
@@ -205,7 +200,6 @@ function Account() {
           })}
         </div>
       </div>
-      {/* </div> */}
 
       <button className="btn mb-4" onClick={submitLogOut}>
         Log out
