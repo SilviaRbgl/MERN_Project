@@ -11,7 +11,7 @@ export const AuthContextProvider = (props) => {
   const [expedition, setExpedition] = useState([]);
   const [loading, setLoading] = useState(true);
   const redirectTo = useNavigate();
-  const server = "http://remoteislandexpeditions-server.vercel.app";
+  const server = "https://remoteislandexpeditions-server.vercel.app";
 
   const submitRegister = async (
     userName,
