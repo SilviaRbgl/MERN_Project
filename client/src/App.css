@@ -51,7 +51,13 @@ input[type="file"] {
   @apply rounded-md py-2 px-3 uppercase text-xs font-bold cursor-pointer tracking-wider bg-amber-200 hover:bg-cyan-200;
 }
 
+.navbar {
+  @apply flex justify-evenly py-5 bg-gradient-to-r from-cyan-200 to-cyan-500 font-mono text-white
+}
 
+.link-navbar {
+  @apply no-underline hover:underline hover:text-amber-200 active:underline
+}
 
 body.active-modal {
   overflow-y: hidden;

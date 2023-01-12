@@ -8,29 +8,20 @@ function Navbar() {
 
   return (
     <div>
-      <ul className="flex justify-evenly py-5 bg-gradient-to-r from-cyan-200 to-cyan-500 font-mono text-white">
-        <Link to="/" className="no-underline hover:underline active:underline">
+      <ul className="navbar">
+        <Link to="/" className="link-navbar">
           Home{" "}
         </Link>
-        <Link
-          to="/expeditions"
-          className="no-underline hover:underline active:underline"
-        >
+        <Link to="/expeditions" className="link-navbar">
           Expeditions{" "}
         </Link>
-        <Link
-          to="/leaders"
-          className="no-underline hover:underline active:underline"
-        >
+        <Link to="/leaders" className="link-navbar">
           Leaders{" "}
         </Link>
         {user ? (
           <Dropdown />
         ) : (
-          <Link
-            to="/login"
-            className="no-underline hover:underline active:underline"
-          >
+          <Link to="/login" className="link-navbar">
             Log in
           </Link>
         )}
