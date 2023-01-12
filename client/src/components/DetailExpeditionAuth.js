@@ -225,7 +225,7 @@ function DetailExpeditionAuth() {
                 Thank you for your interest in this expedition, you will receive
                 an email with all the booking details!
               </p>
-              <button className="close-modal" onClick={toggleModal}>
+              <button className="modal-close" onClick={toggleModal}>
                 <MdClose />
               </button>
             </div>

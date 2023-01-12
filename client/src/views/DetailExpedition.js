@@ -80,7 +80,7 @@ function DetailExpedition() {
                   <p className="font-mono text-center">
                     If you want to book an expedition, you have to log in first.
                   </p>
-                  <button className="close-modal" onClick={toggleModal}>
+                  <button className="modal-close" onClick={toggleModal}>
                     <MdClose />
                   </button>
                 </div>
