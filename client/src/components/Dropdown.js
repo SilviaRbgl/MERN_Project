@@ -25,7 +25,7 @@ function Dropdown() {
 
   return (
     <div className="dropdown">
-      <button onClick={handleOpen} className="dropbtn">
+      <button onClick={handleOpen}>
         <BsFillPersonLinesFill />
       </button>
       {open ? (

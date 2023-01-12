@@ -14,13 +14,13 @@ function Login() {
 
   return (
     <div className="background">
-      <div className="card bg-gradient-to-r from-amber-100 to-cyan-100 text-center">
+      <div className="card-login">
         <p className="font-mono font-bold mb-4">Access to my account</p>
         <div className="flex-col font-mono pb-8">
           <label htmlFor="email">Email*</label>
           <br />
           <input
-            className="border-2 rounded border-cyan-500 shadow-md shadow-cyan-400/30 mb-4 p-1"
+            className="input"
             id="email"
             type="email"
             placeholder="Enter email"
@@ -33,7 +33,7 @@ function Login() {
           <label htmlFor="password">Password*</label>
           <br />
           <input
-            className="border-2 rounded border-cyan-500 shadow-md shadow-cyan-400/30 mb-4 p-1"
+            className="input"
             type="password"
             placeholder="Enter password"
             name="password"
