@@ -23,7 +23,7 @@ function Leaders() {
 
   return (
     <>
-      <div className="background grid gap-10 md:grid-rows-2 lg:grid-rows-3 lg:mx-40">
+      <div className="background static grid gap-10 md:grid-rows-2 lg:grid-rows-3 lg:mx-40">
         {!loading ? (
           leader.map((leader, index) => {
             return (

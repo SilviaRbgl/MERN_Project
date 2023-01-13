@@ -31,7 +31,7 @@ function Expeditions() {
   };
 
   return (
-    <div className="background mb-10 grid md:grid-cols-2 lg:grid-cols-3 gap-10 static">
+    <div className="background static mb-10 grid md:grid-cols-2 lg:grid-cols-3 gap-10">
       {!loading ? (
         expedition.map((expedition, index) => {
           return (

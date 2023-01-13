@@ -115,7 +115,7 @@ function Account() {
 
   return (
     <div className="background lg:mx-60">
-      <div className="card bg-gradient-to-r from-amber-100 to-cyan-100 mb-4 text-center object-center">
+      <div className="card bg-gradient mb-4 text-center object-center">
         <p className="font-mono font-bold uppercase mb-2">
           My {user?.role} account
         </p>
