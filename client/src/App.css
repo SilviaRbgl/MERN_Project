@@ -2,16 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+.background {
+  @apply bg-slate-50 p-10 lg:mr-12 lg:ml-12 md:mr-20 md:ml-20 sm:mr-16 sm:ml-16;
+}
+
+.bg-gradient {
+  @apply bg-gradient-to-r from-amber-100 to-cyan-100;
+}
+
 .card {
   @apply bg-white rounded overflow-hidden shadow-md p-2;
 }
 
 .card-login {
-  @apply bg-gradient-to-r from-amber-100 to-cyan-100 text-center rounded shadow-md p-2
-}
-
-.background {
-  @apply bg-slate-50 p-10 lg:mr-12 lg:ml-12 md:mr-20 md:ml-20 sm:mr-16 sm:ml-16;
+  @apply bg-gradient-to-r from-amber-100 to-cyan-100 text-center rounded shadow-md p-2;
 }
 
 .btn {
