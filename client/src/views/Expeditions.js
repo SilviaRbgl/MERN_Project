@@ -31,7 +31,7 @@ function Expeditions() {
   };
 
   return (
-    <div className="background mb-10 grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+    <div className="background mb-10 grid md:grid-cols-2 lg:grid-cols-3 gap-10 static">
       {!loading ? (
         expedition.map((expedition, index) => {
           return (
@@ -56,7 +56,7 @@ function Expeditions() {
           );
         })
       ) : (
-        <div className="block md:ml-48 lg:ml-96">
+        <div className="absolute inset-x-1/2 inset-y-1/3">
           <Spinner color="warning" size="xl" />
         </div>
       )}
