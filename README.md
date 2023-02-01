@@ -13,6 +13,9 @@ Most styled elements are designed with TailwindCSS.
 The project was deployed on vercel:
 :palm_tree: [Remote Island Expeditions](https://remoteislandexpeditions.vercel.app)
 
+![This picture is a preview of the project]
+(https://raw.githubusercontent.com/SilviaRbgl/MERN_Project/client/src/assets/RemoteIslandExpeditions.png)
+
 ## Technologies used
 
 - JavaScript
