@@ -13,7 +13,7 @@ Most styled elements are designed with TailwindCSS.
 The project was deployed on vercel:
 :palm_tree: [Remote Island Expeditions](https://remoteislandexpeditions.vercel.app)
 
-![](images/RemoteIslandExpeditions.png)
+![](assets/RemoteIslandExpeditions.png)
 
 ## Technologies used
 
