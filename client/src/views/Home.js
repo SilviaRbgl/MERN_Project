@@ -2,13 +2,13 @@ import { Carousel } from "flowbite-react";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import "../Home.css";
-import Easter_Island01 from "../images/Easter_Island01.jpg";
-import Nicobar_Islands01 from "../images/Nicobar_Islands01.jpg";
-import Pitcairn_Island01 from "../images/Pitcairn_Island01.jpg";
-import Revillagigedo01 from "../images/Revillagigedo01.jpg";
-import South_Georgia01 from "../images/South_Georgia01.jpg";
-import Svalbard01 from "../images/Svalbard01.jpg";
-import Socotra01 from "../images/Socotra01.jpg";
+import Easter_Island01 from "../assets/Easter_Island01.jpg";
+import Nicobar_Islands01 from "../assets/Nicobar_Islands01.jpg";
+import Pitcairn_Island01 from "../assets/Pitcairn_Island01.jpg";
+import Revillagigedo01 from "../assets/Revillagigedo01.jpg";
+import South_Georgia01 from "../assets/South_Georgia01.jpg";
+import Svalbard01 from "../assets/Svalbard01.jpg";
+import Socotra01 from "../assets/Socotra01.jpg";
 
 function Home() {
   return (

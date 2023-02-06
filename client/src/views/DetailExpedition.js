@@ -1,14 +1,14 @@
 import { useLocation } from "react-router-dom";
-import { MdClose } from "react-icons/md";
+// import { MdClose } from "react-icons/md";
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import DetailExpeditionAuth from "../components/DetailExpeditionAuth";
 import { Carousel } from "flowbite-react";
+import Modal from "../components/Modal";
 
 function DetailExpedition() {
   const singleExpedition = useLocation();
-  const { user } = useContext(AuthContext);
-  const [modal, setModal] = useState(false);
+  const { user, modal, setModal } = useContext(AuthContext);
 
   const getDates = (date) => {
     let myDate = new Date(date).toLocaleDateString();
@@ -19,11 +19,11 @@ function DetailExpedition() {
     setModal(!modal);
   };
 
-  if (modal) {
-    document.body.classList.add("active-modal");
-  } else {
-    document.body.classList.remove("active-modal");
-  }
+  // if (modal) {
+  //   document.body.classList.add("active-modal");
+  // } else {
+  //   document.body.classList.remove("active-modal");
+  // }
 
   return (
     <div className="background mb-10 lg:mx-40">
@@ -72,7 +72,8 @@ function DetailExpedition() {
             <button className="btn" onClick={toggleModal}>
               Reserve
             </button>
-            {modal && (
+            <Modal />
+            {/* {modal && (
               <div className="modal">
                 <div className="overlay"></div>
                 <div className="modal-content">
@@ -85,7 +86,7 @@ function DetailExpedition() {
                   </button>
                 </div>
               </div>
-            )}
+            )} */}
           </div>
           <div className="space-y-5">
             <p className="font-mono font-bold uppercase">Itinerary</p>

@@ -10,6 +10,7 @@ export const AuthContextProvider = (props) => {
   const [user, setUser] = useState(null);
   const [expedition, setExpedition] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [modal, setModal] = useState(false);
   const redirectTo = useNavigate();
   const server = "https://remoteislandexpeditions-server.vercel.app";
 
@@ -217,6 +218,8 @@ export const AuthContextProvider = (props) => {
         expedition,
         setExpedition,
         server,
+        modal,
+        setModal,
       }}
     >
       {props.children}
