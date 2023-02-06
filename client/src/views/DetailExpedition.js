@@ -39,21 +39,21 @@ function DetailExpedition() {
                     singleExpedition.state?.images &&
                     singleExpedition.state.images[0]
                   }
-                  alt="expedition image"
+                  alt="island"
                 />
                 <img
                   src={
                     singleExpedition.state?.images &&
                     singleExpedition.state.images[1]
                   }
-                  alt="expedition image"
+                  alt="island"
                 />
                 <img
                   src={
                     singleExpedition.state?.images &&
                     singleExpedition.state.images[2]
                   }
-                  alt="expedition image"
+                  alt="island"
                 />
               </Carousel>
             </div>
