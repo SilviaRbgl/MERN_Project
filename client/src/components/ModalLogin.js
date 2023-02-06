@@ -1,10 +1,9 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext } from "react";
 import { MdClose } from "react-icons/md";
 import { AuthContext } from "../context/AuthContext";
 
-function Modal() {
+function ModalLogin() {
   const { modal, setModal } = useContext(AuthContext);
-  const text = useRef();
 
   const toggleModal = () => {
     setModal(!modal);
@@ -23,8 +22,8 @@ function Modal() {
           <div className="overlay"></div>
           <div className="modal-content">
             <p className="font-mono font-bold text-center">OOPS!</p>
-            <p className="font-mono text-center" ref={text}>
-              {/* If you want to book an expedition, you have to log in first. */}
+            <p className="font-mono text-center">
+              If you want to book an expedition, you have to log in first.
             </p>
             <button className="modal-close" onClick={toggleModal}>
               <MdClose />
@@ -36,4 +35,4 @@ function Modal() {
   );
 }
 
-export default Modal;
+export default ModalLogin;

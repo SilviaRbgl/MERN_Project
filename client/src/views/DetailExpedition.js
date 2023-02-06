@@ -1,10 +1,9 @@
 import { useLocation } from "react-router-dom";
-// import { MdClose } from "react-icons/md";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import ModalLogin from "../components/ModalLogin";
 import DetailExpeditionAuth from "../components/DetailExpeditionAuth";
 import { Carousel } from "flowbite-react";
-import Modal from "../components/Modal";
 
 function DetailExpedition() {
   const singleExpedition = useLocation();
@@ -18,12 +17,6 @@ function DetailExpedition() {
   const toggleModal = () => {
     setModal(!modal);
   };
-
-  // if (modal) {
-  //   document.body.classList.add("active-modal");
-  // } else {
-  //   document.body.classList.remove("active-modal");
-  // }
 
   return (
     <div className="background mb-10 lg:mx-40">
@@ -72,21 +65,7 @@ function DetailExpedition() {
             <button className="btn" onClick={toggleModal}>
               Reserve
             </button>
-            <Modal />
-            {/* {modal && (
-              <div className="modal">
-                <div className="overlay"></div>
-                <div className="modal-content">
-                  <p className="font-mono font-bold text-center">OOPS!</p>
-                  <p className="font-mono text-center">
-                    If you want to book an expedition, you have to log in first.
-                  </p>
-                  <button className="modal-close" onClick={toggleModal}>
-                    <MdClose />
-                  </button>
-                </div>
-              </div>
-            )} */}
+            <ModalLogin />
           </div>
           <div className="space-y-5">
             <p className="font-mono font-bold uppercase">Itinerary</p>

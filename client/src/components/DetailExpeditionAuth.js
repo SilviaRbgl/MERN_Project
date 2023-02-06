@@ -8,7 +8,7 @@ import getToken from "../utils/getToken";
 
 function DetailExpeditionAuth() {
   const singleExpedition = useLocation();
-  const { user, setUser, getProfile, server } = useContext(AuthContext);
+  const { user, getProfile, server } = useContext(AuthContext);
   const [modal, setModal] = useState(false);
   const comment = useRef();
   const [comments, setComments] = useState([]);
