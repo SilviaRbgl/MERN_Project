@@ -261,7 +261,7 @@ function DetailExpeditionAuth() {
             <img
               className="w-10 h-10 img-profile"
               src={comment.profilePicture}
-              alt="profile picture"
+              alt="avatar profile"
             />
             <p className="text-sm mb-2">{comment.author} wrote:</p>
             <p className="mb-2 italic">{comment.text}</p>
