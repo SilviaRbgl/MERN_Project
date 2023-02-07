@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { MdClose } from "react-icons/md";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 function ModalLogin() {
   const { modal, setModal } = useContext(AuthContext);

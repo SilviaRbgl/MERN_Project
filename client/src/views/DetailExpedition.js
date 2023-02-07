@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import ModalLogin from "../components/ModalLogin";
+import ModalLogin from "../components/Modals/ModalLogin";
 import DetailExpeditionAuth from "../components/DetailExpeditionAuth";
 import { Carousel } from "flowbite-react";
 

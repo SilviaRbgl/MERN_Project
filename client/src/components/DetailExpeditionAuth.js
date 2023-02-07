@@ -1,10 +1,11 @@
 import { useLocation, useParams } from "react-router-dom";
-import { MdFavoriteBorder, MdClose } from "react-icons/md";
+import { MdFavoriteBorder } from "react-icons/md";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Carousel } from "flowbite-react";
 import getToken from "../utils/getToken";
+import ModalReserve from "./Modals/ModalReserve";
 
 function DetailExpeditionAuth() {
   const singleExpedition = useLocation();
@@ -216,21 +217,7 @@ function DetailExpeditionAuth() {
         <button className="btn" onClick={toggleModal}>
           Reserve
         </button>
-        {modal && (
-          <div className="modal">
-            <div className="overlay"></div>
-            <div className="modal-content">
-              <p className="font-mono font-bold text-center">HURRAH!</p>
-              <p className="font-mono text-center">
-                Thank you for your interest in this expedition, you will receive
-                an email with all the booking details!
-              </p>
-              <button className="modal-close" onClick={toggleModal}>
-                <MdClose />
-              </button>
-            </div>
-          </div>
-        )}
+        <ModalReserve />
       </div>
       <div className="space-y-5">
         <p className="font-mono font-bold uppercase">Itinerary</p>
