@@ -160,13 +160,13 @@ function Account() {
           <img
             className="w-32 h-32 img-profile"
             src={user.profilePicture}
-            alt="profile picture"
+            alt="avatar profile"
           />
         ) : (
           <img
             className="w-32 h-32 img-profile"
             src="http://res.cloudinary.com/dtwbyjspa/image/upload/v1669821358/images/yk4xc69svkglrejjq3tk.png"
-            alt="default profile picture"
+            alt="default avatar profile"
           />
         )}
         <div>
