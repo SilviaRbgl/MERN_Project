@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { Spinner } from "flowbite-react";
+import Spinner from "../components/Spinner";
 
 function Expeditions() {
   const { expedition, setExpedition, loading, setLoading, server } =
@@ -44,7 +44,7 @@ function Expeditions() {
               </p>
               <img
                 src={expedition?.images && expedition.images[0]}
-                alt="expedition image"
+                alt="expedition"
               />
               <button
                 className="btn"
@@ -57,7 +57,7 @@ function Expeditions() {
         })
       ) : (
         <div className="absolute inset-x-1/2 inset-y-1/3">
-          <Spinner color="warning" size="xl" />
+          <Spinner />
         </div>
       )}
     </div>

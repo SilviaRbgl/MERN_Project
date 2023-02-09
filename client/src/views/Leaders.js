@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import { Spinner } from "flowbite-react";
+import Spinner from "../components/Spinner";
 
 function Leaders() {
   const [leader, setLeader] = useState([]);
@@ -56,7 +55,7 @@ function Leaders() {
           })
         ) : (
           <div className="absolute inset-x-1/2 inset-y-1/3">
-            <Spinner color="warning" size="xl" />
+            <Spinner />
           </div>
         )}
         {/* <div className="card bg-gradient">
