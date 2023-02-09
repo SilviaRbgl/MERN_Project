@@ -30,42 +30,42 @@ function DetailExpeditionAuth() {
     document.body.classList.remove("active-modal");
   }
 
-  const addOrDeleteFav = async (expeditionId) => {
-    const myHeaders = new Headers();
-    const token = getToken();
-    myHeaders.append("Authorization", `Bearer ${token}`);
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+  // const addOrDeleteFav = async (expeditionId) => {
+  //   const myHeaders = new Headers();
+  //   const token = getToken();
+  //   myHeaders.append("Authorization", `Bearer ${token}`);
+  //   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
-    const urlencoded = new URLSearchParams();
-    urlencoded.append("favourite", expeditionId);
+  //   const urlencoded = new URLSearchParams();
+  //   urlencoded.append("favourite", expeditionId);
 
-    const requestOptions = {
-      method: "PATCH",
-      headers: myHeaders,
-      body: urlencoded,
-      redirect: "follow",
-    };
-    try {
-      const response = await fetch(
-        `${server}/api/users/favourites`,
-        requestOptions
-      );
-      const result = await response.json();
-      getProfile();
-    } catch (error) {
-      console.log("error :>> ", error);
-    }
-  };
+  //   const requestOptions = {
+  //     method: "PATCH",
+  //     headers: myHeaders,
+  //     body: urlencoded,
+  //     redirect: "follow",
+  //   };
+  //   try {
+  //     const response = await fetch(
+  //       `${server}/api/users/favourites`,
+  //       requestOptions
+  //     );
+  //     const result = await response.json();
+  //     getProfile();
+  //   } catch (error) {
+  //     console.log("error :>> ", error);
+  //   }
+  // };
 
-  const isFav = (expeditionID) => {
-    if (
-      user?.favourites?.length > 0 &&
-      user?.favourites?.find((fav) => fav._id === expeditionID)
-    ) {
-      return true;
-    }
-    return false;
-  };
+  // const isFav = (expeditionID) => {
+  //   if (
+  //     user?.favourites?.length > 0 &&
+  //     user?.favourites?.find((fav) => fav._id === expeditionID)
+  //   ) {
+  //     return true;
+  //   }
+  //   return false;
+  // };
 
   const getComments = async () => {
     const myHeaders = new Headers();
@@ -203,7 +203,7 @@ function DetailExpeditionAuth() {
         <p className="font-mono">Price: {singleExpedition.state.price}</p>
         <p className="font-mono"></p>
         {}
-        <button
+        {/* <button
           onClick={() => addOrDeleteFav(singleExpedition.state._id)}
           className={
             isFav(singleExpedition.state._id)
@@ -212,7 +212,7 @@ function DetailExpeditionAuth() {
           }
         >
           <MdFavoriteBorder />
-        </button>
+        </button> */}
         <br />
         <button className="btn" onClick={toggleModal}>
           Reserve
