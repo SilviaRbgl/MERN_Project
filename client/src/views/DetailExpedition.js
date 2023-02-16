@@ -175,6 +175,10 @@ function DetailExpedition() {
             <p className="font-mono">{singleExpedition.state.itinerary}</p>
             <p className="font-mono font-bold uppercase">What is included</p>
             <p className="font-mono">{singleExpedition.state.itinerary}</p>
+            </div>
+          
+          
+            <div>
             <p className="font-mono font-bold uppercase">Travellers opinions</p>
             <textarea
               className="rounded border-2 border-cyan-500 w-full pt-2 pl-2 pr-14 pb-14 font-mono outline-1 outline-cyan-600"

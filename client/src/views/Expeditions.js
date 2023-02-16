@@ -56,7 +56,7 @@ function Expeditions() {
           );
         })
       ) : (
-        <div className="absolute inset-x-1/2 inset-y-1/3">
+        <div className="absolute md:inset-x-1/2 inset-x-1/3 inset-y-1/3">
           <Spinner />
         </div>
       )}
