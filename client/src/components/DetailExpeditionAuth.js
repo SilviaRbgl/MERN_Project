@@ -6,6 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 import { Carousel } from "flowbite-react";
 import getToken from "../utils/getToken";
 import ModalReserve from "./Modals/ModalReserve";
+import Comments from "./Comments";
 
 function DetailExpeditionAuth() {
   const singleExpedition = useLocation();
@@ -30,135 +31,98 @@ function DetailExpeditionAuth() {
     document.body.classList.remove("active-modal");
   }
 
-  // const addOrDeleteFav = async (expeditionId) => {
+  // const getComments = async () => {
   //   const myHeaders = new Headers();
   //   const token = getToken();
+
+  //   myHeaders.append("Authorization", `Bearer ${token}`);
+  //   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+  //   const requestOptions = {
+  //     headers: myHeaders,
+  //     method: "GET",
+  //     redirect: "follow",
+  //   };
+  //   try {
+  //     const response = await fetch(
+  //       `${server}/api/expeditions/comments/${expeditionName.island}`,
+  //       requestOptions
+  //     );
+  //     const result = await response.json();
+  //     setComments(result.comments);
+  //   } catch (error) {
+  //     console.log("error", error);
+  //   }
+  // };
+
+  // const postComment = async () => {
+  //   const myHeaders = new Headers();
+  //   const token = getToken();
+
   //   myHeaders.append("Authorization", `Bearer ${token}`);
   //   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
   //   const urlencoded = new URLSearchParams();
-  //   urlencoded.append("favourite", expeditionId);
+  //   urlencoded.append("author", user.userName);
+  //   urlencoded.append("profilePicture", user.profilePicture);
+  //   urlencoded.append("text", comment.current.value);
+  //   urlencoded.append("expedition", singleExpedition.state.island);
 
   //   const requestOptions = {
-  //     method: "PATCH",
+  //     method: "POST",
   //     headers: myHeaders,
   //     body: urlencoded,
   //     redirect: "follow",
   //   };
   //   try {
   //     const response = await fetch(
-  //       `${server}/api/users/favourites`,
+  //       `${server}/api/expeditions/postcomment`,
   //       requestOptions
   //     );
   //     const result = await response.json();
-  //     getProfile();
+  //     comment.current.value = "";
+  //     // console.log("result post comments>>", result);
+  //     getComments();
   //   } catch (error) {
-  //     console.log("error :>> ", error);
+  //     console.log("error comments>> ", error);
   //   }
   // };
 
-  // const isFav = (expeditionID) => {
-  //   if (
-  //     user?.favourites?.length > 0 &&
-  //     user?.favourites?.find((fav) => fav._id === expeditionID)
-  //   ) {
-  //     return true;
+  // const deleteComments = async (commentId, commentAuthor) => {
+  //   const myHeaders = new Headers();
+  //   const token = getToken();
+  //   myHeaders.append("Authorization", `Bearer ${token}`);
+  //   myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+  //   const urlencoded = new URLSearchParams();
+  //   urlencoded.append("commentId", commentId);
+  //   urlencoded.append("expeditionId", singleExpedition.state._id);
+
+  //   const requestOptions = {
+  //     method: "DELETE",
+  //     headers: myHeaders,
+  //     body: urlencoded,
+  //     redirect: "follow",
+  //   };
+  //   if (commentAuthor === user.userName) {
+  //     try {
+  //       const response = await fetch(
+  //         `${server}/api/expeditions/deletecomment`,
+  //         requestOptions
+  //       );
+  //       const result = await response.json();
+  //       getComments();
+  //     } catch (error) {
+  //       console.log("error", error);
+  //     }
+  //   } else {
+  //     console.log("can not delete comments users");
   //   }
-  //   return false;
   // };
 
-  const getComments = async () => {
-    const myHeaders = new Headers();
-    const token = getToken();
-
-    myHeaders.append("Authorization", `Bearer ${token}`);
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-    const requestOptions = {
-      headers: myHeaders,
-      method: "GET",
-      redirect: "follow",
-    };
-    try {
-      const response = await fetch(
-        `${server}/api/expeditions/comments/${expeditionName.island}`,
-        requestOptions
-      );
-      const result = await response.json();
-      setComments(result.comments);
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
-
-  const postComment = async () => {
-    const myHeaders = new Headers();
-    const token = getToken();
-
-    myHeaders.append("Authorization", `Bearer ${token}`);
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-    const urlencoded = new URLSearchParams();
-    urlencoded.append("author", user.userName);
-    urlencoded.append("profilePicture", user.profilePicture);
-    urlencoded.append("text", comment.current.value);
-    urlencoded.append("expedition", singleExpedition.state.island);
-
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: urlencoded,
-      redirect: "follow",
-    };
-    try {
-      const response = await fetch(
-        `${server}/api/expeditions/postcomment`,
-        requestOptions
-      );
-      const result = await response.json();
-      comment.current.value = "";
-      // console.log("result post comments>>", result);
-      getComments();
-    } catch (error) {
-      console.log("error comments>> ", error);
-    }
-  };
-
-  const deleteComments = async (commentId, commentAuthor) => {
-    const myHeaders = new Headers();
-    const token = getToken();
-    myHeaders.append("Authorization", `Bearer ${token}`);
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-    const urlencoded = new URLSearchParams();
-    urlencoded.append("commentId", commentId);
-    urlencoded.append("expeditionId", singleExpedition.state._id);
-
-    const requestOptions = {
-      method: "DELETE",
-      headers: myHeaders,
-      body: urlencoded,
-      redirect: "follow",
-    };
-    if (commentAuthor === user.userName) {
-      try {
-        const response = await fetch(
-          `${server}/api/expeditions/deletecomment`,
-          requestOptions
-        );
-        const result = await response.json();
-        getComments();
-      } catch (error) {
-        console.log("error", error);
-      }
-    } else {
-      console.log("can not delete comments users");
-    }
-  };
-
-  useEffect(() => {
-    getComments();
-  }, []);
+  // useEffect(() => {
+  //   getComments();
+  // }, []);
 
   return (
     <>
@@ -203,16 +167,7 @@ function DetailExpeditionAuth() {
         <p className="font-mono">Price: {singleExpedition.state.price}</p>
         <p className="font-mono"></p>
         {}
-        {/* <button
-          onClick={() => addOrDeleteFav(singleExpedition.state._id)}
-          className={
-            isFav(singleExpedition.state._id)
-              ? "btn-favorite-clicked"
-              : "btn-favorite"
-          }
-        >
-          <MdFavoriteBorder />
-        </button> */}
+
         <br />
         <button className="btn" onClick={toggleModal}>
           Reserve
@@ -235,11 +190,16 @@ function DetailExpeditionAuth() {
         />
         <label htmlFor="message"></label>
         <br></br>
-        <button className="btn" type="submit" onClick={postComment}>
+        <button
+          className="btn"
+          type="submit"
+          // onClick={postComment}
+        >
           Submit opinion
         </button>
       </div>
-      {comments?.map((comment, index) => {
+      <Comments />
+      {/* {comments?.map((comment, index) => {
         return (
           <div
             key={index}
@@ -265,7 +225,7 @@ function DetailExpeditionAuth() {
             </div>
           </div>
         );
-      })}
+      })} */}
     </>
   );
 }
