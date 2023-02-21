@@ -3,7 +3,6 @@ import { AuthContext } from "../context/AuthContext";
 
 function Register() {
   const { submitRegister } = useContext(AuthContext);
-
   const userName = useRef();
   const email = useRef();
   const password = useRef();

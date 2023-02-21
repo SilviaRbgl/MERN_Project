@@ -4,14 +4,12 @@ import { AuthContext } from "../context/AuthContext";
 import ModalLogin from "../components/Modals/ModalLogin";
 import ModalReserve from "../components/Modals/ModalReserve";
 import Favourite from "../components/Favourite";
-import getToken from "../utils/getToken";
-// import DetailExpeditionAuth from "../components/DetailExpeditionAuth";
 import { Carousel } from "flowbite-react";
 import Comments from "../components/Comments";
 
 function DetailExpedition() {
   const singleExpedition = useLocation();
-  const { user, modal, setModal, server } = useContext(AuthContext);
+  const { user, modal, setModal } = useContext(AuthContext);
 
   const getDates = (date) => {
     let myDate = new Date(date).toLocaleDateString();

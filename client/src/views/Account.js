@@ -192,7 +192,7 @@ function Account() {
                 <p className="text-xs mb-1 ">{fav.country}</p>
                 <img
                   src={fav.images[0]}
-                  alt="expedition image"
+                  alt="expedition island"
                   className="w-32 rounded mb-1"
                 />
               </div>
